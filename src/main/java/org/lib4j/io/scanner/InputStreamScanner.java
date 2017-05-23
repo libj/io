@@ -20,7 +20,7 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.util.List;
 
-import org.safris.commons.util.HashTree;
+import org.lib4j.util.HashTree;
 
 public final class InputStreamScanner extends Thread {
   private final InputStream in;

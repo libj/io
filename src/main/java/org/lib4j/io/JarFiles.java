@@ -24,7 +24,7 @@ import java.util.jar.JarEntry;
 import java.util.jar.JarFile;
 import java.util.zip.ZipEntry;
 
-import org.safris.commons.lang.Paths;
+import org.lib4j.lang.Paths;
 
 public class JarFiles {
   private static FileOutputStream getOutputStream(final File outDir, final String path) throws IOException {
