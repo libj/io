@@ -14,7 +14,7 @@
  * program. If not, see <http://opensource.org/licenses/MIT/>.
  */
 
-package org.safris.commons.io.file;
+package org.lib4j.io.file;
 
 import java.io.File;
 

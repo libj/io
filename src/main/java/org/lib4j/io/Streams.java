@@ -14,7 +14,7 @@
  * program. If not, see <http://opensource.org/licenses/MIT/>.
  */
 
-package org.safris.commons.io;
+package org.lib4j.io;
 
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
@@ -23,7 +23,7 @@ import java.io.OutputStream;
 import java.io.PipedInputStream;
 import java.io.PipedOutputStream;
 
-import org.safris.commons.io.output.TeeOutputStream;
+import org.lib4j.io.output.TeeOutputStream;
 
 public final class Streams {
   private static final int DEFAULT_SOCKET_BUFFER_SIZE = 65536;

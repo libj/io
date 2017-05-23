@@ -14,7 +14,7 @@
  * program. If not, see <http://opensource.org/licenses/MIT/>.
  */
 
-package org.safris.commons.io.input;
+package org.lib4j.io.input;
 
 import java.io.PipedInputStream;
 import java.io.PipedOutputStream;

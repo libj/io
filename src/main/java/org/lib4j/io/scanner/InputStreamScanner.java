@@ -14,7 +14,7 @@
  * program. If not, see <http://opensource.org/licenses/MIT/>.
  */
 
-package org.safris.commons.io.scanner;
+package org.lib4j.io.scanner;
 
 import java.io.IOException;
 import java.io.InputStream;

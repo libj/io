@@ -1,4 +1,4 @@
-/* Copyright (c) 2006 lib4j
+/* Copyright (c) 2016 lib4j
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -14,27 +14,32 @@
  * program. If not, see <http://opensource.org/licenses/MIT/>.
  */
 
-package org.safris.commons.io.output;
+package org.lib4j.io;
 
 import java.io.IOException;
-import java.io.OutputStream;
+import java.io.Reader;
 
-public final class TeeOutputStream extends OutputStream {
-  private final OutputStream out1;
-  private final OutputStream out2;
+public final class Readers {
+  public static String readFully(final Reader reader) throws IOException {
+    final StringBuilder builder = new StringBuilder();
+    int ch;
+    while ((ch = reader.read()) != -1)
+      builder.append((char)ch);
 
-  public TeeOutputStream(final OutputStream out1, final OutputStream out2) {
-    this.out1 = out1;
-    this.out2 = out2;
+    return builder.toString();
   }
 
-  @Override
-  public void write(final int b) throws IOException {
-    out1.write(b);
-    out2.write(b);
-    if ((char)b == '\n') {
-      out1.flush();
-      out2.flush();
-    }
+  public static String readFully(final Reader reader, final int bufferSize) throws IOException {
+    final StringBuilder builder = new StringBuilder();
+    final char[] buffer = new char[bufferSize];
+    int size;
+    while ((size = reader.read(buffer)) == bufferSize)
+      builder.append(buffer);
+
+    builder.append(buffer, 0, size);
+    return builder.toString();
+  }
+
+  private Readers() {
   }
 }
