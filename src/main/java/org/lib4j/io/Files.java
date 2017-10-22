@@ -274,6 +274,12 @@ public final class Files {
     return files[0];
   }
 
+  public static String getShortName(final File file) {
+    final String name = file.getName();
+    final int index = name.indexOf('.');
+    return index == -1 ? name : name.substring(0, index);
+  }
+
   private Files() {
   }
 }

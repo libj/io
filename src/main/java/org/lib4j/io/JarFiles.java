@@ -28,7 +28,7 @@ import org.lib4j.lang.Paths;
 
 public class JarFiles {
   private static FileOutputStream getOutputStream(final File outDir, final String path) throws IOException {
-    final String parent = Paths.getParent(path);
+    final String parent = Paths.getCanonicalParent(path);
     final File destDir = parent == null || parent.length() == 0 ? outDir : new File(outDir, parent);
     if (!destDir.exists() && !destDir.mkdirs())
       throw new IOException("Unable to create destination directory: " + destDir.getAbsolutePath());
