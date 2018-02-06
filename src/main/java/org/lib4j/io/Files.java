@@ -81,13 +81,10 @@ public final class Files {
           else
             delete(entry, onExit);
         }
-
-        delete(path, onExit);
       }
     }
-    else {
-      delete(path, onExit);
-    }
+
+    delete(path, onExit);
   }
 
   public static void deleteAllOnExit(final Path path, final DirectoryStream.Filter<Path> filter) throws IOException {
