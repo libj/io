@@ -20,15 +20,15 @@ import java.io.BufferedInputStream;
 import java.io.IOException;
 import java.io.InputStream;
 
-public class ReviewableInputStream extends InputStream {
+public class RewindableInputStream extends InputStream {
   private final InputStream in;
 
-  public ReviewableInputStream(final InputStream in, final int size) {
+  public RewindableInputStream(final InputStream in, final int size) {
     this.in = new BufferedInputStream(in, size);
     this.in.mark(Integer.MAX_VALUE);
   }
 
-  public ReviewableInputStream(final InputStream in) {
+  public RewindableInputStream(final InputStream in) {
     this.in = new BufferedInputStream(in);
     this.in.mark(Integer.MAX_VALUE);
   }
@@ -64,7 +64,7 @@ public class ReviewableInputStream extends InputStream {
   }
 
   @Override
-  public synchronized void mark(int readlimit) {
+  public synchronized void mark(final int readlimit) {
   }
 
   @Override
