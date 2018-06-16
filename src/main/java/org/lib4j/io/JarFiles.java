@@ -26,7 +26,7 @@ import java.util.zip.ZipEntry;
 
 import org.lib4j.lang.Paths;
 
-public class JarFiles {
+public final class JarFiles {
   private static FileOutputStream getOutputStream(final File outDir, final String path) throws IOException {
     final String parent = Paths.getCanonicalParent(path);
     final File destDir = parent == null || parent.length() == 0 ? outDir : new File(outDir, parent);
@@ -75,5 +75,8 @@ public class JarFiles {
       final FileOutputStream out = getOutputStream(outDir, path);
       Streams.pipe(jarFile.getInputStream(entry), out);
     }
+  }
+
+  private JarFiles() {
   }
 }

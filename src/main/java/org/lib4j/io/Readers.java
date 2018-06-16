@@ -33,10 +33,9 @@ public final class Readers {
     final StringBuilder builder = new StringBuilder();
     final char[] buffer = new char[bufferSize];
     int size;
-    while ((size = reader.read(buffer)) == bufferSize)
-      builder.append(buffer);
+    while ((size = reader.read(buffer)) != -1)
+      builder.append(buffer, 0, size);
 
-    builder.append(buffer, 0, size);
     return builder.toString();
   }
 

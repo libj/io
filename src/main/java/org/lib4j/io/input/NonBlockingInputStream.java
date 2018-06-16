@@ -19,7 +19,7 @@ package org.lib4j.io.input;
 import java.io.IOException;
 import java.io.InputStream;
 
-public final class NonBlockingInputStream extends InputStream {
+public class NonBlockingInputStream extends InputStream {
   private final InputStream in;
   private final byte[] buffer;
   private final int tempBufferSize;

@@ -200,7 +200,6 @@ public final class Streams {
         else {
           while ((length = src.read(bytes)) != -1) {
             pipedOut.write(bytes, 0, length);
-
             pipedOut.flush();
           }
 

@@ -20,32 +20,30 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.util.List;
 
-import org.lib4j.util.HashTree;
+import org.lib4j.util.ListTree;
 
-public final class InputStreamScanner extends Thread {
+public class InputStreamScanner extends Thread {
   private final InputStream in;
-  private List<HashTree.Node<ScannerHandler>> currentNodes;
+  private List<ListTree.Node<ScannerHandler>> currentNodes;
 
-  public InputStreamScanner(final InputStream in, final HashTree<ScannerHandler> handlers) {
+  public InputStreamScanner(final InputStream in, final ListTree<ScannerHandler> handlers) {
     super(InputStreamScanner.class.getSimpleName());
     this.in = in;
-    currentNodes = handlers != null ? handlers.getChildren() : null;
+    this.currentNodes = handlers == null ? null : handlers.getChildren();
   }
 
-  private boolean onMatch(final String line, final List<HashTree.Node<ScannerHandler>> nodes) throws IOException {
+  private boolean onMatch(final String line, final List<ListTree.Node<ScannerHandler>> nodes) throws IOException {
     boolean match = false;
-    for (final HashTree.Node<ScannerHandler> node : nodes) {
-      if (node.getValue() != null) {
-        if (line.matches(node.getValue().getMatch())) {
-          match = true;
-          node.getValue().match(line);
-          if (node.hasChildren())
-            currentNodes = node.getChildren();
-        }
-      }
-      else {
-        for (final HashTree.Node<ScannerHandler> child : node.getChildren())
+    for (final ListTree.Node<ScannerHandler> node : nodes) {
+      if (node.getValue() == null) {
+        for (final ListTree.Node<ScannerHandler> child : node.getChildren())
           onMatch(line, child.getChildren());
+      }
+      else if (line.matches(node.getValue().getPattern())) {
+        match = true;
+        node.getValue().match(line);
+        if (node.hasChildren())
+          currentNodes = node.getChildren();
       }
     }
 
@@ -54,23 +52,20 @@ public final class InputStreamScanner extends Thread {
 
   @Override
   public void run() {
-    String line = "";
+    final StringBuilder builder = new StringBuilder();
     try {
-      char ch = 0;
+      char ch;
       while ((ch = (char)in.read()) != -1) {
-        if (ch != '\n') {
-          if (ch != ' ' || line.length() != 0)
-            line += ch;
-        }
-        else {
-          line = "";
-        }
+        if (ch == '\n')
+          builder.setLength(0);
+        else if (ch != ' ' || builder.length() != 0)
+          builder.append(ch);
 
         if (currentNodes == null)
           continue;
 
-        if (onMatch(line, currentNodes))
-          line = "";
+        if (onMatch(builder.toString(), currentNodes))
+          builder.setLength(0);
       }
     }
     catch (final Exception e) {
@@ -80,10 +75,12 @@ public final class InputStreamScanner extends Thread {
       throw new RuntimeException(e);
     }
     finally {
-      try {
-        notifyAll();
-      }
-      catch (final IllegalMonitorStateException e) {
+      synchronized (this) {
+        try {
+          notifyAll();
+        }
+        catch (final IllegalMonitorStateException e) {
+        }
       }
     }
   }

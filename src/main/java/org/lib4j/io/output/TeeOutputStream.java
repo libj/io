@@ -19,7 +19,7 @@ package org.lib4j.io.output;
 import java.io.IOException;
 import java.io.OutputStream;
 
-public final class TeeOutputStream extends OutputStream {
+public class TeeOutputStream extends OutputStream {
   private final OutputStream out1;
   private final OutputStream out2;
 

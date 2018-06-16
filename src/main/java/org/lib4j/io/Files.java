@@ -162,13 +162,10 @@ public final class Files {
   /**
    * Copy a file or directory from <code>from</code> to <code>to</code>.
    *
-   * @param from
-   *          <code>File</code> to copy from.
-   * @param to
-   *          <code>File</code> to copy to.
+   * @param from <code>File</code> to copy from.
+   * @param to <code>File</code> to copy to.
    *
-   * @exception IOException
-   *              If there is an error handling either the from file, or the to file.
+   * @exception IOException If there is an error handling either the from file, or the to file.
    */
   public static void copy(final File from, final File to) throws IOException {
     if (from.isFile()) {
@@ -205,10 +202,6 @@ public final class Files {
       final FileChannel destinationChannel = out.getChannel();
     ) {
       sourceChannel.transferTo(0, sourceChannel.size(), destinationChannel);
-      sourceChannel.close();
-      in.close();
-
-      destinationChannel.close();
     }
   }
 

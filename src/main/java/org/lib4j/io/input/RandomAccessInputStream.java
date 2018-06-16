@@ -22,7 +22,7 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.RandomAccessFile;
 
-public final class RandomAccessInputStream extends InputStream {
+public class RandomAccessInputStream extends InputStream {
   private final RandomAccessFile file;
   private long mark = 0;
 
