@@ -30,7 +30,7 @@ public final class FileMonitor {
 
   public FileMonitor(final File file, final int interval) {
     if (file == null)
-      throw new NullPointerException("file == null");
+      throw new IllegalArgumentException("file == null");
 
     this.file = file;
     this.interval = interval;
@@ -95,10 +95,10 @@ public final class FileMonitor {
 
     public FileMonitorKiller(final Thread criticalThread, final Thread dependentThread) {
       if (criticalThread == null)
-        throw new NullPointerException("criticalThread == null");
+        throw new IllegalArgumentException("criticalThread == null");
 
       if (dependentThread == null)
-        throw new NullPointerException("dependentThread == null");
+        throw new IllegalArgumentException("dependentThread == null");
 
       this.criticalThread = criticalThread;
       this.dependentThread = dependentThread;
