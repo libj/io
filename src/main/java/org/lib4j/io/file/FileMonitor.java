@@ -26,7 +26,7 @@ public final class FileMonitor {
   private volatile long lastModifiedTime = 0;
   private volatile boolean deleted = false;
   private volatile boolean kill = false;
-  private final Set<FileEventListener> listeners = new HashSet<FileEventListener>();
+  private final Set<FileEventListener> listeners = new HashSet<>();
 
   public FileMonitor(final File file, final int interval) {
     if (file == null)

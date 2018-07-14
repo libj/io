@@ -45,7 +45,7 @@ public final class Files {
     return TEMP_DIR == null ? TEMP_DIR = new File(System.getProperty("java.io.tmpdir")) : TEMP_DIR;
   }
 
-  private static final DirectoryStream.Filter<Path> anyFilter = new DirectoryStream.Filter<Path>() {
+  private static final DirectoryStream.Filter<Path> anyFilter = new DirectoryStream.Filter<>() {
     @Override
     public boolean accept(final Path entry) {
       return true;
@@ -118,10 +118,10 @@ public final class Files {
       return null;
 
     List<File> outer = Collections.asCollection(new ArrayList<File>(), directory.listFiles());
-    final List<File> files = new ArrayList<File>(outer);
+    final List<File> files = new ArrayList<>(outer);
     List<File> inner;
     while (outer.size() != 0) {
-      inner = new ArrayList<File>();
+      inner = new ArrayList<>();
       for (final File file : outer)
         if (file.isDirectory())
           inner.addAll(Arrays.asList(file.listFiles()));
@@ -139,10 +139,10 @@ public final class Files {
 
     final FileFilter directoryFilter = new DirectoryFileFilter(fileFilter);
     List<File> outer = Collections.asCollection(new ArrayList<File>(), directory.listFiles(directoryFilter));
-    final List<File> files = new ArrayList<File>(outer);
+    final List<File> files = new ArrayList<>(outer);
     List<File> inner;
     while (outer.size() != 0) {
-      inner = new ArrayList<File>();
+      inner = new ArrayList<>();
       for (final File file : outer)
         if (file.isDirectory())
           inner.addAll(Arrays.asList(file.listFiles(directoryFilter)));
@@ -151,7 +151,7 @@ public final class Files {
       outer = inner;
     }
 
-    final List<File> result = new ArrayList<File>();
+    final List<File> result = new ArrayList<>();
     for (final File file : files)
       if (fileFilter.accept(file))
         result.add(file);
