@@ -21,7 +21,6 @@ import java.io.FileFilter;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.IOException;
-import java.io.InputStream;
 import java.nio.channels.FileChannel;
 import java.nio.file.DirectoryStream;
 import java.nio.file.Path;
@@ -103,14 +102,6 @@ public final class Files {
   public static boolean deleteAll(final Path path) throws IOException {
     deleteAll(path, anyFilter, false);
     return !java.nio.file.Files.exists(path);
-  }
-
-  public static String getBasename(final File file) {
-    if (file == null)
-      throw new IllegalArgumentException("file == null");
-
-    final String filename = file.getName();
-    return filename.substring(0, filename.lastIndexOf("."));
   }
 
   public static List<File> listAll(final File directory) {
@@ -208,41 +199,6 @@ public final class Files {
   public static String relativePath(final File dir, final File file) {
     // FIXME: Should this be getAbsolutePath() instead?
     return dir != null && file != null ? Paths.relativePath(dir.getPath(), file.getPath()) : null;
-  }
-
-  public static byte[] getBytes(final File file) throws IOException {
-    try (final InputStream in = new FileInputStream(file)) {
-      // Get the size of the file
-      final long length = file.length();
-
-      // You cannot create an array using a long type.
-      // It needs to be an int type.
-      // Before converting to an int type, check
-      // to ensure that file is not larger than Integer.MAX_VALUE.
-      if (length > Integer.MAX_VALUE)
-        throw new IllegalArgumentException("File is too large to fit in a byte array");
-
-      // Create the byte array to hold the data
-      final byte[] bytes = new byte[(int)length];
-
-      // Read in the bytes
-      int offset = 0;
-      int numRead = 0;
-      while (offset < bytes.length && (numRead = in.read(bytes, offset, bytes.length - offset)) >= 0)
-        offset += numRead;
-
-      // Ensure all the bytes have been read in
-      if (offset < bytes.length)
-        throw new IOException("Could not completely read file " + file.getName());
-
-      return bytes;
-    }
-  }
-
-  public static void writeFile(final File file, final byte[] bytes) throws IOException {
-    try (final FileOutputStream out = new FileOutputStream(file)) {
-      out.write(bytes);
-    }
   }
 
   public static File commonality(final File[] files) throws IOException {
