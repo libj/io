@@ -14,7 +14,7 @@
  * program. If not, see <http://opensource.org/licenses/MIT/>.
  */
 
-package org.lib4j.io.file;
+package org.lib4j.io;
 
 import java.io.File;
 
@@ -23,7 +23,7 @@ import org.junit.Test;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-public final class FileMonitorTest implements FileEventListener {
+public class FileMonitorTest implements FileMonitor.FileEventListener {
   private static final Logger logger = LoggerFactory.getLogger(FileMonitorTest.class);
 
   @Override

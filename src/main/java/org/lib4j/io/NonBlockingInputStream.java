@@ -14,7 +14,7 @@
  * program. If not, see <http://opensource.org/licenses/MIT/>.
  */
 
-package org.lib4j.io.input;
+package org.lib4j.io;
 
 import java.io.IOException;
 import java.io.InputStream;

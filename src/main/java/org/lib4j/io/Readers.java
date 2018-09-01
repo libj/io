@@ -22,20 +22,14 @@ import java.io.Reader;
 public final class Readers {
   public static String readFully(final Reader reader) throws IOException {
     final StringBuilder builder = new StringBuilder();
-    int ch;
-    while ((ch = reader.read()) != -1)
-      builder.append((char)ch);
-
+    for (int ch; (ch = reader.read()) != -1; builder.append((char)ch));
     return builder.toString();
   }
 
   public static String readFully(final Reader reader, final int bufferSize) throws IOException {
     final StringBuilder builder = new StringBuilder();
     final char[] buffer = new char[bufferSize];
-    int size;
-    while ((size = reader.read(buffer)) != -1)
-      builder.append(buffer, 0, size);
-
+    for (int size; (size = reader.read(buffer)) != -1; builder.append(buffer, 0, size));
     return builder.toString();
   }
 

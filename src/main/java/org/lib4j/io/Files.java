@@ -110,8 +110,7 @@ public final class Files {
 
     List<File> outer = Collections.asCollection(new ArrayList<File>(), directory.listFiles());
     final List<File> files = new ArrayList<>(outer);
-    List<File> inner;
-    while (outer.size() != 0) {
+    for (List<File> inner; outer.size() != 0;) {
       inner = new ArrayList<>();
       for (final File file : outer)
         if (file.isDirectory())
@@ -131,8 +130,7 @@ public final class Files {
     final FileFilter directoryFilter = new DirectoryFileFilter(fileFilter);
     List<File> outer = Collections.asCollection(new ArrayList<File>(), directory.listFiles(directoryFilter));
     final List<File> files = new ArrayList<>(outer);
-    List<File> inner;
-    while (outer.size() != 0) {
+    for (List<File> inner; outer.size() != 0;) {
       inner = new ArrayList<>();
       for (final File file : outer)
         if (file.isDirectory())

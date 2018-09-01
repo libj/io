@@ -14,13 +14,19 @@
  * program. If not, see <http://opensource.org/licenses/MIT/>.
  */
 
-package org.lib4j.io.file;
+package org.lib4j.io;
 
 import java.io.File;
 import java.util.HashSet;
 import java.util.Set;
 
+// FIXME: Need to change to to use atomic API
 public final class FileMonitor {
+  public static interface FileEventListener {
+    public void onModify(final File file);
+    public void onDelete(final File file);
+  }
+
   private final File file;
   private final int interval;
   private volatile long lastModifiedTime = 0;

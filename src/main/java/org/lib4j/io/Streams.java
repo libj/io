@@ -23,8 +23,6 @@ import java.io.OutputStream;
 import java.io.PipedInputStream;
 import java.io.PipedOutputStream;
 
-import org.lib4j.io.output.TeeOutputStream;
-
 public final class Streams {
   private static final int DEFAULT_SOCKET_BUFFER_SIZE = 65536;
 
@@ -98,10 +96,7 @@ public final class Streams {
 
     final ByteArrayOutputStream buffer = new ByteArrayOutputStream(DEFAULT_SOCKET_BUFFER_SIZE);
     final byte[] data = new byte[DEFAULT_SOCKET_BUFFER_SIZE];
-    int length = -1;
-    while ((length = in.read(data)) != -1)
-      buffer.write(data, 0, length);
-
+    for (int length; (length = in.read(data)) != -1; buffer.write(data, 0, length));
     return buffer.toByteArray();
   }
 
