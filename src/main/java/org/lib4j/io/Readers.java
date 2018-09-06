@@ -27,9 +27,12 @@ public final class Readers {
   }
 
   public static String readFully(final Reader reader, final int bufferSize) throws IOException {
+    if (bufferSize <= 0)
+      throw new IllegalArgumentException("bufferSize <= 0: " + bufferSize);
+
     final StringBuilder builder = new StringBuilder();
-    final char[] buffer = new char[bufferSize];
-    for (int size; (size = reader.read(buffer)) != -1; builder.append(buffer, 0, size));
+    final char[] cbuf = new char[bufferSize];
+    for (int size; (size = reader.read(cbuf)) > 0; builder.append(cbuf, 0, size));
     return builder.toString();
   }
 

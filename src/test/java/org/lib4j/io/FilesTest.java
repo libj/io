@@ -16,20 +16,21 @@
 
 package org.lib4j.io;
 
+import static org.junit.Assert.*;
+
 import java.io.File;
 
-import org.junit.Assert;
 import org.junit.Test;
 
 public class FilesTest {
   @Test
   public void testGetShortName() {
-    Assert.assertEquals("", Files.getShortName(new File("")));
-    Assert.assertEquals("share", Files.getShortName(new File("file:///usr/share/../share.txt")));
-    Assert.assertEquals("lib", Files.getShortName(new File("file:///usr/share/../share/../lib")));
-    Assert.assertEquals("var", Files.getShortName(new File("/usr/share/../share/../lib/../../var.old")));
-    Assert.assertEquals("var", Files.getShortName(new File("/usr/share/../share/../lib/../../var/")));
-    Assert.assertEquals("resolv", Files.getShortName(new File("/etc/resolv.conf")));
-    Assert.assertEquals("name", Files.getShortName(new File("name")));
+    assertEquals("", Files.getShortName(new File("")));
+    assertEquals("share", Files.getShortName(new File("file:///usr/share/../share.txt")));
+    assertEquals("lib", Files.getShortName(new File("file:///usr/share/../share/../lib")));
+    assertEquals("var", Files.getShortName(new File("/usr/share/../share/../lib/../../var.old")));
+    assertEquals("var", Files.getShortName(new File("/usr/share/../share/../lib/../../var/")));
+    assertEquals("resolv", Files.getShortName(new File("/etc/resolv.conf")));
+    assertEquals("name", Files.getShortName(new File("name")));
   }
 }

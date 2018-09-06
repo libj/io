@@ -78,17 +78,17 @@ public final class Streams {
    * Reads all bytes from the input stream and returns the resulting buffer
    * array. This method blocks until all contents have been read, end of
    * file is detected, or an exception is thrown.
-   *
-   * <p> If the InputStream <code>in</code> is <code>null</code>, then null
+   * <p>
+   * If the InputStream <code>in</code> is <code>null</code>, then null
    * is returned; otherwise, a byte[] of at least size 0 will be returned.
    *
-   * @param      in   the input stream to read from.
-   * @return     the byte[] containing all bytes that were read from the
-   *             InputStream <code>in</code> until an end of file is detected.
-   * @exception  IOException  If the first byte cannot be read for any reason
-   * other than the end of the file, if the input stream has been closed, or
-   * if some other I/O error occurs.
-   * @see        java.io.InputStream#read(byte[])
+   * @param in The input stream to read from.
+   * @return The byte[] containing all bytes that were read from the
+   *         InputStream <code>in</code> until an end of file is detected.
+   * @throws IOException If the first byte cannot be read for any reason
+   *           other than the end of the file, if the input stream has been closed, or
+   *           if some other I/O error occurs.
+   * @see java.io.InputStream#read(byte[])
    */
   public static byte[] readBytes(final InputStream in) throws IOException {
     if (in == null)

@@ -38,8 +38,8 @@ public class ReplayReader extends FilterReader {
     /**
      * Creates a new ReadbackCharArrayWriter with the specified initial size.
      *
-     * @param initialSize an int specifying the initial buffer size.
-     * @exception IllegalArgumentException if initialSize is negative
+     * @param initialSize An int specifying the initial buffer size.
+     * @throws IllegalArgumentException If initialSize is negative.
      */
     public ReadbackCharArrayWriter(final int initialSize) {
       super(initialSize);
@@ -124,7 +124,7 @@ public class ReplayReader extends FilterReader {
     /**
      * Reads characters into an array.
      *
-     * @param cbuf destination buffer
+     * @param cbuf Destination buffer.
      * @return The number of characters read, or -1 if the end of the
      *         stream has been reached.
      */
@@ -135,14 +135,14 @@ public class ReplayReader extends FilterReader {
     /**
      * Reads characters into a portion of an array.
      *
-     * @param cbuf destination buffer
-     * @param off offset at which to start storing characters
-     * @param len maximum number of characters to read
+     * @param cbuf Destination buffer.
+     * @param off Offset at which to start storing characters.
+     * @param len Maximum number of characters to read.
      * @return The number of characters read, or -1 if the end of the
      *         stream has been reached.
-     * @exception IndexOutOfBoundsException
-     *              If {@code off} is negative, or {@code len} is negative,
-     *              or {@code len} is greater than {@code cbuf.length - off}.
+     * @throws IndexOutOfBoundsException If {@code off} is negative, or
+     *           {@code len} is negative, or {@code len} is greater than
+     *           {@code cbuf.length - off}.
      */
     public int read(final char[] cbuf, final int off, final int len) {
       if (count >= total)
@@ -160,7 +160,7 @@ public class ReplayReader extends FilterReader {
      *
      * @param n The number of characters to skip
      * @return The number of characters actually skipped.
-     * @exception IllegalArgumentException If <code>n</code> is negative.
+     * @throws IllegalArgumentException If {@code n} is negative.
      */
     public long skip(final long n) {
       if (n < 0)
@@ -198,10 +198,9 @@ public class ReplayReader extends FilterReader {
     /**
      * Resets the buffer to the position value of the argument.
      *
-     * @param p the position to reset to
-     * @exception IllegalArgumentException
-     *              If <code>p</code> is negative,
-     *              or if <code>p</code> exceeds the buffer length.
+     * @param p The position to reset to.
+     * @throws IllegalArgumentException If {@code p} is negative, or if
+     *           {@code p} exceeds the buffer length.
      */
     public void reset(final int p) {
       if (p < 0)
@@ -240,10 +239,10 @@ public class ReplayReader extends FilterReader {
   /**
    * Creates a new ReplayReader.
    *
-   * @param in a Reader object providing the underlying stream.
+   * @param in A Reader object providing the underlying stream.
    * @param initialSize an int specifying the initial buffer size of the
    *          re-readable buffer.
-   * @throws NullPointerException if {@code in} is {@code null}
+   * @throws NullPointerException If {@code in} is {@code null}.
    */
   public ReplayReader(final Reader in, final int initialSize) {
     super(in);
@@ -253,8 +252,8 @@ public class ReplayReader extends FilterReader {
   /**
    * Creates a new ReplayReader.
    *
-   * @param in a Reader object providing the underlying stream.
-   * @throws NullPointerException if {@code in} is {@code null}
+   * @param in A Reader object providing the underlying stream.
+   * @throws NullPointerException If {@code in} is {@code null}.
    */
   public ReplayReader(final Reader in) {
     super(in);
@@ -270,7 +269,7 @@ public class ReplayReader extends FilterReader {
    * @return {@code true} if the reader's position was previously reset such
    *         that the buffer has a character available to be re-read.
    *         Otherwise, this method is delegated to the underlying reader.
-   * @exception IOException If an I/O error occurs
+   * @throws IOException If an I/O error occurs.
    */
   @Override
   public boolean ready() throws IOException {
@@ -285,7 +284,7 @@ public class ReplayReader extends FilterReader {
    * until a character is available, an I/O error occurs, or the end of the
    * stream is reached.
    *
-   * @exception IOException If an I/O error occurs
+   * @throws IOException If an I/O error occurs.
    * @return The character read, as an integer in the range 0 to 65535
    *         ({@code 0x00-0xffff}), or -1 if the end of the stream has
    *         been reached.
@@ -313,10 +312,10 @@ public class ReplayReader extends FilterReader {
    * case this method will block characters are available, an I/O error occurs,
    * or the end of the stream is reached.
    *
-   * @param cbuf Destination buffer
+   * @param cbuf Destination buffer.
    * @return The number of characters read, or -1 if the end of the stream has
    *         been reached.
-   * @exception IOException If an I/O error occurs
+   * @throws IOException If an I/O error occurs.
    */
   @Override
   public int read(final char[] cbuf) throws IOException {
@@ -331,15 +330,15 @@ public class ReplayReader extends FilterReader {
    * in which case this method will block characters are available, an I/O
    * error occurs, or the end of the stream is reached.
    *
-   * @param cbuf Destination buffer
-   * @param off Offset at which to start storing characters
-   * @param len Maximum number of characters to read
+   * @param cbuf Destination buffer.
+   * @param off Offset at which to start storing characters.
+   * @param len Maximum number of characters to read.
    * @return The number of characters read, or -1 if the end of the stream has
    *         been reached.
-   * @exception IOException If an I/O error occurs
-   * @exception IndexOutOfBoundsException
-   *              If {@code off} is negative, or {@code len} is negative,
-   *              or {@code len} is greater than {@code cbuf.length - off}.
+   * @throws IOException If an I/O error occurs.
+   * @throws IndexOutOfBoundsException If {@code off} is negative, or
+   *           {@code len} is negative, or {@code len} is greater than
+   *           {@code cbuf.length - off}.
    */
   @Override
   public int read(final char[] cbuf, final int off, final int len) throws IOException {
@@ -370,8 +369,8 @@ public class ReplayReader extends FilterReader {
    *
    * @param n The number of characters to skip
    * @return The number of characters actually skipped.
-   * @exception IllegalArgumentException If <code>n</code> is negative.
-   * @exception IOException If an I/O error occurs
+   * @throws IllegalArgumentException If {@code n} is negative.
+   * @throws IOException If an I/O error occurs.
    */
   @Override
   public long skip(final long n) throws IOException {
@@ -407,7 +406,7 @@ public class ReplayReader extends FilterReader {
    * Tells whether this stream supports the {@link #mark()} operation, which is
    * always {@code true}.
    *
-   * @return {@code true}
+   * @return {@code true}.
    */
   @Override
   public boolean markSupported() {
@@ -431,7 +430,7 @@ public class ReplayReader extends FilterReader {
    * release the underlying stream once its content has been satisfactorily
    * read.
    *
-   * @exception IOException If an I/O error occurs
+   * @throws IOException If an I/O error occurs.
    */
   @Override
   public void close() throws IOException {

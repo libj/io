@@ -38,8 +38,8 @@ public class ReplayInputStream extends FilterInputStream {
     /**
      * Creates a new ReadbackByteArrayOutputStream with the specified initial size.
      *
-     * @param initialSize an int specifying the initial buffer size.
-     * @exception IllegalArgumentException if initialSize is negative
+     * @param initialSize An int specifying the initial buffer size.
+     * @throws IllegalArgumentException If initialSize is negative.
      */
     public ReadbackByteArrayOutputStream(final int initialSize) {
       super(initialSize);
@@ -84,7 +84,7 @@ public class ReplayInputStream extends FilterInputStream {
     /**
      * Reads bytes into an array.
      *
-     * @param b destination buffer
+     * @param b Destination buffer.
      * @return The number of bytes read, or -1 if the end of the
      *         stream has been reached.
      */
@@ -95,14 +95,14 @@ public class ReplayInputStream extends FilterInputStream {
     /**
      * Reads bytes into a portion of an array.
      *
-     * @param b destination buffer
-     * @param off offset at which to start storing bytes
-     * @param len maximum number of bytes to read
+     * @param b Destination buffer.
+     * @param off Offset at which to start storing bytes.
+     * @param len Maximum number of bytes to read.
      * @return The number of bytes read, or -1 if the end of the
      *         stream has been reached.
-     * @exception IndexOutOfBoundsException
-     *              If {@code off} is negative, or {@code len} is negative,
-     *              or {@code len} is greater than {@code b.length - off}.
+     * @throws IndexOutOfBoundsException If {@code off} is negative, or
+     *           {@code len} is negative, or {@code len} is greater than
+     *           {@code b.length - off}.
      */
     public int read(final byte[] b, final int off, final int len) {
       if (count >= total)
@@ -118,9 +118,9 @@ public class ReplayInputStream extends FilterInputStream {
     /**
      * Skips bytes.
      *
-     * @param n The number of bytes to skip
+     * @param n The number of bytes to skip.
      * @return The number of bytes actually skipped.
-     * @exception IllegalArgumentException If <code>n</code> is negative.
+     * @throws IllegalArgumentException If {@code n} is negative.
      */
     public long skip(final long n) {
       if (n < 0)
@@ -158,10 +158,9 @@ public class ReplayInputStream extends FilterInputStream {
     /**
      * Resets the buffer to the position value of the argument.
      *
-     * @param p the position to reset to
-     * @exception IllegalArgumentException
-     *              If <code>p</code> is negative,
-     *              or if <code>p</code> exceeds the buffer length.
+     * @param p The position to reset to.
+     * @throws IllegalArgumentException If {@code p} is negative, or if
+     *           {@code p} exceeds the buffer length.
      */
     public void reset(final int p) {
       if (p < 0)
@@ -200,10 +199,10 @@ public class ReplayInputStream extends FilterInputStream {
   /**
    * Creates a new ReplayInputStream.
    *
-   * @param in an InputStream object providing the underlying stream.
-   * @param initialSize an int specifying the initial buffer size of the
+   * @param in An InputStream object providing the underlying stream.
+   * @param initialSize An int specifying the initial buffer size of the
    *          re-readable buffer.
-   * @throws NullPointerException if {@code in} is {@code null}
+   * @throws NullPointerException If {@code in} is {@code null}.
    */
   public ReplayInputStream(final InputStream in, final int initialSize) {
     super(in);
@@ -213,8 +212,8 @@ public class ReplayInputStream extends FilterInputStream {
   /**
    * Creates a new ReplayInputStream.
    *
-   * @param in an InputStream object providing the underlying stream.
-   * @throws NullPointerException if {@code in} is {@code null}
+   * @param in An InputStream object providing the underlying stream.
+   * @throws NullPointerException If {@code in} is {@code null}.
    */
   public ReplayInputStream(final InputStream in) {
     super(in);
@@ -229,9 +228,9 @@ public class ReplayInputStream extends FilterInputStream {
    * until a byte is available, an I/O error occurs, or the end of the
    * stream is reached.
    *
-   * @exception IOException If an I/O error occurs
+   * @throws IOException If an I/O error occurs.
    * @return The byte read, as an integer in the range 0 to 255, or -1 if
-   * the end of the stream has been reached.
+   *         the end of the stream has been reached.
    */
   @Override
   public int read() throws IOException {
@@ -256,10 +255,10 @@ public class ReplayInputStream extends FilterInputStream {
    * case this method will block bytes are available, an I/O error occurs,
    * or the end of the stream is reached.
    *
-   * @param cbuf Destination buffer
+   * @param cbuf Destination buffer.
    * @return The number of bytes read, or -1 if the end of the stream has
    *         been reached.
-   * @exception IOException If an I/O error occurs
+   * @throws IOException If an I/O error occurs.
    */
   @Override
   public int read(final byte[] b) throws IOException {
@@ -279,10 +278,10 @@ public class ReplayInputStream extends FilterInputStream {
    * @param len Maximum number of bytes to read
    * @return The number of bytes read, or -1 if the end of the stream has
    *         been reached.
-   * @exception IOException If an I/O error occurs
-   * @exception IndexOutOfBoundsException
-   *              If {@code off} is negative, or {@code len} is negative,
-   *              or {@code len} is greater than {@code cbuf.length - off}.
+   * @throws IOException If an I/O error occurs.
+   * @throws IndexOutOfBoundsException If {@code off} is negative, or
+   *           {@code len} is negative, or {@code len} is greater than
+   *           {@code cbuf.length - off}.
    */
   @Override
   public int read(final byte[] b, final int off, final int len) throws IOException {
@@ -313,8 +312,8 @@ public class ReplayInputStream extends FilterInputStream {
    *
    * @param n The number of bytes to skip
    * @return The number of bytes actually skipped.
-   * @exception IllegalArgumentException If <code>n</code> is negative.
-   * @exception IOException If an I/O error occurs
+   * @throws IllegalArgumentException If {@code n} is negative.
+   * @throws IOException If an I/O error occurs.
    */
   @Override
   public long skip(final long n) throws IOException {
@@ -344,9 +343,9 @@ public class ReplayInputStream extends FilterInputStream {
    * by this method. The remaining estimate is delegated to the available()
    * method of the underlying stream.
    *
-   * @return an estimate of the number of bytes that can be read (or skipped
+   * @return An estimate of the number of bytes that can be read (or skipped
    *         over) from this input stream without blocking.
-   * @exception IOException if an I/O error occurs.
+   * @throws IOException if an I/O error occurs.
    */
   @Override
   public int available() throws IOException {
@@ -369,7 +368,7 @@ public class ReplayInputStream extends FilterInputStream {
    * Tells whether this stream supports the {@link #mark()} operation, which is
    * always {@code true}.
    *
-   * @return {@code true}
+   * @return {@code true}.
    */
   @Override
   public boolean markSupported() {
@@ -393,7 +392,7 @@ public class ReplayInputStream extends FilterInputStream {
    * release the underlying stream once its content has been satisfactorily
    * read.
    *
-   * @exception IOException If an I/O error occurs
+   * @throws IOException If an I/O error occurs.
    */
   @Override
   public void close() throws IOException {
