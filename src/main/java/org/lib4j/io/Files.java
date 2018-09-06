@@ -29,8 +29,8 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
-import org.lib4j.lang.Paths;
 import org.lib4j.util.Collections;
+import org.lib4j.util.Paths;
 
 public final class Files {
   private static File CWD;
