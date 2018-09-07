@@ -114,8 +114,8 @@ public class ReplayReader extends FilterReader {
      * Reads a single character from the buffer.
      *
      * @return The character read, as an integer in the range 0 to 65535
-     *         ({@code 0x00-0xffff}), or -1 if the end of the buffer has
-     *         been reached.
+     *         ({@code 0x00-0xffff}), or -1 if the end of the buffer has been
+     *         reached.
      */
     public int read() {
       return count >= total ? -1 : buf[count++];
@@ -125,8 +125,8 @@ public class ReplayReader extends FilterReader {
      * Reads characters into an array.
      *
      * @param cbuf Destination buffer.
-     * @return The number of characters read, or -1 if the end of the
-     *         stream has been reached.
+     * @return The number of characters read, or -1 if the end of the stream has
+     *         been reached.
      */
     public int read(final char[] cbuf) {
       return read(cbuf, 0, cbuf.length);
@@ -138,8 +138,8 @@ public class ReplayReader extends FilterReader {
      * @param cbuf Destination buffer.
      * @param off Offset at which to start storing characters.
      * @param len Maximum number of characters to read.
-     * @return The number of characters read, or -1 if the end of the
-     *         stream has been reached.
+     * @return The number of characters read, or -1 if the end of the stream has
+     *         been reached.
      * @throws IndexOutOfBoundsException If {@code off} is negative, or
      *           {@code len} is negative, or {@code len} is greater than
      *           {@code cbuf.length - off}.
@@ -166,6 +166,16 @@ public class ReplayReader extends FilterReader {
       if (n < 0)
         throw new IllegalArgumentException("Skip value is negative: " + n);
 
+      return skip0(n);
+    }
+
+    /**
+     * Skips characters.
+     *
+     * @param n The number of characters to skip
+     * @return The number of characters actually skipped.
+     */
+    private long skip0(final long n) {
       if (count >= total)
         return 0;
 
@@ -188,11 +198,23 @@ public class ReplayReader extends FilterReader {
     }
 
     /**
-     * Marks the present position in the reader. Subsequent calls to {@link #reset()}
-     * will attempt to reposition the stream to this point.
+     * Marks the present position in the reader. Subsequent calls to
+     * {@link #reset()} will attempt to reposition the stream to this point.
      */
     public void mark() {
       mark = count;
+    }
+
+    /**
+     * Resets the buffer to the position value of the argument.
+     *
+     * @param p The position to reset to.
+     */
+    private void reset0(final int p) {
+      if (p > count)
+        skip0(p - count);
+
+      count = p;
     }
 
     /**
@@ -209,18 +231,15 @@ public class ReplayReader extends FilterReader {
       if (total < p)
         throw new IllegalArgumentException("Position (" + p + ") must not exceed buffer length (" + total + ")");
 
-      if (p > count)
-        skip(p - count);
-
-      count = p;
+      reset0(p);
     }
 
     /**
-     * Resets the buffer to the position previously marcked by {@link #mark()}.
+     * Resets the buffer to the position previously marked by {@link #mark()}.
      */
     @Override
     public void reset() {
-      reset(mark);
+      reset0(mark);
     }
 
     /**
@@ -261,14 +280,14 @@ public class ReplayReader extends FilterReader {
   }
 
   /**
-   * Tells whether this stream is ready to be read. If the reader's position
-   * was previously reset such that the buffer has a character available to be
-   * re-read, this method returns {@code true}. Otherwise, this method
-   * is delegated to the underlying reader.
+   * Tells whether this stream is ready to be read. If the reader's position was
+   * previously reset such that the buffer has a character available to be
+   * re-read, this method returns {@code true}. Otherwise, this method is
+   * delegated to the underlying reader.
    *
    * @return {@code true} if the reader's position was previously reset such
-   *         that the buffer has a character available to be re-read.
-   *         Otherwise, this method is delegated to the underlying reader.
+   *         that the buffer has a character available to be re-read. Otherwise,
+   *         this method is delegated to the underlying reader.
    * @throws IOException If an I/O error occurs.
    */
   @Override
@@ -280,14 +299,14 @@ public class ReplayReader extends FilterReader {
    * Reads a single character. If the reader's position was previously reset
    * such that the buffer has a character available to be re-read, the character
    * will be re-read from the underlying buffer. Otherwise, a character will be
-   * read from the underlying stream, in which case this method will block
-   * until a character is available, an I/O error occurs, or the end of the
-   * stream is reached.
+   * read from the underlying stream, in which case this method will block until
+   * a character is available, an I/O error occurs, or the end of the stream is
+   * reached.
    *
    * @throws IOException If an I/O error occurs.
    * @return The character read, as an integer in the range 0 to 65535
-   *         ({@code 0x00-0xffff}), or -1 if the end of the stream has
-   *         been reached.
+   *         ({@code 0x00-0xffff}), or -1 if the end of the stream has been
+   *         reached.
    */
   @Override
   public int read() throws IOException {
@@ -308,9 +327,9 @@ public class ReplayReader extends FilterReader {
    * Reads characters into an array. If the reader's position was previously
    * reset such that the buffer has characters available to be re-read, the
    * available characters will be re-read from the underlying buffer. The
-   * remaining characters will be read from the underlying stream, in which
-   * case this method will block characters are available, an I/O error occurs,
-   * or the end of the stream is reached.
+   * remaining characters will be read from the underlying stream, in which case
+   * this method will block characters are available, an I/O error occurs, or
+   * the end of the stream is reached.
    *
    * @param cbuf Destination buffer.
    * @return The number of characters read, or -1 if the end of the stream has
@@ -327,8 +346,8 @@ public class ReplayReader extends FilterReader {
    * previously reset such that the buffer has characters available to be
    * re-read, the available characters will be re-read from the underlying
    * buffer. The remaining characters will be read from the underlying stream,
-   * in which case this method will block characters are available, an I/O
-   * error occurs, or the end of the stream is reached.
+   * in which case this method will block characters are available, an I/O error
+   * occurs, or the end of the stream is reached.
    *
    * @param cbuf Destination buffer.
    * @param off Offset at which to start storing characters.
@@ -348,7 +367,8 @@ public class ReplayReader extends FilterReader {
 
     if (avail > 0) {
       buffer.read(cbuf, off, avail);
-      for (int ch; avail < cbuf.length - off && (ch = read()) != -1; cbuf[avail++] = (char)ch);
+      for (int ch; avail < cbuf.length - off && (ch = read()) != -1; cbuf[avail++] = (char)ch)
+        ;
       return avail;
     }
 
@@ -361,11 +381,11 @@ public class ReplayReader extends FilterReader {
 
   /**
    * Skips characters. If the reader's position was previously reset such that
-   * the buffer has characters available to be re-read, the available
-   * characters will first be skipped in the underlying buffer. The remaining
-   * characters will be read from the underlying stream, written to the
-   * buffer, and skipped, in which case this method will block characters are
-   * available, an I/O error occurs, or the end of the stream is reached.
+   * the buffer has characters available to be re-read, the available characters
+   * will first be skipped in the underlying buffer. The remaining characters
+   * will be read from the underlying stream, written to the buffer, and
+   * skipped, in which case this method will block characters are available, an
+   * I/O error occurs, or the end of the stream is reached.
    *
    * @param n The number of characters to skip
    * @return The number of characters actually skipped.
@@ -392,8 +412,8 @@ public class ReplayReader extends FilterReader {
   }
 
   /**
-   * Marks the present position in the stream. Subsequent calls to {@link #reset()}
-   * will attempt to reposition the stream to this point.
+   * Marks the present position in the stream. Subsequent calls to
+   * {@link #reset()} will attempt to reposition the stream to this point.
    *
    * @param readAheadLimit This argument is ignored.
    */
@@ -423,12 +443,11 @@ public class ReplayReader extends FilterReader {
   }
 
   /**
-   * Closes the underlying underlying reader resource, and resets the
-   * underlying buffer position to 0. Subsequent calls to {@code read()},
-   * {@code mark()} and {@code reset()} continue to function as before the
-   * underlying stream was closed. The purpose of this method is solely to
-   * release the underlying stream once its content has been satisfactorily
-   * read.
+   * Closes the underlying underlying reader resource, and resets the underlying
+   * buffer position to 0. Subsequent calls to {@code read()}, {@code mark()}
+   * and {@code reset()} continue to function as before the underlying stream
+   * was closed. The purpose of this method is solely to release the underlying
+   * stream once its content has been satisfactorily read.
    *
    * @throws IOException If an I/O error occurs.
    */
