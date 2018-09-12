@@ -22,7 +22,7 @@ import java.io.IOException;
 import java.io.StringReader;
 
 import org.junit.Test;
-import org.lib4j.util.Strings;
+import org.fastjax.util.Strings;
 
 public class ReadersTest {
   @Test

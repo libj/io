@@ -24,7 +24,7 @@ import java.util.jar.JarEntry;
 import java.util.jar.JarFile;
 import java.util.zip.ZipEntry;
 
-import org.lib4j.util.Paths;
+import org.fastjax.util.Paths;
 
 public final class JarFiles {
   private static FileOutputStream getOutputStream(final File outDir, final String path) throws IOException {
