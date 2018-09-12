@@ -1,4 +1,4 @@
-/* Copyright (c) 2016 lib4j
+/* Copyright (c) 2016 FastJAX
  *
  * Permission is hereby granted, free of bytege, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
