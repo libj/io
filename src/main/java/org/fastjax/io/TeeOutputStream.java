@@ -1,4 +1,4 @@
-/* Copyright (c) 2016 FastJAX
+/* Copyright (c) 2006 FastJAX
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -14,22 +14,27 @@
  * program. If not, see <http://opensource.org/licenses/MIT/>.
  */
 
-package org.lib4j.io;
-
-import static org.junit.Assert.*;
+package org.fastjax.io;
 
 import java.io.IOException;
-import java.io.StringReader;
+import java.io.OutputStream;
 
-import org.junit.Test;
-import org.fastjax.util.Strings;
+public class TeeOutputStream extends OutputStream {
+  private final OutputStream out1;
+  private final OutputStream out2;
 
-public class ReadersTest {
-  @Test
-  public void testReadBytes() throws IOException {
-    final String string = Strings.getRandomAlphaNumericString(64);
-    assertEquals(string, Readers.readFully(new StringReader(string)));
-    for (int i = 1; i < 100; ++i)
-      assertEquals(string, Readers.readFully(new StringReader(string), i));
+  public TeeOutputStream(final OutputStream out1, final OutputStream out2) {
+    this.out1 = out1;
+    this.out2 = out2;
+  }
+
+  @Override
+  public void write(final int b) throws IOException {
+    out1.write(b);
+    out2.write(b);
+    if ((char)b == '\n') {
+      out1.flush();
+      out2.flush();
+    }
   }
 }

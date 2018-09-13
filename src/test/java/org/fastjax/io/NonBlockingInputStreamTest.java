@@ -14,14 +14,14 @@
  * program. If not, see <http://opensource.org/licenses/MIT/>.
  */
 
-package org.lib4j.io;
+package org.fastjax.io;
 
 import java.io.PipedInputStream;
 import java.io.PipedOutputStream;
 
+import org.fastjax.io.NonBlockingInputStream;
 import org.junit.Assert;
 import org.junit.Test;
-import org.lib4j.io.NonBlockingInputStream;
 
 public class NonBlockingInputStreamTest {
   @Test

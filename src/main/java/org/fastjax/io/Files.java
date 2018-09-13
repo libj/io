@@ -14,7 +14,7 @@
  * program. If not, see <http://opensource.org/licenses/MIT/>.
  */
 
-package org.lib4j.io;
+package org.fastjax.io;
 
 import java.io.File;
 import java.io.FileFilter;

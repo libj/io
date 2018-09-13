@@ -14,7 +14,7 @@
  * program. If not, see <http://opensource.org/licenses/MIT/>.
  */
 
-package org.lib4j.io;
+package org.fastjax.io;
 
 import static org.junit.Assert.*;
 
@@ -22,6 +22,8 @@ import java.io.ByteArrayInputStream;
 import java.io.IOException;
 import java.io.Reader;
 
+import org.fastjax.io.Readers;
+import org.fastjax.io.UnicodeReader;
 import org.junit.Ignore;
 import org.junit.Test;
 

@@ -1,4 +1,4 @@
-package org.lib4j.io;
+package org.fastjax.io;
 
 import static org.junit.Assert.*;
 
@@ -6,6 +6,7 @@ import java.io.ByteArrayInputStream;
 import java.io.IOException;
 import java.io.InputStream;
 
+import org.fastjax.io.Streams;
 import org.junit.Test;
 
 public class StreamsTest {

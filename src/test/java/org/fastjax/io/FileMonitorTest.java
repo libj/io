@@ -14,10 +14,11 @@
  * program. If not, see <http://opensource.org/licenses/MIT/>.
  */
 
-package org.lib4j.io;
+package org.fastjax.io;
 
 import java.io.File;
 
+import org.fastjax.io.FileMonitor;
 import org.junit.Ignore;
 import org.junit.Test;
 import org.slf4j.Logger;
