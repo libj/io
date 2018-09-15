@@ -26,23 +26,21 @@
   </parent>
   <groupId>org.fastjax</groupId>
   <artifactId>fastjax-io</artifactId>
-  <version>1.3.5-SNAPSHOT</version>
+  <version>0.7.5-SNAPSHOT</version>
   <name>${project.groupId}:${project.artifactId}</name>
   <properties>
-    <maven.compiler.source>9</maven.compiler.source>
-    <maven.compiler.target>9</maven.compiler.target>
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
   </properties>
   <dependencies>
     <dependency>
       <groupId>org.fastjax</groupId>
       <artifactId>fastjax-util</artifactId>
-      <version>1.5.9-SNAPSHOT</version>
+      <version>0.7.9-SNAPSHOT</version>
     </dependency>
     <dependency>
       <groupId>org.fastjax</groupId>
       <artifactId>fastjax-test</artifactId>
-      <version>1.1.7-SNAPSHOT</version>
+      <version>0.6.9-SNAPSHOT</version>
     </dependency>
   </dependencies>
 </project>

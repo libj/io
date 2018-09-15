@@ -44,7 +44,7 @@ public final class Files {
     return TEMP_DIR == null ? TEMP_DIR = new File(System.getProperty("java.io.tmpdir")) : TEMP_DIR;
   }
 
-  private static final DirectoryStream.Filter<Path> anyFilter = new DirectoryStream.Filter<>() {
+  private static final DirectoryStream.Filter<Path> anyFilter = new DirectoryStream.Filter<Path>() {
     @Override
     public boolean accept(final Path entry) {
       return true;
