@@ -21,7 +21,6 @@ import static org.junit.Assert.*;
 import java.io.ByteArrayInputStream;
 import java.io.IOException;
 
-import org.fastjax.io.ReplayInputStream;
 import org.junit.Test;
 
 public class ReplayInputStreamTest {

@@ -19,22 +19,125 @@ package org.fastjax.io;
 import java.io.IOException;
 import java.io.OutputStream;
 
+/**
+ * {@link OutputStream} that propagates its method calls to an array of output
+ * streams.
+ */
 public class TeeOutputStream extends OutputStream {
-  private final OutputStream out1;
-  private final OutputStream out2;
+  private final OutputStream[] streams;
 
-  public TeeOutputStream(final OutputStream out1, final OutputStream out2) {
-    this.out1 = out1;
-    this.out2 = out2;
+  /**
+   * Construct a new {@code TeeOutputStream}.
+   *
+   * @param streams The streams to which this stream's method calls will be
+   *          propagated.
+   * @throws IllegalArgumentException If {@code streams.length == 0} or if any
+   *           of the output streams in the {@code streams} array are
+   *           {@code null}.
+   */
+  public TeeOutputStream(final OutputStream ... streams) {
+    if (streams.length == 0)
+      throw new IllegalArgumentException("streams.length == 0");
+
+    for (int i = 0; i < streams.length; ++i)
+      if (streams[i] == null)
+        throw new IllegalArgumentException("member at index " + i + " is null");
+
+    this.streams = streams;
   }
 
   @Override
   public void write(final int b) throws IOException {
-    out1.write(b);
-    out2.write(b);
-    if ((char)b == '\n') {
-      out1.flush();
-      out2.flush();
+    IOException exception = null;
+    for (int i = 0; i < streams.length; ++i) {
+      try {
+        streams[i].write(b);
+      }
+      catch (final IOException e) {
+        if (exception == null)
+          exception = e;
+        else
+          exception.addSuppressed(e);
+      }
     }
+
+    if (exception != null)
+      throw exception;
+  }
+
+  @Override
+  public void write(final byte[] b) throws IOException {
+    IOException exception = null;
+    for (int i = 0; i < streams.length; ++i) {
+      try {
+        streams[i].write(b);
+      }
+      catch (final IOException e) {
+        if (exception == null)
+          exception = e;
+        else
+          exception.addSuppressed(e);
+      }
+    }
+
+    if (exception != null)
+      throw exception;
+  }
+
+  @Override
+  public void write(final byte[] b, final int off, final int len) throws IOException {
+    IOException exception = null;
+    for (int i = 0; i < streams.length; ++i) {
+      try {
+        streams[i].write(b, off, len);
+      }
+      catch (final IOException e) {
+        if (exception == null)
+          exception = e;
+        else
+          exception.addSuppressed(e);
+      }
+    }
+
+    if (exception != null)
+      throw exception;
+  }
+
+  @Override
+  public void flush() throws IOException {
+    IOException exception = null;
+    for (int i = 0; i < streams.length; ++i) {
+      try {
+        streams[i].flush();
+      }
+      catch (final IOException e) {
+        if (exception == null)
+          exception = e;
+        else
+          exception.addSuppressed(e);
+      }
+    }
+
+    if (exception != null)
+      throw exception;
+  }
+
+  @Override
+  public void close() throws IOException {
+    IOException exception = null;
+    for (int i = 0; i < streams.length; ++i) {
+      try {
+        streams[i].close();
+      }
+      catch (final IOException e) {
+        if (exception == null)
+          exception = e;
+        else
+          exception.addSuppressed(e);
+      }
+    }
+
+    if (exception != null)
+      throw exception;
   }
 }

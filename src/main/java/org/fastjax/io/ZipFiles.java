@@ -19,64 +19,63 @@ package org.fastjax.io;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
-import java.util.function.Consumer;
-import java.util.jar.JarEntry;
-import java.util.jar.JarFile;
+import java.io.InputStream;
+import java.util.Enumeration;
+import java.util.function.Predicate;
 import java.util.zip.ZipEntry;
+import java.util.zip.ZipFile;
 
-import org.fastjax.util.Paths;
-
-public final class JarFiles {
-  private static FileOutputStream getOutputStream(final File outDir, final String path) throws IOException {
-    final String parent = Paths.getCanonicalParent(path);
-    final File destDir = parent == null || parent.length() == 0 ? outDir : new File(outDir, parent);
-    if (!destDir.exists() && !destDir.mkdirs())
-      throw new IOException("Unable to create destination directory: " + destDir.getAbsolutePath());
-
-    return new FileOutputStream(new File(destDir, Paths.getName(path)));
+/**
+ * Utility functions pertaining to {@link ZipFile}.
+ */
+public final class ZipFiles {
+  /**
+   * Extract a {@code zipFile} to {@code destDir}.
+   *
+   * @param zipFile The {@link ZipFile}.
+   * @param destDir The destination directory.
+   * @throws IOException If an I/O error has occurred.
+   * @throws NullPointerException If {@code zipFile} or {@code destDir} are
+   *           {@code null}.
+   */
+  public static void extract(final ZipFile zipFile, final File destDir) throws IOException {
+    extract(zipFile, destDir, null);
   }
 
-  public static void extract(final JarFile jarFile, final String path, final File outDir) throws IOException {
-    final boolean isDirectory;
-    final ZipEntry entry;
-    if (path.endsWith("/")) {
-      isDirectory = true;
-      entry = null;
-    }
-    else {
-      final ZipEntry dirEntry = jarFile.getEntry(path + "/");
-      entry = dirEntry != null ? dirEntry : jarFile.getEntry(path);
-      isDirectory = entry != null && entry.isDirectory();
-    }
+  /**
+   * Extract a {@code zipFile} to {@code destDir}. Only entries that pass the
+   * {@code predicate} test will be extracted.
+   *
+   * @param zipFile The {@link ZipFile}.
+   * @param destDir The destination directory.
+   * @param predicate The {@link Predicate}, can be {@code null}.
+   * @throws IOException If an I/O error has occurred.
+   * @throws NullPointerException If {@code zipFile} or {@code destDir} are
+   *           {@code null}.
+   */
+  public static void extract(final ZipFile zipFile, final File destDir, final Predicate<ZipEntry> predicate) throws IOException {
+    final Enumeration<? extends ZipEntry> entries = zipFile.entries();
+    while (entries.hasMoreElements()) {
+      final ZipEntry zipEntry = entries.nextElement();
+      if (predicate != null && !predicate.test(zipEntry))
+        continue;
 
-    if (isDirectory) {
-      try {
-        jarFile.stream().forEach(new Consumer<JarEntry>() {
-          @Override
-          public void accept(final JarEntry t) {
-            try {
-              if (t.getName().startsWith(path)) {
-                final FileOutputStream out = getOutputStream(outDir, t.getName());
-                Streams.pipe(jarFile.getInputStream(t), out);
-              }
-            }
-            catch (final IOException e) {
-              throw new RuntimeException(e);
-            }
-          }
-        });
+      final File file = new File(destDir + File.separator + zipEntry.getName());
+      if (zipEntry.isDirectory()) {
+        file.mkdirs();
+        continue;
       }
-      catch (final RuntimeException e) {
-        if (e.getCause() instanceof IOException)
-          throw (IOException)e.getCause();
+
+      file.getParentFile().mkdirs();
+      try (
+        final InputStream in = zipFile.getInputStream(zipEntry);
+        final FileOutputStream out = new FileOutputStream(file);
+      ) {
+        for (int ch; (ch = in.read()) != -1; out.write(ch));
       }
-    }
-    else {
-      final FileOutputStream out = getOutputStream(outDir, path);
-      Streams.pipe(jarFile.getInputStream(entry), out);
     }
   }
 
-  private JarFiles() {
+  private ZipFiles() {
   }
 }

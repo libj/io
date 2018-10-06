@@ -19,13 +19,34 @@ package org.fastjax.io;
 import java.io.IOException;
 import java.io.Reader;
 
+/**
+ * Utility functions for operations pertaining to {@link Reader}.
+ */
 public final class Readers {
+  /**
+   * Returns a string of the remaining contents from {@code reader}.
+   *
+   * @param reader The {@code Reader}.
+   * @return A string of the remaining contents from {@code reader}.
+   * @throws IOException If an I/O error has occurred.
+   * @throws NullPointerException If {@code reader} is {@code null}.
+   */
   public static String readFully(final Reader reader) throws IOException {
     final StringBuilder builder = new StringBuilder();
     for (int ch; (ch = reader.read()) != -1; builder.append((char)ch));
     return builder.toString();
   }
 
+  /**
+   * Returns a string of the remaining contents from {@code reader}.
+   *
+   * @param reader The {@code Reader}.
+   * @param bufferSize The size of the read buffer to use when reading.
+   * @return A string of the remaining contents from {@code reader}.
+   * @throws IOException If an I/O error has occurred.
+   * @throws NullPointerException If {@code reader} is {@code null}.
+   * @throws IllegalArgumentException If {@code bufferSize <= 0}.
+   */
   public static String readFully(final Reader reader, final int bufferSize) throws IOException {
     if (bufferSize <= 0)
       throw new IllegalArgumentException("bufferSize <= 0: " + bufferSize);

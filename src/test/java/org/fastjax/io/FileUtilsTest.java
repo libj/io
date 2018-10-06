@@ -20,18 +20,41 @@ import static org.junit.Assert.*;
 
 import java.io.File;
 
-import org.fastjax.io.Files;
 import org.junit.Test;
 
-public class FilesTest {
+public class FileUtilsTest {
+  @Test
+  public void testCommonality() {
+    try {
+      FileUtils.commonality();
+      fail("Expected IllegalArgumentException");
+    }
+    catch (final IllegalArgumentException e) {
+    }
+
+    assertEquals(new File("foo"), FileUtils.commonality(new File("foo")));
+    assertEquals(new File("/"), FileUtils.commonality(new File("/foo"), new File("/bar")));
+    assertEquals(new File(""), FileUtils.commonality(new File("foo"), new File("bar")));
+
+    final File[] files = {
+      new File("/var/lib/foo/bar/hi.txt"),
+      new File("/var/lib/foo/bar/a/b/c.txt"),
+      new File("/var/lib/foo/welcome.txt"),
+      new File("/var/lib/foo/some/dir.txt"),
+      new File("/var/lib/foo/bar/a/b/hello.txt")
+    };
+
+    assertEquals(new File("/var/lib/foo"), FileUtils.commonality(files));
+  }
+
   @Test
   public void testGetShortName() {
-    assertEquals("", Files.getShortName(new File("")));
-    assertEquals("share", Files.getShortName(new File("file:///usr/share/../share.txt")));
-    assertEquals("lib", Files.getShortName(new File("file:///usr/share/../share/../lib")));
-    assertEquals("var", Files.getShortName(new File("/usr/share/../share/../lib/../../var.old")));
-    assertEquals("var", Files.getShortName(new File("/usr/share/../share/../lib/../../var/")));
-    assertEquals("resolv", Files.getShortName(new File("/etc/resolv.conf")));
-    assertEquals("name", Files.getShortName(new File("name")));
+    assertEquals("", FileUtils.getShortName(new File("")));
+    assertEquals("share", FileUtils.getShortName(new File("file:///usr/share/../share.txt")));
+    assertEquals("lib", FileUtils.getShortName(new File("file:///usr/share/../share/../lib")));
+    assertEquals("var", FileUtils.getShortName(new File("/usr/share/../share/../lib/../../var.old")));
+    assertEquals("var", FileUtils.getShortName(new File("/usr/share/../share/../lib/../../var/")));
+    assertEquals("resolv", FileUtils.getShortName(new File("/etc/resolv.conf")));
+    assertEquals("name", FileUtils.getShortName(new File("name")));
   }
 }

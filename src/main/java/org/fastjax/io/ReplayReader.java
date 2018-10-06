@@ -288,7 +288,7 @@ public class ReplayReader extends FilterReader {
    * @return {@code true} if the reader's position was previously reset such
    *         that the buffer has a character available to be re-read. Otherwise,
    *         this method is delegated to the underlying reader.
-   * @throws IOException If an I/O error occurs.
+   * @throws IOException If an I/O error has occurred.
    */
   @Override
   public boolean ready() throws IOException {
@@ -303,7 +303,7 @@ public class ReplayReader extends FilterReader {
    * a character is available, an I/O error occurs, or the end of the stream is
    * reached.
    *
-   * @throws IOException If an I/O error occurs.
+   * @throws IOException If an I/O error has occurred.
    * @return The character read, as an integer in the range 0 to 65535
    *         ({@code 0x00-0xffff}), or -1 if the end of the stream has been
    *         reached.
@@ -334,7 +334,7 @@ public class ReplayReader extends FilterReader {
    * @param cbuf Destination buffer.
    * @return The number of characters read, or -1 if the end of the stream has
    *         been reached.
-   * @throws IOException If an I/O error occurs.
+   * @throws IOException If an I/O error has occurred.
    */
   @Override
   public int read(final char[] cbuf) throws IOException {
@@ -354,7 +354,7 @@ public class ReplayReader extends FilterReader {
    * @param len Maximum number of characters to read.
    * @return The number of characters read, or -1 if the end of the stream has
    *         been reached.
-   * @throws IOException If an I/O error occurs.
+   * @throws IOException If an I/O error has occurred.
    * @throws IndexOutOfBoundsException If {@code off} is negative, or
    *           {@code len} is negative, or {@code len} is greater than
    *           {@code cbuf.length - off}.
@@ -390,7 +390,7 @@ public class ReplayReader extends FilterReader {
    * @param n The number of characters to skip
    * @return The number of characters actually skipped.
    * @throws IllegalArgumentException If {@code n} is negative.
-   * @throws IOException If an I/O error occurs.
+   * @throws IOException If an I/O error has occurred.
    */
   @Override
   public long skip(final long n) throws IOException {
@@ -449,7 +449,7 @@ public class ReplayReader extends FilterReader {
    * was closed. The purpose of this method is solely to release the underlying
    * stream once its content has been satisfactorily read.
    *
-   * @throws IOException If an I/O error occurs.
+   * @throws IOException If an I/O error has occurred.
    */
   @Override
   public void close() throws IOException {

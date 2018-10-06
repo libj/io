@@ -247,7 +247,7 @@ public class ReplayInputStream extends FilterInputStream {
    * underlying stream, in which case this method will block until a byte is
    * available, an I/O error occurs, or the end of the stream is reached.
    *
-   * @throws IOException If an I/O error occurs.
+   * @throws IOException If an I/O error has occurred.
    * @return The byte read, as an integer in the range 0 to 255, or -1 if the
    *         end of the stream has been reached.
    */
@@ -276,7 +276,7 @@ public class ReplayInputStream extends FilterInputStream {
    * @param cbuf Destination buffer.
    * @return The number of bytes read, or -1 if the end of the stream has been
    *         reached.
-   * @throws IOException If an I/O error occurs.
+   * @throws IOException If an I/O error has occurred.
    */
   @Override
   public int read(final byte[] b) throws IOException {
@@ -296,7 +296,7 @@ public class ReplayInputStream extends FilterInputStream {
    * @param len Maximum number of bytes to read
    * @return The number of bytes read, or -1 if the end of the stream has been
    *         reached.
-   * @throws IOException If an I/O error occurs.
+   * @throws IOException If an I/O error has occurred.
    * @throws IndexOutOfBoundsException If {@code off} is negative, or
    *           {@code len} is negative, or {@code len} is greater than
    *           {@code cbuf.length - off}.
@@ -332,7 +332,7 @@ public class ReplayInputStream extends FilterInputStream {
    * @param n The number of bytes to skip
    * @return The number of bytes actually skipped.
    * @throws IllegalArgumentException If {@code n} is negative.
-   * @throws IOException If an I/O error occurs.
+   * @throws IOException If an I/O error has occurred.
    */
   @Override
   public long skip(final long n) throws IOException {
@@ -363,7 +363,7 @@ public class ReplayInputStream extends FilterInputStream {
    *
    * @return An estimate of the number of bytes that can be read (or skipped
    *         over) from this input stream without blocking.
-   * @throws IOException if an I/O error occurs.
+   * @throws IOException if an I/O error has occurred.
    */
   @Override
   public int available() throws IOException {
@@ -409,7 +409,7 @@ public class ReplayInputStream extends FilterInputStream {
    * was closed. The purpose of this method is solely to release the underlying
    * stream once its content has been satisfactorily read.
    *
-   * @throws IOException If an I/O error occurs.
+   * @throws IOException If an I/O error has occurred.
    */
   @Override
   public void close() throws IOException {

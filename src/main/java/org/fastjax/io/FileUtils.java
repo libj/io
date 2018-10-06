@@ -17,65 +17,58 @@
 package org.fastjax.io;
 
 import java.io.File;
-import java.io.FileFilter;
-import java.io.FileInputStream;
-import java.io.FileOutputStream;
 import java.io.IOException;
-import java.nio.channels.FileChannel;
 import java.nio.file.DirectoryStream;
+import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.StandardOpenOption;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
 
-import org.fastjax.util.Collections;
 import org.fastjax.util.Paths;
 
-public final class Files {
+/**
+ * Utility functions for operations pertaining to {@link File} and {@link Path}.
+ */
+public final class FileUtils {
   private static File CWD;
   private static File TEMP_DIR;
 
+  /**
+   * Returns the current working directory.
+   *
+   * @return The current working directory.
+   */
   public static File getCwd() {
     return CWD == null ? CWD = new File("").getAbsoluteFile() : CWD;
   }
 
+  /**
+   * Returns the default path the JVM uses to store temporary files.
+   *
+   * @return The default path the JVM uses to store temporary files.
+   */
   public static File getTempDir() {
     return TEMP_DIR == null ? TEMP_DIR = new File(System.getProperty("java.io.tmpdir")) : TEMP_DIR;
   }
 
-  private static final DirectoryStream.Filter<Path> anyFilter = new DirectoryStream.Filter<Path>() {
+  private static final DirectoryStream.Filter<Path> anyStreamFilter = new DirectoryStream.Filter<Path>() {
     @Override
     public boolean accept(final Path entry) {
       return true;
     }
   };
 
-  private static final class DirectoryFileFilter implements FileFilter {
-    private final FileFilter original;
-
-    public DirectoryFileFilter(final FileFilter original) {
-      this.original = original;
-    }
-
-    @Override
-    public boolean accept(final File pathname) {
-      return original.accept(pathname) || pathname.isDirectory();
-    }
-  }
-
   private static void delete(final Path path, final boolean onExit) throws IOException {
     if (onExit)
-      java.nio.file.Files.newOutputStream(path, StandardOpenOption.DELETE_ON_CLOSE);
+      Files.newOutputStream(path, StandardOpenOption.DELETE_ON_CLOSE);
     else
-      java.nio.file.Files.delete(path);
+      Files.delete(path);
   }
 
   private static void deleteAll(final Path path, final DirectoryStream.Filter<Path> filter, final boolean onExit) throws IOException {
-    if (java.nio.file.Files.isDirectory(path)) {
-      try (final DirectoryStream<Path> stream = java.nio.file.Files.newDirectoryStream(path, filter)) {
+    if (Files.isDirectory(path)) {
+      try (final DirectoryStream<Path> stream = Files.newDirectoryStream(path, filter)) {
         for (final Path entry : stream) {
-          if (java.nio.file.Files.isDirectory(entry))
+          if (Files.isDirectory(entry))
             deleteAll(entry, filter, onExit);
           else
             delete(entry, onExit);
@@ -86,144 +79,106 @@ public final class Files {
     delete(path, onExit);
   }
 
+  /**
+   * Register a path to be recursively deleted when the JVM exits. When executed
+   * on exit, only the paths that pass the {@code filter} will be deleted.
+   *
+   * @param path The path to delete recursively.
+   * @param filter The filter of paths to delete, or {@code null} to match all
+   *          paths.
+   * @throws IOException If an I/O error has occurred.
+   * @throws NullPointerException If {@code path} is {@code null}.
+   */
   public static void deleteAllOnExit(final Path path, final DirectoryStream.Filter<Path> filter) throws IOException {
-    deleteAll(path, filter, true);
-  }
-
-  public static boolean deleteAll(final Path path, final DirectoryStream.Filter<Path> filter) throws IOException {
-    deleteAll(path, filter, false);
-    return !java.nio.file.Files.exists(path);
-  }
-
-  public static void deleteAllOnExit(final Path path) throws IOException {
-    deleteAll(path, anyFilter, true);
-  }
-
-  public static boolean deleteAll(final Path path) throws IOException {
-    deleteAll(path, anyFilter, false);
-    return !java.nio.file.Files.exists(path);
-  }
-
-  public static List<File> listAll(final File directory) {
-    if (!directory.isDirectory())
-      return null;
-
-    List<File> outer = Collections.asCollection(new ArrayList<File>(), directory.listFiles());
-    final List<File> files = new ArrayList<>(outer);
-    for (List<File> inner; outer.size() != 0;) {
-      inner = new ArrayList<>();
-      for (final File file : outer)
-        if (file.isDirectory())
-          inner.addAll(Arrays.asList(file.listFiles()));
-
-      files.addAll(inner);
-      outer = inner;
-    }
-
-    return files;
-  }
-
-  public static List<File> listAll(final File directory, final FileFilter fileFilter) {
-    if (!directory.isDirectory())
-      return null;
-
-    final FileFilter directoryFilter = new DirectoryFileFilter(fileFilter);
-    List<File> outer = Collections.asCollection(new ArrayList<File>(), directory.listFiles(directoryFilter));
-    final List<File> files = new ArrayList<>(outer);
-    for (List<File> inner; outer.size() != 0;) {
-      inner = new ArrayList<>();
-      for (final File file : outer)
-        if (file.isDirectory())
-          inner.addAll(Arrays.asList(file.listFiles(directoryFilter)));
-
-      files.addAll(inner);
-      outer = inner;
-    }
-
-    final List<File> result = new ArrayList<>();
-    for (final File file : files)
-      if (fileFilter.accept(file))
-        result.add(file);
-
-    return result;
+    deleteAll(path, filter != null ? filter : anyStreamFilter, true);
   }
 
   /**
-   * Copy a file or directory from <code>from</code> to <code>to</code>.
+   * Delete a path recursively. Only the paths that pass the
+   * {@code filter} will be deleted.
    *
-   * @param from <code>File</code> to copy from.
-   * @param to <code>File</code> to copy to.
-   *
-   * @exception IOException If there is an error handling either the from file, or the to file.
+   * @param path The path to delete recursively.
+   * @param filter The filter of paths to delete, or {@code null} to match all
+   *          paths.
+   * @throws IOException If an I/O error has occurred.
+   * @throws NullPointerException If {@code path} is {@code null}.
    */
-  public static void copy(final File from, final File to) throws IOException {
-    if (from.isFile()) {
-      copyFile(from, to);
-    }
-    else if (from.isDirectory()) {
-      if (to.isFile())
-        throw new IllegalArgumentException("trying to copy a directory to a file");
-
-      if (!to.exists() && !to.mkdirs())
-        throw new IOException("Unable to create destination directory: " + to.getAbsolutePath());
-
-      final List<File> files = Files.listAll(from.getAbsoluteFile());
-      for (final File file : files) {
-        final String relativePath = Paths.relativePath(from.getAbsolutePath(), file.getAbsolutePath());
-        final File toFile = new File(to, relativePath);
-        if (file.isFile())
-          copyFile(file, toFile);
-        else if (file.isDirectory())
-          toFile.mkdir();
-        else
-          throw new IllegalArgumentException(file.getAbsolutePath() + " does not exist");
-      }
-    }
-    else {
-      throw new IllegalArgumentException("from does not exist");
-    }
+  public static boolean deleteAll(final Path path, final DirectoryStream.Filter<Path> filter) throws IOException {
+    deleteAll(path, filter != null ? filter : anyStreamFilter, false);
+    return !Files.exists(path);
   }
 
-  private static void copyFile(final File from, final File to) throws IOException {
-    try (final FileInputStream in = new FileInputStream(from);
-      final FileChannel sourceChannel = in.getChannel();
-      final FileOutputStream out = new FileOutputStream(to);
-      final FileChannel destinationChannel = out.getChannel();
-    ) {
-      sourceChannel.transferTo(0, sourceChannel.size(), destinationChannel);
-    }
+  /**
+   * Register a path to be recursively deleted when the JVM exits.
+   *
+   * @param path The path to delete recursively.
+   * @throws IOException If an I/O error has occurred.
+   * @throws NullPointerException If {@code path} is {@code null}.
+   */
+  public static void deleteAllOnExit(final Path path) throws IOException {
+    deleteAll(path, anyStreamFilter, true);
   }
 
-  public static String relativePath(final File dir, final File file) {
-    // FIXME: Should this be getAbsolutePath() instead?
-    return dir != null && file != null ? Paths.relativePath(dir.getPath(), file.getPath()) : null;
+  /**
+   * Delete a path recursively.
+   *
+   * @param path The path to delete recursively.
+   * @throws IOException If an I/O error has occurred.
+   * @throws NullPointerException If {@code path} is {@code null}.
+   */
+  public static boolean deleteAll(final Path path) throws IOException {
+    deleteAll(path, anyStreamFilter, false);
+    return !Files.exists(path);
   }
 
-  public static File commonality(final File[] files) throws IOException {
-    if (files == null || files.length == 0)
-      return null;
+  /**
+   * Returns a {@code File} having a path that is common to the argument
+   * {@code files}.
+   *
+   * @param files The files.
+   * @return A {@code File} having a path that is common to the argument
+   *         {@code files}.
+   * @throws IllegalArgumentException If {@code files.length == 0}.
+   */
+  public static File commonality(final File ... files) {
+    if (files.length == 0)
+      throw new IllegalArgumentException("files.length == 0");
 
     if (files.length > 1) {
-      int length = Integer.MAX_VALUE;
-      for (final File file : files)
-        if (file.getCanonicalPath().length() < length)
-          length = file.getCanonicalPath().length();
+      final String[] canons = new String[files.length];
+      canons[0] = Paths.canonicalize(files[0].getPath());
+      int length = canons[0].length();
+      for (int i = 1; i < files.length; ++i) {
+        canons[i] = Paths.canonicalize(files[i].getPath());
+        if (canons[i].length() < length)
+          length = canons[i].length();
+      }
 
-      for (int i = 0; i < length; i++)
-        for (int j = 1; j < files.length; j++)
-          if (files[0].getCanonicalPath().charAt(i) != files[j].getCanonicalPath().charAt(i))
-            return new File(files[0].getCanonicalPath().substring(0, i));
+      for (int i = 0; i < length; ++i) {
+        final char ch = canons[0].charAt(i);
+        for (int j = 1; j < files.length; ++j)
+          if (ch != canons[j].charAt(i))
+            return new File(canons[0].substring(0, i));
+      }
     }
 
     return files[0];
   }
 
+  /**
+   * Returns the "short name" of {@code file}. The "short name" is the name of a
+   * file not including the dot and extension, if present.
+   *
+   * @param file The {@code File}.
+   * @return The "short name" of {@code file}.
+   * @throws NullPointerException If {@code file} is {@code null}.
+   */
   public static String getShortName(final File file) {
     final String name = file.getName();
     final int index = name.indexOf('.');
     return index == -1 ? name : name.substring(0, index);
   }
 
-  private Files() {
+  private FileUtils() {
   }
 }

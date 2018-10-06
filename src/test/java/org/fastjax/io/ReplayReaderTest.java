@@ -21,7 +21,6 @@ import static org.junit.Assert.*;
 import java.io.CharArrayReader;
 import java.io.IOException;
 
-import org.fastjax.io.ReplayReader;
 import org.junit.Test;
 
 public class ReplayReaderTest {

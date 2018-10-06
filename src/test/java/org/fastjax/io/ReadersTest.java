@@ -21,9 +21,8 @@ import static org.junit.Assert.*;
 import java.io.IOException;
 import java.io.StringReader;
 
-import org.junit.Test;
-import org.fastjax.io.Readers;
 import org.fastjax.util.Strings;
+import org.junit.Test;
 
 public class ReadersTest {
   @Test

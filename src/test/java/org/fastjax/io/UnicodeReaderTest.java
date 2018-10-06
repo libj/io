@@ -22,9 +22,6 @@ import java.io.ByteArrayInputStream;
 import java.io.IOException;
 import java.io.Reader;
 
-import org.fastjax.io.Readers;
-import org.fastjax.io.UnicodeReader;
-import org.junit.Ignore;
 import org.junit.Test;
 
 public class UnicodeReaderTest {
@@ -32,20 +29,6 @@ public class UnicodeReaderTest {
     try (final Reader reader = new UnicodeReader(new ByteArrayInputStream(test.getBytes()))) {
       final String actual = Math.random() < 0.5 ? Readers.readFully(reader) : Readers.readFully(reader, 1 + (int)(Math.random() * 50));
       assertEquals(expected, actual);
-    }
-  }
-
-  @Test
-  public void test() {
-    for (int i = 0; i < 8; i++) {
-      final int f = i * 4;
-      System.err.print(f + " ");
-    }
-
-    System.err.println();
-    for (int i = 0; i < 8; i++) {
-      final int g = 4 * (i % 2 == 0 ? (i + 1) * ((i + 1) % 2) : (i - 1) * (i % 2));
-      System.err.print(g + " ");
     }
   }
 
