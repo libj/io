@@ -429,6 +429,11 @@ public final class Streams {
    *
    * @param src The source {@code InputStream}.
    * @param snk The sink {@code OutputStream}.
+   * @param onThreadExit Consumer function that will be called when the thread
+   *          exits, either (1) due to IOException (in which case the exception
+   *          will be passed to the consumer instance), or (2) due to regular
+   *          completion (in which case {@code null} will be passed to the
+   *          consumer instance).
    * @throws IOException If an I/O error has occurred.
    * @throws NullPointerException If {@code src} or {@code snk} are {@code null}.
    */

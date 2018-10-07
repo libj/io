@@ -53,7 +53,9 @@ public class ReplayReader extends FilterReader {
     }
 
     /**
-     * The buffer where data is stored.
+     * Returns the buffer where data is stored.
+     *
+     * @return The buffer where data is stored.
      */
     public char[] buf() {
       return buf;
@@ -415,7 +417,7 @@ public class ReplayReader extends FilterReader {
    * Marks the present position in the stream. Subsequent calls to
    * {@link #reset()} will attempt to reposition the stream to this point.
    *
-   * @param readAheadLimit This argument is ignored.
+   * @param readlimit This argument is ignored.
    */
   @Override
   public void mark(final int readlimit) {
@@ -423,8 +425,8 @@ public class ReplayReader extends FilterReader {
   }
 
   /**
-   * Tells whether this stream supports the {@link #mark()} operation, which is
-   * always {@code true}.
+   * Tells whether this stream supports the {@link #mark(int)} operation, which
+   * is always {@code true}.
    *
    * @return {@code true}.
    */

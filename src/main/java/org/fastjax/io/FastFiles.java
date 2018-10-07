@@ -28,7 +28,7 @@ import org.fastjax.util.Paths;
 /**
  * Utility functions for operations pertaining to {@link File} and {@link Path}.
  */
-public final class FileUtils {
+public final class FastFiles {
   private static File CWD;
   private static File TEMP_DIR;
 
@@ -94,12 +94,14 @@ public final class FileUtils {
   }
 
   /**
-   * Delete a path recursively. Only the paths that pass the
-   * {@code filter} will be deleted.
+   * Delete a path recursively. Only the paths that pass the {@code filter} will
+   * be deleted.
    *
    * @param path The path to delete recursively.
    * @param filter The filter of paths to delete, or {@code null} to match all
    *          paths.
+   * @return {@code true} if and only if the file or directory was successfully
+   *         deleted; {@code false} otherwise.
    * @throws IOException If an I/O error has occurred.
    * @throws NullPointerException If {@code path} is {@code null}.
    */
@@ -123,6 +125,8 @@ public final class FileUtils {
    * Delete a path recursively.
    *
    * @param path The path to delete recursively.
+   * @return {@code true} if and only if the file or directory was successfully
+   *         deleted; {@code false} otherwise.
    * @throws IOException If an I/O error has occurred.
    * @throws NullPointerException If {@code path} is {@code null}.
    */
@@ -179,6 +183,6 @@ public final class FileUtils {
     return index == -1 ? name : name.substring(0, index);
   }
 
-  private FileUtils() {
+  private FastFiles() {
   }
 }

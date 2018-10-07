@@ -54,7 +54,9 @@ public class ReplayInputStream extends FilterInputStream {
     }
 
     /**
-     * The buffer where data is stored.
+     * Returns the buffer where data is stored.
+     *
+     * @return The buffer where data is stored.
      */
     public byte[] buf() {
       return buf;
@@ -273,7 +275,7 @@ public class ReplayInputStream extends FilterInputStream {
    * read from the underlying stream, in which case this method will block bytes
    * are available, an I/O error occurs, or the end of the stream is reached.
    *
-   * @param cbuf Destination buffer.
+   * @param b Destination buffer.
    * @return The number of bytes read, or -1 if the end of the stream has been
    *         reached.
    * @throws IOException If an I/O error has occurred.
@@ -291,15 +293,15 @@ public class ReplayInputStream extends FilterInputStream {
    * method will block bytes are available, an I/O error occurs, or the end of
    * the stream is reached.
    *
-   * @param cbuf Destination buffer
-   * @param off Offset at which to start storing bytes
-   * @param len Maximum number of bytes to read
+   * @param b Destination buffer.
+   * @param off Offset at which to start storing bytes.
+   * @param len Maximum number of bytes to read.
    * @return The number of bytes read, or -1 if the end of the stream has been
    *         reached.
    * @throws IOException If an I/O error has occurred.
    * @throws IndexOutOfBoundsException If {@code off} is negative, or
    *           {@code len} is negative, or {@code len} is greater than
-   *           {@code cbuf.length - off}.
+   *           {@code b.length - off}.
    */
   @Override
   public int read(final byte[] b, final int off, final int len) throws IOException {
@@ -329,7 +331,7 @@ public class ReplayInputStream extends FilterInputStream {
    * method will block bytes are available, an I/O error occurs, or the end of
    * the stream is reached.
    *
-   * @param n The number of bytes to skip
+   * @param n The number of bytes to skip.
    * @return The number of bytes actually skipped.
    * @throws IllegalArgumentException If {@code n} is negative.
    * @throws IOException If an I/O error has occurred.
@@ -374,7 +376,7 @@ public class ReplayInputStream extends FilterInputStream {
    * Marks the present position in the stream. Subsequent calls to
    * {@link #reset()} will attempt to reposition the stream to this point.
    *
-   * @param readAheadLimit This argument is ignored.
+   * @param readlimit This argument is ignored.
    */
   @Override
   public void mark(final int readlimit) {
@@ -383,8 +385,8 @@ public class ReplayInputStream extends FilterInputStream {
   }
 
   /**
-   * Tells whether this stream supports the {@link #mark()} operation, which is
-   * always {@code true}.
+   * Tells whether this stream supports the {@link #mark(int)} operation, which
+   * is always {@code true}.
    *
    * @return {@code true}.
    */

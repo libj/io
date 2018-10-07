@@ -23,7 +23,7 @@ import java.util.Objects;
 
 /**
  * A {@code Reader} for decoding streams of escaped unicode encoded strings
- * (i.e. {@code "\\u48\\u65\\u6C\\u6C\\u6F"} -> {@code "Hello"}). The
+ * (i.e. {@code "\\u48\\u65\\u6C\\u6C\\u6F"} -&gt; {@code "Hello"}). The
  * {@code UnicodeReader} supports:
  * <ul>
  * <li>{@code UTF-8}, {@code UTF-16be}, {@code UTF-16le}, {@code UTF-32be} and
@@ -32,8 +32,8 @@ import java.util.Objects;
  *
  * <li>Streams can contain mixed unicode encodings:
  *
- * <pre>{@code "\\u48\\u0065\\u0000006C\\ufffe\\u6C00\\ufffe0000\\u6F000000"} ->
- * {@code "Hello"})</pre></li>
+ * <pre>{@code "\\u48\\u0065\\u0000006C\\ufffe\\u6C00\\ufffe0000\\u6F000000"}
+ * -&gt; {@code "Hello"})</pre></li>
  *
  * <li>Streams can contain mixed {@code UTF} multibyte characters, as well as
  * escaped unicode sequences of Latin1 {@code ISO 8859-1} bytes (i.e. intermixed
@@ -42,7 +42,7 @@ import java.util.Objects;
  * <li>Malformed unicode sequences are returned in their original unicode
  * encoded form:
  *
- * <pre>{@code "\\u48\\u6\\u48"} -> {@code "H\\u6H"}</pre></li>
+ * <pre>{@code "\\u48\\u6\\u48"} -&gt; {@code "H\\u6H"}</pre></li>
  *
  * <li>If no BOM is detected, streams are assumed to be in big-endian encoding.</li>
  * </ul>
@@ -91,11 +91,13 @@ public class UnicodeReader extends Reader {
   }
 
   /**
-   * @implSpec This method automatically detects and replaces escaped sequences
-   *           into their corresponding UTF character. The BOM (Byte Order Mark)
-   *           is used to signify the encoding format of the characters that
-   *           follow. BOM characters are consumed (i.e. the following character
-   *           is returned, if it is also not a BOM).
+   * {@inheritDoc}
+   * <p>
+   * This method automatically detects and replaces escaped sequences into their
+   * corresponding UTF character. The BOM (Byte Order Mark) is used to signify
+   * the encoding format of the characters that follow. BOM characters are
+   * consumed (i.e. the following character is returned, if it is also not a
+   * BOM).
    */
   @Override
   public int read() throws IOException {
