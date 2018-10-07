@@ -305,17 +305,17 @@ public final class Streams {
 
   /**
    * Reads all bytes from the input stream and returns the resulting buffer
-   * array. This method blocks until all contents have been read, end of
-   * file is detected, or an exception is thrown.
+   * array. This method blocks until all contents have been read, end of file is
+   * detected, or an exception is thrown.
    * <p>
-   * If the InputStream <code>in</code> is <code>null</code>, then null
-   * is returned; otherwise, a byte[] of at least size 0 will be returned.
+   * If the InputStream {@code in} is {@code null}, then null is returned;
+   * otherwise, a byte[] of at least size 0 will be returned.
    *
    * @param in The input stream to read from.
-   * @return The byte[] containing all bytes that were read from the
-   *         InputStream <code>in</code> until an end of file is detected.
-   * @throws IOException If the first byte cannot be read for any reason
-   *           other than the end of the file, if the input stream has been closed, or
+   * @return The byte[] containing all bytes that were read from the InputStream
+   *         {@code in} until an end of file is detected.
+   * @throws IOException If the first byte cannot be read for any reason other
+   *           than the end of the file, if the input stream has been closed, or
    *           if some other I/O error occurs.
    * @throws NullPointerException If {@code in} is {@code null}.
    * @see java.io.InputStream#read(byte[])
@@ -326,7 +326,8 @@ public final class Streams {
 
     final ByteArrayOutputStream buffer = new ByteArrayOutputStream(DEFAULT_SOCKET_BUFFER_SIZE);
     final byte[] data = new byte[DEFAULT_SOCKET_BUFFER_SIZE];
-    for (int length; (length = in.read(data)) != -1; buffer.write(data, 0, length));
+    for (int length; (length = in.read(data)) != -1; buffer.write(data, 0, length))
+      ;
     return buffer.toByteArray();
   }
 
@@ -417,7 +418,8 @@ public final class Streams {
    * @param src The source {@code InputStream}.
    * @param snk The sink {@code OutputStream}.
    * @throws IOException If an I/O error has occurred.
-   * @throws NullPointerException If {@code src} or {@code snk} are {@code null}.
+   * @throws NullPointerException If {@code src} or {@code snk} are
+   *           {@code null}.
    */
   public static void pipeAsync(final InputStream src, final OutputStream snk) throws IOException {
     pipeAsync(src, snk, null);
@@ -435,7 +437,8 @@ public final class Streams {
    *          completion (in which case {@code null} will be passed to the
    *          consumer instance).
    * @throws IOException If an I/O error has occurred.
-   * @throws NullPointerException If {@code src} or {@code snk} are {@code null}.
+   * @throws NullPointerException If {@code src} or {@code snk} are
+   *           {@code null}.
    */
   public static void pipeAsync(final InputStream src, final OutputStream snk, final Consumer<IOException> onThreadExit) throws IOException {
     pipe(src, snk, false, false, onThreadExit);
@@ -555,7 +558,8 @@ public final class Streams {
         snk.flush();
       }
       else {
-        while ((len = src.read(bytes)) != -1);
+        while ((len = src.read(bytes)) != -1)
+          ;
       }
 
       if (onExit != null)
