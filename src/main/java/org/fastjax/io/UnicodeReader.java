@@ -188,6 +188,15 @@ public class UnicodeReader extends Reader {
     }
   }
 
+  /**
+   * {@inheritDoc}
+   * <p>
+   * This method automatically detects and replaces escaped sequences into their
+   * corresponding UTF character. The BOM (Byte Order Mark) is used to signify
+   * the encoding format of the characters that follow. BOM characters are
+   * consumed (i.e. the following character is returned, if it is also not a
+   * BOM).
+   */
   @Override
   public int read(final char[] cbuf, final int off, final int len) throws IOException {
     int i = 0;

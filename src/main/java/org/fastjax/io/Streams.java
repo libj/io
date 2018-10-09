@@ -326,8 +326,7 @@ public final class Streams {
 
     final ByteArrayOutputStream buffer = new ByteArrayOutputStream(DEFAULT_SOCKET_BUFFER_SIZE);
     final byte[] data = new byte[DEFAULT_SOCKET_BUFFER_SIZE];
-    for (int length; (length = in.read(data)) != -1; buffer.write(data, 0, length))
-      ;
+    for (int length; (length = in.read(data)) != -1; buffer.write(data, 0, length));
     return buffer.toByteArray();
   }
 
@@ -558,8 +557,7 @@ public final class Streams {
         snk.flush();
       }
       else {
-        while ((len = src.read(bytes)) != -1)
-          ;
+        while ((len = src.read(bytes)) != -1);
       }
 
       if (onExit != null)

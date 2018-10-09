@@ -369,8 +369,7 @@ public class ReplayReader extends FilterReader {
 
     if (avail > 0) {
       buffer.read(cbuf, off, avail);
-      for (int ch; avail < cbuf.length - off && (ch = read()) != -1; cbuf[avail++] = (char)ch)
-        ;
+      for (int ch; avail < cbuf.length - off && (ch = read()) != -1; cbuf[avail++] = (char)ch);
       return avail;
     }
 
