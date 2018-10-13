@@ -29,7 +29,7 @@ public final class Readers {
    * @param reader The {@code Reader}.
    * @return A string of the remaining contents from {@code reader}.
    * @throws IOException If an I/O error has occurred.
-   * @throws NullPointerException If {@code reader} is {@code null}.
+   * @throws NullPointerException If {@code reader} is null.
    */
   public static String readFully(final Reader reader) throws IOException {
     final StringBuilder builder = new StringBuilder();
@@ -44,7 +44,7 @@ public final class Readers {
    * @param bufferSize The size of the read buffer to use when reading.
    * @return A string of the remaining contents from {@code reader}.
    * @throws IOException If an I/O error has occurred.
-   * @throws NullPointerException If {@code reader} is {@code null}.
+   * @throws NullPointerException If {@code reader} is null.
    * @throws IllegalArgumentException If {@code bufferSize <= 0}.
    */
   public static String readFully(final Reader reader, final int bufferSize) throws IOException {

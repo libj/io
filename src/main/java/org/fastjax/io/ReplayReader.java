@@ -263,7 +263,7 @@ public class ReplayReader extends FilterReader {
    * @param in A Reader object providing the underlying stream.
    * @param initialSize an int specifying the initial buffer size of the
    *          re-readable buffer.
-   * @throws NullPointerException If {@code in} is {@code null}.
+   * @throws NullPointerException If {@code in} is null.
    */
   public ReplayReader(final Reader in, final int initialSize) {
     super(in);
@@ -274,7 +274,7 @@ public class ReplayReader extends FilterReader {
    * Creates a new ReplayReader.
    *
    * @param in A Reader object providing the underlying stream.
-   * @throws NullPointerException If {@code in} is {@code null}.
+   * @throws NullPointerException If {@code in} is null.
    */
   public ReplayReader(final Reader in) {
     super(in);

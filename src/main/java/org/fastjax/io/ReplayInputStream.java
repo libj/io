@@ -224,7 +224,7 @@ public class ReplayInputStream extends FilterInputStream {
    * @param in An InputStream object providing the underlying stream.
    * @param initialSize An int specifying the initial buffer size of the
    *          re-readable buffer.
-   * @throws NullPointerException If {@code in} is {@code null}.
+   * @throws NullPointerException If {@code in} is null.
    */
   public ReplayInputStream(final InputStream in, final int initialSize) {
     super(in);
@@ -235,7 +235,7 @@ public class ReplayInputStream extends FilterInputStream {
    * Creates a new ReplayInputStream.
    *
    * @param in An InputStream object providing the underlying stream.
-   * @throws NullPointerException If {@code in} is {@code null}.
+   * @throws NullPointerException If {@code in} is null.
    */
   public ReplayInputStream(final InputStream in) {
     super(in);

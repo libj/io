@@ -84,10 +84,10 @@ public final class FastFiles {
    * on exit, only the paths that pass the {@code filter} will be deleted.
    *
    * @param path The path to delete recursively.
-   * @param filter The filter of paths to delete, or {@code null} to match all
+   * @param filter The filter of paths to delete, or null to match all
    *          paths.
    * @throws IOException If an I/O error has occurred.
-   * @throws NullPointerException If {@code path} is {@code null}.
+   * @throws NullPointerException If {@code path} is null.
    */
   public static void deleteAllOnExit(final Path path, final DirectoryStream.Filter<Path> filter) throws IOException {
     deleteAll(path, filter != null ? filter : anyStreamFilter, true);
@@ -98,12 +98,12 @@ public final class FastFiles {
    * be deleted.
    *
    * @param path The path to delete recursively.
-   * @param filter The filter of paths to delete, or {@code null} to match all
+   * @param filter The filter of paths to delete, or null to match all
    *          paths.
    * @return {@code true} if and only if the file or directory was successfully
    *         deleted; {@code false} otherwise.
    * @throws IOException If an I/O error has occurred.
-   * @throws NullPointerException If {@code path} is {@code null}.
+   * @throws NullPointerException If {@code path} is null.
    */
   public static boolean deleteAll(final Path path, final DirectoryStream.Filter<Path> filter) throws IOException {
     deleteAll(path, filter != null ? filter : anyStreamFilter, false);
@@ -115,7 +115,7 @@ public final class FastFiles {
    *
    * @param path The path to delete recursively.
    * @throws IOException If an I/O error has occurred.
-   * @throws NullPointerException If {@code path} is {@code null}.
+   * @throws NullPointerException If {@code path} is null.
    */
   public static void deleteAllOnExit(final Path path) throws IOException {
     deleteAll(path, anyStreamFilter, true);
@@ -128,7 +128,7 @@ public final class FastFiles {
    * @return {@code true} if and only if the file or directory was successfully
    *         deleted; {@code false} otherwise.
    * @throws IOException If an I/O error has occurred.
-   * @throws NullPointerException If {@code path} is {@code null}.
+   * @throws NullPointerException If {@code path} is null.
    */
   public static boolean deleteAll(final Path path) throws IOException {
     deleteAll(path, anyStreamFilter, false);
@@ -175,7 +175,7 @@ public final class FastFiles {
    *
    * @param file The {@code File}.
    * @return The "short name" of {@code file}.
-   * @throws NullPointerException If {@code file} is {@code null}.
+   * @throws NullPointerException If {@code file} is null.
    */
   public static String getShortName(final File file) {
     final String name = file.getName();

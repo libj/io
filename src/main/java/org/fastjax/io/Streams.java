@@ -43,7 +43,7 @@ public final class Streams {
    * @param out The {@code OutputStream}.
    * @param s The {@code short} value to write.
    * @throws IOException If an I/O error has occurred.
-   * @throws NullPointerException If {@code out} is {@code null}.
+   * @throws NullPointerException If {@code out} is null.
    */
   public static void writeShort(final OutputStream out, final short s) throws IOException {
     writeShort(out, s, true);
@@ -57,7 +57,7 @@ public final class Streams {
    * @param isBigEndian If {@code true}, bytes will be written in big-endian
    *          encoding. If {@code false}, in little-endian.
    * @throws IOException If an I/O error has occurred.
-   * @throws NullPointerException If {@code out} is {@code null}.
+   * @throws NullPointerException If {@code out} is null.
    */
   public static void writeShort(final OutputStream out, final short s, final boolean isBigEndian) throws IOException {
     Bytes.toBytes(s, out, isBigEndian);
@@ -69,7 +69,7 @@ public final class Streams {
    * @param out The {@code OutputStream}.
    * @param c The {@code char} value to write.
    * @throws IOException If an I/O error has occurred.
-   * @throws NullPointerException If {@code out} is {@code null}.
+   * @throws NullPointerException If {@code out} is null.
    */
   public static void writeChar(final OutputStream out, final char c) throws IOException {
     writeChar(out, c, true);
@@ -83,7 +83,7 @@ public final class Streams {
    * @param isBigEndian If {@code true}, bytes will be written in big-endian
    *          encoding. If {@code false}, in little-endian.
    * @throws IOException If an I/O error has occurred.
-   * @throws NullPointerException If {@code out} is {@code null}.
+   * @throws NullPointerException If {@code out} is null.
    */
   public static void writeChar(final OutputStream out, final char c, final boolean isBigEndian) throws IOException {
     Bytes.toBytes(c, out, isBigEndian);
@@ -95,7 +95,7 @@ public final class Streams {
    * @param out The {@code OutputStream}.
    * @param i The {@code int} value to write.
    * @throws IOException If an I/O error has occurred.
-   * @throws NullPointerException If {@code out} is {@code null}.
+   * @throws NullPointerException If {@code out} is null.
    */
   public static void writeInt(final OutputStream out, final int i) throws IOException {
     writeInt(out, i, true);
@@ -109,7 +109,7 @@ public final class Streams {
    * @param isBigEndian If {@code true}, bytes will be written in big-endian
    *          encoding. If {@code false}, in little-endian.
    * @throws IOException If an I/O error has occurred.
-   * @throws NullPointerException If {@code out} is {@code null}.
+   * @throws NullPointerException If {@code out} is null.
    */
   public static void writeInt(final OutputStream out, final int i, final boolean isBigEndian) throws IOException {
     Bytes.toBytes(i, out, isBigEndian);
@@ -121,7 +121,7 @@ public final class Streams {
    * @param out The {@code OutputStream}.
    * @param l The {@code long} value to write.
    * @throws IOException If an I/O error has occurred.
-   * @throws NullPointerException If {@code out} is {@code null}.
+   * @throws NullPointerException If {@code out} is null.
    */
   public static void writeLong(final OutputStream out, final long l) throws IOException {
     writeLong(out, l, true);
@@ -135,7 +135,7 @@ public final class Streams {
    * @param isBigEndian If {@code true}, bytes will be written in big-endian
    *          encoding. If {@code false}, in little-endian.
    * @throws IOException If an I/O error has occurred.
-   * @throws NullPointerException If {@code out} is {@code null}.
+   * @throws NullPointerException If {@code out} is null.
    */
   public static void writeLong(final OutputStream out, final long l, final boolean isBigEndian) throws IOException {
     Bytes.toBytes(l, out, isBigEndian);
@@ -150,7 +150,7 @@ public final class Streams {
    * @param out The {@code OutputStream}.
    * @param f The {@code float} value to write.
    * @throws IOException If an I/O error has occurred.
-   * @throws NullPointerException If {@code out} is {@code null}.
+   * @throws NullPointerException If {@code out} is null.
    */
   public static void writeFloat(final OutputStream out, final float f) throws IOException {
     writeInt(out, Float.floatToIntBits(f));
@@ -165,7 +165,7 @@ public final class Streams {
    * @param out The {@code OutputStream}.
    * @param d The {@code double} value to write.
    * @throws IOException If an I/O error has occurred.
-   * @throws NullPointerException If {@code out} is {@code null}.
+   * @throws NullPointerException If {@code out} is null.
    */
   public static void writeDouble(final OutputStream out, final double d) throws IOException {
     writeLong(out, Double.doubleToLongBits(d));
@@ -179,7 +179,7 @@ public final class Streams {
    * @return A {@code short} value constructed from the 2-byte big-endian
    *         representation read from {@code in}.
    * @throws IOException If an I/O error has occurred.
-   * @throws NullPointerException If {@code in} is {@code null}.
+   * @throws NullPointerException If {@code in} is null.
    */
   public static short readShort(final InputStream in) throws IOException {
     return readShort(in, true);
@@ -195,7 +195,7 @@ public final class Streams {
    * @param isBigEndian If {@code true}, bytes will be read in big-endian
    *          encoding. If {@code false}, in little-endian.
    * @throws IOException If an I/O error has occurred.
-   * @throws NullPointerException If {@code in} is {@code null}.
+   * @throws NullPointerException If {@code in} is null.
    */
   public static short readShort(final InputStream in, final boolean isBigEndian) throws IOException {
     if (isBigEndian)
@@ -212,7 +212,7 @@ public final class Streams {
    * @return A {@code short} value constructed from the 2-byte unsigned
    *         big-endian representation read from {@code in}.
    * @throws IOException If an I/O error has occurred.
-   * @throws NullPointerException If {@code in} is {@code null}.
+   * @throws NullPointerException If {@code in} is null.
    */
   public static char readChar(final InputStream in) throws IOException {
     return readChar(in, true);
@@ -228,7 +228,7 @@ public final class Streams {
    * @param isBigEndian If {@code true}, bytes will be read in big-endian
    *          encoding. If {@code false}, in little-endian.
    * @throws IOException If an I/O error has occurred.
-   * @throws NullPointerException If {@code in} is {@code null}.
+   * @throws NullPointerException If {@code in} is null.
    */
   public static char readChar(final InputStream in, final boolean isBigEndian) throws IOException {
     if (isBigEndian)
@@ -245,7 +245,7 @@ public final class Streams {
    * @return An {@code int} value constructed from the 4-byte big-endian
    *         representation read from {@code in}.
    * @throws IOException If an I/O error has occurred.
-   * @throws NullPointerException If {@code in} is {@code null}.
+   * @throws NullPointerException If {@code in} is null.
    */
   public static int readInt(final InputStream in) throws IOException {
     return readInt(in, true);
@@ -261,7 +261,7 @@ public final class Streams {
    * @param isBigEndian If {@code true}, bytes will be read in big-endian
    *          encoding. If {@code false}, in little-endian.
    * @throws IOException If an I/O error has occurred.
-   * @throws NullPointerException If {@code in} is {@code null}.
+   * @throws NullPointerException If {@code in} is null.
    */
   public static int readInt(final InputStream in, final boolean isBigEndian) throws IOException {
     if (isBigEndian)
@@ -278,7 +278,7 @@ public final class Streams {
    * @return A {@code long} value constructed from the 8-byte big-endian
    *         representation read from {@code in}.
    * @throws IOException If an I/O error has occurred.
-   * @throws NullPointerException If {@code in} is {@code null}.
+   * @throws NullPointerException If {@code in} is null.
    */
   public static long readLong(final InputStream in) throws IOException {
     return readLong(in, true);
@@ -294,7 +294,7 @@ public final class Streams {
    * @param isBigEndian If {@code true}, bytes will be read in big-endian
    *          encoding. If {@code false}, in little-endian.
    * @throws IOException If an I/O error has occurred.
-   * @throws NullPointerException If {@code in} is {@code null}.
+   * @throws NullPointerException If {@code in} is null.
    */
   public static long readLong(final InputStream in, final boolean isBigEndian) throws IOException {
     if (isBigEndian)
@@ -308,8 +308,8 @@ public final class Streams {
    * array. This method blocks until all contents have been read, end of file is
    * detected, or an exception is thrown.
    * <p>
-   * If the InputStream {@code in} is {@code null}, then null is returned;
-   * otherwise, a byte[] of at least size 0 will be returned.
+   * If the InputStream {@code in} is null, then null is returned; otherwise, a
+   * byte[] of at least size 0 will be returned.
    *
    * @param in The input stream to read from.
    * @return The byte[] containing all bytes that were read from the InputStream
@@ -317,7 +317,7 @@ public final class Streams {
    * @throws IOException If the first byte cannot be read for any reason other
    *           than the end of the file, if the input stream has been closed, or
    *           if some other I/O error occurs.
-   * @throws NullPointerException If {@code in} is {@code null}.
+   * @throws NullPointerException If {@code in} is null.
    * @see java.io.InputStream#read(byte[])
    */
   public static byte[] readBytes(final InputStream in) throws IOException {
@@ -403,8 +403,7 @@ public final class Streams {
    * @param src The source {@code InputStream}.
    * @param snk The sink {@code OutputStream}.
    * @throws IOException If an I/O error has occurred.
-   * @throws NullPointerException If {@code src} or {@code snk} are
-   *           {@code null}.
+   * @throws NullPointerException If {@code src} or {@code snk} are null.
    */
   public static void pipe(final InputStream src, final OutputStream snk) throws IOException {
     pipe(src, snk, false, true, null);
@@ -417,8 +416,7 @@ public final class Streams {
    * @param src The source {@code InputStream}.
    * @param snk The sink {@code OutputStream}.
    * @throws IOException If an I/O error has occurred.
-   * @throws NullPointerException If {@code src} or {@code snk} are
-   *           {@code null}.
+   * @throws NullPointerException If {@code src} or {@code snk} are null.
    */
   public static void pipeAsync(final InputStream src, final OutputStream snk) throws IOException {
     pipeAsync(src, snk, null);
@@ -433,11 +431,10 @@ public final class Streams {
    * @param onThreadExit Consumer function that will be called when the thread
    *          exits, either (1) due to IOException (in which case the exception
    *          will be passed to the consumer instance), or (2) due to regular
-   *          completion (in which case {@code null} will be passed to the
-   *          consumer instance).
+   *          completion (in which case null will be passed to the consumer
+   *          instance).
    * @throws IOException If an I/O error has occurred.
-   * @throws NullPointerException If {@code src} or {@code snk} are
-   *           {@code null}.
+   * @throws NullPointerException If {@code src} or {@code snk} are null.
    */
   public static void pipeAsync(final InputStream src, final OutputStream snk, final Consumer<IOException> onThreadExit) throws IOException {
     pipe(src, snk, false, false, onThreadExit);
@@ -451,8 +448,7 @@ public final class Streams {
    * @param snk The sink {@code OutputStream}.
    * @return The {@code InputStream} teed from {@code src}.
    * @throws IOException If an I/O error has occurred.
-   * @throws NullPointerException If {@code src} or {@code snk} are
-   *           {@code null}.
+   * @throws NullPointerException If {@code src} or {@code snk} are null.
    */
   public static InputStream tee(final InputStream src, final OutputStream snk) throws IOException {
     return pipe(src, snk, true, true, null);
@@ -467,8 +463,7 @@ public final class Streams {
    * @param snk The sink {@code OutputStream}.
    * @return The {@code InputStream} teed from {@code src}.
    * @throws IOException If an I/O error has occurred.
-   * @throws NullPointerException If {@code src} or {@code snk} are
-   *           {@code null}.
+   * @throws NullPointerException If {@code src} or {@code snk} are null.
    */
   public static InputStream teeAsync(final InputStream src, final OutputStream snk) throws IOException {
     return teeAsync(src, snk, null);
@@ -484,12 +479,11 @@ public final class Streams {
    * @param onThreadExit Consumer function that will be called when the thread
    *          exits, either (1) due to IOException (in which case the exception
    *          will be passed to the consumer instance), or (2) due to regular
-   *          completion (in which case {@code null} will be passed to the
-   *          consumer instance).
+   *          completion (in which case null will be passed to the consumer
+   *          instance).
    * @return The {@code InputStream} teed from {@code src}.
    * @throws IOException If an I/O error has occurred.
-   * @throws NullPointerException If {@code src} or {@code snk} are
-   *           {@code null}.
+   * @throws NullPointerException If {@code src} or {@code snk} are null.
    */
   public static InputStream teeAsync(final InputStream src, final OutputStream snk, final Consumer<IOException> onThreadExit) throws IOException {
     return pipe(src, snk, true, false, onThreadExit);
@@ -557,7 +551,8 @@ public final class Streams {
         snk.flush();
       }
       else {
-        while ((len = src.read(bytes)) != -1);
+        while ((len = src.read(bytes)) != -1)
+          ;
       }
 
       if (onExit != null)
