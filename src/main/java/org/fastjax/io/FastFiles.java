@@ -18,9 +18,14 @@ package org.fastjax.io;
 
 import java.io.File;
 import java.io.IOException;
+import java.nio.file.CopyOption;
+import java.nio.file.DirectoryNotEmptyException;
 import java.nio.file.DirectoryStream;
+import java.nio.file.FileAlreadyExistsException;
 import java.nio.file.Files;
+import java.nio.file.LinkPermission;
 import java.nio.file.Path;
+import java.nio.file.StandardCopyOption;
 import java.nio.file.StandardOpenOption;
 
 import org.fastjax.util.Paths;
@@ -133,6 +138,72 @@ public final class FastFiles {
   public static boolean deleteAll(final Path path) throws IOException {
     deleteAll(path, anyStreamFilter, false);
     return !Files.exists(path);
+  }
+
+  /**
+   * Copy a source path to a target path recursively with the {@code options}
+   * parameter specifying how the copy is performed. If the source path is a
+   * directory, this method traverses all child paths, creates child
+   * directories, and applies the {@code options} parameter to the
+   * {@link Files#copy(Path,Path,CopyOption...)} operation applied to each child
+   * file. If the source path is a file, this method delegate to
+   * {@link Files#copy(Path,Path,CopyOption...)}.
+   *
+   * @param source The source path to copy from.
+   * @param target The target path to copy to.
+   * @param options Options specifying how the copy should be done.
+   * @return The path to the target file.
+   * @throws IOException If an I/O error has occurred.
+   * @throws UnsupportedOperationException if the array contains a copy option
+   *           that is not supported
+   * @throws FileAlreadyExistsException If the target file exists but cannot be
+   *           replaced because the {@code REPLACE_EXISTING} option is not
+   *           specified <i>(optional specific exception)</i>.
+   * @throws DirectoryNotEmptyException The {@code REPLACE_EXISTING} option is
+   *           specified but the target path could not be deleted <i>(optional
+   *           specific exception)</i>.
+   * @throws SecurityException In the case of the default provider, and a
+   *           security manager is installed, the
+   *           {@link SecurityManager#checkRead(String) checkRead} method is
+   *           invoked to check read access to the source file, the
+   *           {@link SecurityManager#checkWrite(String) checkWrite} is invoked
+   *           to check write access to the target file. If a symbolic link is
+   *           copied the security manager is invoked to check
+   *           {@link LinkPermission}{@code ("symbolic")}.
+   * @throws NullPointerException If {@code source} or {@code target} are null.
+   * @see Files#copy(Path,Path,CopyOption...)
+   */
+  public static Path copyAll(final Path source, final Path target, final CopyOption ... options) throws IOException {
+    if (Files.isRegularFile(source))
+      return Files.copy(source, target, options);
+
+    if (Files.exists(target) && options != null)
+      for (int i = 0; i < options.length; ++i)
+        if (options[i] == StandardCopyOption.REPLACE_EXISTING && !deleteAll(target))
+          throw new DirectoryNotEmptyException(target.toString());
+
+    try {
+      Files.walk(source).forEach(s -> {
+        try {
+          final Path t = target.resolve(source.relativize(s));
+          if (Files.isRegularFile(s))
+            Files.copy(s, t, options);
+          else if (!Files.exists(t))
+            Files.createDirectory(t);
+        }
+        catch (final IOException e) {
+          throw new RuntimeException(e);
+        }
+      });
+
+      return target;
+    }
+    catch (final Exception e) {
+      if (RuntimeException.class.equals(e.getClass()) && e.getCause() instanceof IOException)
+        throw (IOException)e.getCause();
+
+      throw e;
+    }
   }
 
   /**
