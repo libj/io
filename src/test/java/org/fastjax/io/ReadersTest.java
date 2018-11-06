@@ -27,7 +27,7 @@ import org.junit.Test;
 public class ReadersTest {
   @Test
   public void testReadBytes() throws IOException {
-    final String string = Strings.getRandomAlphaNumericString(64);
+    final String string = Strings.getRandomAlphaNumeric(64);
     assertEquals(string, Readers.readFully(new StringReader(string)));
     for (int i = 1; i < 100; ++i)
       assertEquals(string, Readers.readFully(new StringReader(string), i));
