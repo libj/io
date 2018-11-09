@@ -17,6 +17,7 @@
 package org.fastjax.io;
 
 import java.io.ByteArrayOutputStream;
+import java.io.DataOutput;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
@@ -25,7 +26,6 @@ import java.io.PipedOutputStream;
 import java.util.concurrent.CountDownLatch;
 import java.util.function.Consumer;
 
-import org.fastjax.util.Bytes;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -60,7 +60,47 @@ public final class Streams {
    * @throws NullPointerException If {@code out} is null.
    */
   public static void writeShort(final OutputStream out, final short s, final boolean isBigEndian) throws IOException {
-    Bytes.toBytes(s, out, isBigEndian);
+    if (isBigEndian) {
+      out.write((byte)((s >> 8) & 0xff));
+      out.write((byte)(s & 0xff));
+    }
+    else {
+      out.write((byte)(s & 0xff));
+      out.write((byte)((s >> 8) & 0xff));
+    }
+  }
+
+  /**
+   * Write a 2-byte {@code short} value to {@code out} in big-endian encoding.
+   *
+   * @param out The {@code OutputStream}.
+   * @param s The {@code short} value to write.
+   * @throws IOException If an I/O error has occurred.
+   * @throws NullPointerException If {@code out} is null.
+   */
+  public static void writeShort(final DataOutput out, final short s) throws IOException {
+    writeShort(out, s, true);
+  }
+
+  /**
+   * Write a 2-byte {@code short} value to {@code out}.
+   *
+   * @param out The {@code OutputStream}.
+   * @param s The {@code short} value to write.
+   * @param isBigEndian If {@code true}, bytes will be written in big-endian
+   *          encoding. If {@code false}, in little-endian.
+   * @throws IOException If an I/O error has occurred.
+   * @throws NullPointerException If {@code out} is null.
+   */
+  public static void writeShort(final DataOutput out, final short s, final boolean isBigEndian) throws IOException {
+    if (isBigEndian) {
+      out.write((byte)((s >> 8) & 0xff));
+      out.write((byte)(s & 0xff));
+    }
+    else {
+      out.write((byte)(s & 0xff));
+      out.write((byte)((s >> 8) & 0xff));
+    }
   }
 
   /**
@@ -86,7 +126,47 @@ public final class Streams {
    * @throws NullPointerException If {@code out} is null.
    */
   public static void writeChar(final OutputStream out, final char c, final boolean isBigEndian) throws IOException {
-    Bytes.toBytes(c, out, isBigEndian);
+    if (isBigEndian) {
+      out.write((byte)((c >> 8) & 0xff));
+      out.write((byte)(c & 0xff));
+    }
+    else {
+      out.write((byte)(c & 0xff));
+      out.write((byte)((c >> 8) & 0xff));
+    }
+  }
+
+  /**
+   * Write a 2-byte {@code char} value to {@code out} in big-endian encoding.
+   *
+   * @param out The {@code OutputStream}.
+   * @param c The {@code char} value to write.
+   * @throws IOException If an I/O error has occurred.
+   * @throws NullPointerException If {@code out} is null.
+   */
+  public static void writeChar(final DataOutput out, final char c) throws IOException {
+    writeChar(out, c, true);
+  }
+
+  /**
+   * Write a 2-byte {@code char} value to {@code out}.
+   *
+   * @param out The {@code OutputStream}.
+   * @param c The {@code char} value to write.
+   * @param isBigEndian If {@code true}, bytes will be written in big-endian
+   *          encoding. If {@code false}, in little-endian.
+   * @throws IOException If an I/O error has occurred.
+   * @throws NullPointerException If {@code out} is null.
+   */
+  public static void writeChar(final DataOutput out, final char c, final boolean isBigEndian) throws IOException {
+    if (isBigEndian) {
+      out.write((byte)((c >> 8) & 0xff));
+      out.write((byte)(c & 0xff));
+    }
+    else {
+      out.write((byte)(c & 0xff));
+      out.write((byte)((c >> 8) & 0xff));
+    }
   }
 
   /**
@@ -112,7 +192,55 @@ public final class Streams {
    * @throws NullPointerException If {@code out} is null.
    */
   public static void writeInt(final OutputStream out, final int i, final boolean isBigEndian) throws IOException {
-    Bytes.toBytes(i, out, isBigEndian);
+    if (isBigEndian) {
+      out.write((byte)((i >> 24) & 0xff));
+      out.write((byte)((i >> 16) & 0xff));
+      out.write((byte)((i >> 8) & 0xff));
+      out.write((byte)(i & 0xff));
+    }
+    else {
+      out.write((byte)(i & 0xff));
+      out.write((byte)((i >> 8) & 0xff));
+      out.write((byte)((i >> 16) & 0xff));
+      out.write((byte)((i >> 24) & 0xff));
+    }
+  }
+
+  /**
+   * Write a 4-byte {@code int} value to {@code out} in big-endian encoding.
+   *
+   * @param out The {@code OutputStream}.
+   * @param i The {@code int} value to write.
+   * @throws IOException If an I/O error has occurred.
+   * @throws NullPointerException If {@code out} is null.
+   */
+  public static void writeInt(final DataOutput out, final int i) throws IOException {
+    writeInt(out, i, true);
+  }
+
+  /**
+   * Write a 4-byte {@code int} value to {@code out}.
+   *
+   * @param out The {@code OutputStream}.
+   * @param i The {@code int} value to write.
+   * @param isBigEndian If {@code true}, bytes will be written in big-endian
+   *          encoding. If {@code false}, in little-endian.
+   * @throws IOException If an I/O error has occurred.
+   * @throws NullPointerException If {@code out} is null.
+   */
+  public static void writeInt(final DataOutput out, final int i, final boolean isBigEndian) throws IOException {
+    if (isBigEndian) {
+      out.write((byte)((i >> 24) & 0xff));
+      out.write((byte)((i >> 16) & 0xff));
+      out.write((byte)((i >> 8) & 0xff));
+      out.write((byte)(i & 0xff));
+    }
+    else {
+      out.write((byte)(i & 0xff));
+      out.write((byte)((i >> 8) & 0xff));
+      out.write((byte)((i >> 16) & 0xff));
+      out.write((byte)((i >> 24) & 0xff));
+    }
   }
 
   /**
@@ -138,7 +266,71 @@ public final class Streams {
    * @throws NullPointerException If {@code out} is null.
    */
   public static void writeLong(final OutputStream out, final long l, final boolean isBigEndian) throws IOException {
-    Bytes.toBytes(l, out, isBigEndian);
+    if (isBigEndian) {
+      out.write((byte)((l >> 56) & 0xff));
+      out.write((byte)((l >> 48) & 0xff));
+      out.write((byte)((l >> 40) & 0xff));
+      out.write((byte)((l >> 32) & 0xff));
+      out.write((byte)((l >> 24) & 0xff));
+      out.write((byte)((l >> 16) & 0xff));
+      out.write((byte)((l >> 8) & 0xff));
+      out.write((byte)(l & 0xff));
+    }
+    else {
+      out.write((byte)(l & 0xff));
+      out.write((byte)((l >> 8) & 0xff));
+      out.write((byte)((l >> 16) & 0xff));
+      out.write((byte)((l >> 24) & 0xff));
+      out.write((byte)((l >> 32) & 0xff));
+      out.write((byte)((l >> 40) & 0xff));
+      out.write((byte)((l >> 48) & 0xff));
+      out.write((byte)((l >> 56) & 0xff));
+    }
+  }
+
+  /**
+   * Write a 8-byte {@code long} value to {@code out} in big-endian encoding.
+   *
+   * @param out The {@code OutputStream}.
+   * @param l The {@code long} value to write.
+   * @throws IOException If an I/O error has occurred.
+   * @throws NullPointerException If {@code out} is null.
+   */
+  public static void writeLong(final DataOutput out, final long l) throws IOException {
+    writeLong(out, l, true);
+  }
+
+  /**
+   * Write a 8-byte {@code long} value to {@code out}.
+   *
+   * @param out The {@code OutputStream}.
+   * @param l The {@code long} value to write.
+   * @param isBigEndian If {@code true}, bytes will be written in big-endian
+   *          encoding. If {@code false}, in little-endian.
+   * @throws IOException If an I/O error has occurred.
+   * @throws NullPointerException If {@code out} is null.
+   */
+  public static void writeLong(final DataOutput out, final long l, final boolean isBigEndian) throws IOException {
+    if (isBigEndian) {
+      out.write((byte)((l >> 56) & 0xff));
+      out.write((byte)((l >> 48) & 0xff));
+      out.write((byte)((l >> 40) & 0xff));
+      out.write((byte)((l >> 32) & 0xff));
+      out.write((byte)((l >> 24) & 0xff));
+      out.write((byte)((l >> 16) & 0xff));
+      out.write((byte)((l >> 8) & 0xff));
+      out.write((byte)(l & 0xff));
+    }
+    else {
+      out.write((byte)(l & 0xff));
+      out.write((byte)((l >> 8) & 0xff));
+      out.write((byte)((l >> 16) & 0xff));
+      out.write((byte)((l >> 24) & 0xff));
+      out.write((byte)((l >> 32) & 0xff));
+      out.write((byte)((l >> 40) & 0xff));
+      out.write((byte)((l >> 48) & 0xff));
+      out.write((byte)((l >> 56) & 0xff));
+    }
   }
 
   /**
@@ -551,8 +743,7 @@ public final class Streams {
         snk.flush();
       }
       else {
-        while ((len = src.read(bytes)) != -1)
-          ;
+        while ((len = src.read(bytes)) != -1);
       }
 
       if (onExit != null)
