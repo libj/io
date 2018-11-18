@@ -510,7 +510,7 @@ public final class Streams {
    *           than the end of the file, if the input stream has been closed, or
    *           if some other I/O error occurs.
    * @throws NullPointerException If {@code in} is null.
-   * @see java.io.InputStream#read(byte[])
+   * @see InputStream#read(byte[])
    */
   public static byte[] readBytes(final InputStream in) throws IOException {
     if (in == null)

@@ -364,7 +364,7 @@ public class ReplayInputStream extends FilterInputStream {
    *
    * @return An estimate of the number of bytes that can be read (or skipped
    *         over) from this input stream without blocking.
-   * @throws IOException if an I/O error has occurred.
+   * @throws IOException If an I/O error has occurred.
    */
   @Override
   public int available() throws IOException {

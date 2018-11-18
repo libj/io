@@ -154,8 +154,8 @@ public final class FastFiles {
    * @param options Options specifying how the copy should be done.
    * @return The path to the target file.
    * @throws IOException If an I/O error has occurred.
-   * @throws UnsupportedOperationException if the array contains a copy option
-   *           that is not supported
+   * @throws UnsupportedOperationException If the array contains a copy option
+   *           that is not supported.
    * @throws FileAlreadyExistsException If the target file exists but cannot be
    *           replaced because the {@code REPLACE_EXISTING} option is not
    *           specified <i>(optional specific exception)</i>.
