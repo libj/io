@@ -255,14 +255,16 @@ public class ReplayReader extends FilterReader {
   }
 
   protected final ReadbackCharArrayWriter buffer;
-  private boolean closed;
+  protected boolean closed;
 
   /**
-   * Creates a new ReplayReader.
+   * Creates a new {@code ReplayReader} using the specified reader as its
+   * source, and the provided initial size for the re-readable buffer.
    *
    * @param in A Reader object providing the underlying stream.
    * @param initialSize An int specifying the initial buffer size of the
    *          re-readable buffer.
+   * @throws IllegalArgumentException If {@code initialSize} is negative.
    * @throws NullPointerException If {@code in} is null.
    */
   public ReplayReader(final Reader in, final int initialSize) {
@@ -271,7 +273,8 @@ public class ReplayReader extends FilterReader {
   }
 
   /**
-   * Creates a new ReplayReader.
+   * Creates a new {@code ReplayReader} using the specified reader as its
+   * source, and default initial size of 32 for the re-readable buffer.
    *
    * @param in A Reader object providing the underlying stream.
    * @throws NullPointerException If {@code in} is null.

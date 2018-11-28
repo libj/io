@@ -219,11 +219,13 @@ public class ReplayInputStream extends FilterInputStream {
   private boolean closed;
 
   /**
-   * Creates a new ReplayInputStream.
+   * Creates a new {@code ReplayInputStream} using the specified reader as its
+   * source, and the provided initial size for the re-readable buffer.
    *
    * @param in An InputStream object providing the underlying stream.
    * @param initialSize An int specifying the initial buffer size of the
    *          re-readable buffer.
+   * @throws IllegalArgumentException If {@code initialSize} is negative.
    * @throws NullPointerException If {@code in} is null.
    */
   public ReplayInputStream(final InputStream in, final int initialSize) {
@@ -232,9 +234,10 @@ public class ReplayInputStream extends FilterInputStream {
   }
 
   /**
-   * Creates a new ReplayInputStream.
+   * Creates a new {@code ReplayInputStream} using the specified reader as its
+   * source, and default initial size of 32 for the re-readable buffer.
    *
-   * @param in An InputStream object providing the underlying stream.
+   * @param in A Reader object providing the underlying stream.
    * @throws NullPointerException If {@code in} is null.
    */
   public ReplayInputStream(final InputStream in) {
