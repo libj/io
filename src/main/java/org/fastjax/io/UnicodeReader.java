@@ -181,7 +181,7 @@ public class UnicodeReader extends Reader {
         continue;
       }
 
-      if (value == 0xfeff || value == 0x0000feff)
+      if (value == 0xfeff)
         continue;
 
       return value;
