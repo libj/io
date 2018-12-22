@@ -14,6 +14,16 @@ IO is a supplementary extension to the `java.io` and `java.nio` packages.
 * **[TeeOutputStream](src/main/java/org/fastjax/io/TeeOutputStream.java)**: `java.io.OutputStream` that propagates its method calls to an array of output streams.
 * **[UnicodeReader](src/main/java/org/fastjax/io/UnicodeReader.java)**: A `java.io.Reader` for decoding streams of escaped unicode encoded strings.
 
+### JavaDocs
+
+JavaDocs are available [here](https://www.fastjax.org/javadocs/org/fastjax/io/package-summary.html).
+
+## Contributing
+
+Pull requests are welcome. For major changes, please open an issue first to discuss what you would like to change.
+
+Please make sure to update tests as appropriate.
+
 ### License
 
 This project is licensed under the MIT License - see the [LICENSE.txt](LICENSE.txt) file for details.
