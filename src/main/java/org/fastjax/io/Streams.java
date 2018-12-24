@@ -595,7 +595,7 @@ public final class Streams {
    * @param src The source {@code InputStream}.
    * @param snk The sink {@code OutputStream}.
    * @throws IOException If an I/O error has occurred.
-   * @throws NullPointerException If {@code src} or {@code snk} are null.
+   * @throws NullPointerException If {@code src} or {@code snk} is null.
    */
   public static void pipe(final InputStream src, final OutputStream snk) throws IOException {
     pipe(src, snk, false, true, null);
@@ -608,7 +608,7 @@ public final class Streams {
    * @param src The source {@code InputStream}.
    * @param snk The sink {@code OutputStream}.
    * @throws IOException If an I/O error has occurred.
-   * @throws NullPointerException If {@code src} or {@code snk} are null.
+   * @throws NullPointerException If {@code src} or {@code snk} is null.
    */
   public static void pipeAsync(final InputStream src, final OutputStream snk) throws IOException {
     pipeAsync(src, snk, null);
@@ -626,7 +626,7 @@ public final class Streams {
    *          completion (in which case null will be passed to the consumer
    *          instance).
    * @throws IOException If an I/O error has occurred.
-   * @throws NullPointerException If {@code src} or {@code snk} are null.
+   * @throws NullPointerException If {@code src} or {@code snk} is null.
    */
   public static void pipeAsync(final InputStream src, final OutputStream snk, final Consumer<IOException> onThreadExit) throws IOException {
     pipe(src, snk, false, false, onThreadExit);
@@ -640,7 +640,7 @@ public final class Streams {
    * @param snk The sink {@code OutputStream}.
    * @return The {@code InputStream} teed from {@code src}.
    * @throws IOException If an I/O error has occurred.
-   * @throws NullPointerException If {@code src} or {@code snk} are null.
+   * @throws NullPointerException If {@code src} or {@code snk} is null.
    */
   public static InputStream tee(final InputStream src, final OutputStream snk) throws IOException {
     return pipe(src, snk, true, true, null);
@@ -655,7 +655,7 @@ public final class Streams {
    * @param snk The sink {@code OutputStream}.
    * @return The {@code InputStream} teed from {@code src}.
    * @throws IOException If an I/O error has occurred.
-   * @throws NullPointerException If {@code src} or {@code snk} are null.
+   * @throws NullPointerException If {@code src} or {@code snk} is null.
    */
   public static InputStream teeAsync(final InputStream src, final OutputStream snk) throws IOException {
     return teeAsync(src, snk, null);
@@ -671,11 +671,11 @@ public final class Streams {
    * @param onThreadExit Consumer function that will be called when the thread
    *          exits, either (1) due to IOException (in which case the exception
    *          will be passed to the consumer instance), or (2) due to regular
-   *          completion (in which case null will be passed to the consumer
-   *          instance).
+   *          completion (in which case {@code null} will be passed to the
+   *          consumer instance).
    * @return The {@code InputStream} teed from {@code src}.
    * @throws IOException If an I/O error has occurred.
-   * @throws NullPointerException If {@code src} or {@code snk} are null.
+   * @throws NullPointerException If {@code src} or {@code snk} is null.
    */
   public static InputStream teeAsync(final InputStream src, final OutputStream snk, final Consumer<IOException> onThreadExit) throws IOException {
     return pipe(src, snk, true, false, onThreadExit);

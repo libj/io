@@ -16,6 +16,8 @@
 
 package org.fastjax.io;
 
+import static org.fastjax.util.function.Throwing.*;
+
 import java.io.File;
 import java.io.IOException;
 import java.nio.file.CopyOption;
@@ -170,7 +172,7 @@ public final class FastFiles {
    *           to check write access to the target file. If a symbolic link is
    *           copied the security manager is invoked to check
    *           {@link LinkPermission}{@code ("symbolic")}.
-   * @throws NullPointerException If {@code source} or {@code target} are null.
+   * @throws NullPointerException If {@code source} or {@code target} is null.
    * @see Files#copy(Path,Path,CopyOption...)
    */
   public static Path copyAll(final Path source, final Path target, final CopyOption ... options) throws IOException {
@@ -182,28 +184,15 @@ public final class FastFiles {
         if (options[i] == StandardCopyOption.REPLACE_EXISTING && !deleteAll(target))
           throw new DirectoryNotEmptyException(target.toString());
 
-    try {
-      Files.walk(source).forEach(s -> {
-        try {
-          final Path t = target.resolve(source.relativize(s));
-          if (Files.isRegularFile(s))
-            Files.copy(s, t, options);
-          else if (!Files.exists(t))
-            Files.createDirectory(t);
-        }
-        catch (final IOException e) {
-          throw new RuntimeException(e);
-        }
-      });
+    Files.walk(source).forEach(rethrow(s -> {
+      final Path t = target.resolve(source.relativize(s));
+      if (Files.isRegularFile(s))
+        Files.copy(s, t, options);
+      else if (!Files.exists(t))
+        Files.createDirectory(t);
+    }));
 
-      return target;
-    }
-    catch (final Exception e) {
-      if (RuntimeException.class.equals(e.getClass()) && e.getCause() instanceof IOException)
-        throw (IOException)e.getCause();
-
-      throw e;
-    }
+    return target;
   }
 
   /**
