@@ -16,7 +16,7 @@ IO is a supplementary extension to the `java.io` and `java.nio` packages.
 
 ### JavaDocs
 
-JavaDocs are available [here](https://www.fastjax.org/javadocs/org/fastjax/io/package-summary.html).
+JavaDocs are available [here](https://io.fastjax.org/javadocs/).
 
 ## Contributing
 
