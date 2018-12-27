@@ -27,6 +27,7 @@
   <artifactId>io</artifactId>
   <version>0.7.5-SNAPSHOT</version>
   <name>${project.groupId}:${project.artifactId}</name>
+  <url>https://io.fastjax.org/</url>
   <properties>
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
   </properties>
