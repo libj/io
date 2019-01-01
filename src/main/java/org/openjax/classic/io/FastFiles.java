@@ -1,4 +1,4 @@
-/* Copyright (c) 2006 FastJAX
+/* Copyright (c) 2006 OpenJAX
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -14,9 +14,9 @@
  * program. If not, see <http://opensource.org/licenses/MIT/>.
  */
 
-package org.fastjax.io;
+package org.openjax.classic.io;
 
-import static org.fastjax.util.function.Throwing.*;
+import static org.openjax.classic.util.function.Throwing.*;
 
 import java.io.File;
 import java.io.IOException;
@@ -30,7 +30,7 @@ import java.nio.file.Path;
 import java.nio.file.StandardCopyOption;
 import java.nio.file.StandardOpenOption;
 
-import org.fastjax.util.Paths;
+import org.openjax.classic.util.Paths;
 
 /**
  * Utility functions for operations pertaining to {@link File} and {@link Path}.
