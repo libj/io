@@ -20,22 +20,22 @@
   xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
   <modelVersion>4.0.0</modelVersion>
   <parent>
-    <groupId>org.openjax.classic</groupId>
-    <artifactId>classic</artifactId>
+    <groupId>org.openjax.standard</groupId>
+    <artifactId>standard</artifactId>
     <version>1.11.15-SNAPSHOT</version>
   </parent>
-  <artifactId>classic-io</artifactId>
+  <artifactId>standard-io</artifactId>
   <version>0.7.5-SNAPSHOT</version>
   <name>${project.groupId}:${project.artifactId}</name>
   <dependencies>
     <dependency>
-      <groupId>org.openjax.classic</groupId>
-      <artifactId>classic-util</artifactId>
+      <groupId>org.openjax.standard</groupId>
+      <artifactId>standard-util</artifactId>
       <version>0.7.9-SNAPSHOT</version>
     </dependency>
     <dependency>
-      <groupId>org.openjax.classic</groupId>
-      <artifactId>classic-test</artifactId>
+      <groupId>org.openjax.standard</groupId>
+      <artifactId>standard-test</artifactId>
       <version>0.6.9-SNAPSHOT</version>
     </dependency>
   </dependencies>

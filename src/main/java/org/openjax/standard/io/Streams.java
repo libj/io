@@ -14,7 +14,7 @@
  * program. If not, see <http://opensource.org/licenses/MIT/>.
  */
 
-package org.openjax.classic.io;
+package org.openjax.standard.io;
 
 import java.io.ByteArrayOutputStream;
 import java.io.DataOutput;
