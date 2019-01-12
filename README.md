@@ -1,6 +1,8 @@
 # OpenJAX Standard IO
 
-**Java API Extensions for IO**
+> Java API Extensions for IO
+
+[![Build Status](https://travis-ci.org/openjax/standard-io.png)](https://travis-ci.org/openjax/standard-io)
 
 IO is a supplementary extension to the `java.io` and `java.nio` packages.
 
