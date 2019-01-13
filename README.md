@@ -3,6 +3,7 @@
 > Java API Extensions for IO
 
 [![Build Status](https://travis-ci.org/openjax/standard-io.png)](https://travis-ci.org/openjax/standard-io)
+[![Coverage Status](https://coveralls.io/repos/github/openjax/standard-io/badge.svg)](https://coveralls.io/github/openjax/standard-io)
 
 IO is a supplementary extension to the `java.io` and `java.nio` packages.
 
