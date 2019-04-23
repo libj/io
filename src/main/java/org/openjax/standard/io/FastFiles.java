@@ -40,8 +40,6 @@ public final class FastFiles {
   private static File TEMP_DIR;
 
   /**
-   * Returns the current working directory.
-   *
    * @return The current working directory.
    */
   public static File getCwd() {
@@ -49,8 +47,6 @@ public final class FastFiles {
   }
 
   /**
-   * Returns the default path the JVM uses to store temporary files.
-   *
    * @return The default path the JVM uses to store temporary files.
    */
   public static File getTempDir() {
@@ -203,6 +199,7 @@ public final class FastFiles {
    * @return A {@code File} having a path that is common to the argument
    *         {@code files}.
    * @throws IllegalArgumentException If {@code files.length == 0}.
+   * @throws NullPointerException If {@code files} is null.
    */
   public static File commonality(final File ... files) {
     if (files.length == 0)
