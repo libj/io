@@ -90,6 +90,7 @@ public class ReplayInputStream extends FilterInputStream {
      * @param b Destination buffer.
      * @return The number of bytes read, or -1 if the end of the stream has been
      *         reached.
+     * @throws NullPointerException If {@code b} is null.
      */
     public int read(final byte[] b) {
       return read(b, 0, b.length);
@@ -106,6 +107,7 @@ public class ReplayInputStream extends FilterInputStream {
      * @throws IndexOutOfBoundsException If {@code off} is negative, or
      *           {@code len} is negative, or {@code len} is greater than
      *           {@code b.length - off}.
+     * @throws NullPointerException If {@code b} is null.
      */
     public int read(final byte[] b, final int off, final int len) {
       if (count >= total)
@@ -282,6 +284,7 @@ public class ReplayInputStream extends FilterInputStream {
    * @return The number of bytes read, or -1 if the end of the stream has been
    *         reached.
    * @throws IOException If an I/O error has occurred.
+   * @throws NullPointerException If {@code b} is null.
    */
   @Override
   public int read(final byte[] b) throws IOException {
@@ -305,6 +308,7 @@ public class ReplayInputStream extends FilterInputStream {
    * @throws IndexOutOfBoundsException If {@code off} is negative, or
    *           {@code len} is negative, or {@code len} is greater than
    *           {@code b.length - off}.
+   * @throws NullPointerException If {@code b} is null.
    */
   @Override
   public int read(final byte[] b, final int off, final int len) throws IOException {

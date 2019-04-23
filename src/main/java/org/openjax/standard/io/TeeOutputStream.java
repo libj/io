@@ -33,6 +33,7 @@ public class TeeOutputStream extends OutputStream {
    *          propagated.
    * @throws IllegalArgumentException If {@code streams.length == 0} or if any
    *           of the output streams in the {@code streams} array is null.
+   * @throws NullPointerException If {@code streams} is null.
    */
   public TeeOutputStream(final OutputStream ... streams) {
     if (streams.length == 0)

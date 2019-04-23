@@ -74,8 +74,7 @@ public class UnicodeReader extends Reader {
   private boolean flush = false;
 
   public UnicodeReader(final InputStream reader) {
-    Objects.requireNonNull(reader);
-    this.reader = reader;
+    this.reader = Objects.requireNonNull(reader);
   }
 
   /**

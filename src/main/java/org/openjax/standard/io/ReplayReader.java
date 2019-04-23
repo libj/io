@@ -129,6 +129,7 @@ public class ReplayReader extends FilterReader {
      * @param cbuf Destination buffer.
      * @return The number of characters read, or -1 if the end of the stream has
      *         been reached.
+     * @throws NullPointerException If {@code cbuf} is null.
      */
     public int read(final char[] cbuf) {
       return read(cbuf, 0, cbuf.length);
@@ -145,6 +146,7 @@ public class ReplayReader extends FilterReader {
      * @throws IndexOutOfBoundsException If {@code off} is negative, or
      *           {@code len} is negative, or {@code len} is greater than
      *           {@code cbuf.length - off}.
+     * @throws NullPointerException If {@code cbuf} is null.
      */
     public int read(final char[] cbuf, final int off, final int len) {
       if (count >= total)
@@ -340,6 +342,7 @@ public class ReplayReader extends FilterReader {
    * @return The number of characters read, or -1 if the end of the stream has
    *         been reached.
    * @throws IOException If an I/O error has occurred.
+   * @throws NullPointerException If {@code cbuf} is null.
    */
   @Override
   public int read(final char[] cbuf) throws IOException {
@@ -363,6 +366,7 @@ public class ReplayReader extends FilterReader {
    * @throws IndexOutOfBoundsException If {@code off} is negative, or
    *           {@code len} is negative, or {@code len} is greater than
    *           {@code cbuf.length - off}.
+   * @throws NullPointerException If {@code cbuf} is null.
    */
   @Override
   public int read(final char[] cbuf, final int off, final int len) throws IOException {
