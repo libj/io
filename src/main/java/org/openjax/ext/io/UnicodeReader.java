@@ -14,7 +14,7 @@
  * program. If not, see <http://opensource.org/licenses/MIT/>.
  */
 
-package org.openjax.standard.io;
+package org.openjax.ext.io;
 
 import java.io.IOException;
 import java.io.InputStream;

@@ -1,23 +1,23 @@
-# OpenJAX Standard IO
+# OpenJAX Extensions IO
 
 > Java API Extensions for IO
 
-[![Build Status](https://travis-ci.org/openjax/standard-io.png)](https://travis-ci.org/openjax/standard-io)
-[![Coverage Status](https://coveralls.io/repos/github/openjax/standard-io/badge.svg)](https://coveralls.io/github/openjax/standard-io)
-[![Javadocs](https://www.javadoc.io/badge/org.openjax.standard/io.svg)](https://www.javadoc.io/doc/org.openjax.standard/io)
-[![Released Version](https://img.shields.io/maven-central/v/org.openjax.standard/io.svg)](https://mvnrepository.com/artifact/org.openjax.standard/io)
+[![Build Status](https://travis-ci.org/openjax/ext-io.png)](https://travis-ci.org/openjax/ext-io)
+[![Coverage Status](https://coveralls.io/repos/github/openjax/ext-io/badge.svg)](https://coveralls.io/github/openjax/ext-io)
+[![Javadocs](https://www.javadoc.io/badge/org.openjax.ext/io.svg)](https://www.javadoc.io/doc/org.openjax.ext/io)
+[![Released Version](https://img.shields.io/maven-central/v/org.openjax.ext/io.svg)](https://mvnrepository.com/artifact/org.openjax.ext/io)
 
 IO is a supplementary extension to the `java.io` and `java.nio` packages.
 
 ## Classes
 
-* **[FastFiles](src/main/java/org/openjax/standard/io/FastFiles.java)**: Utility functions for operations pertaining to `java.io.File` and `java.nio.file.Path`.
-* **[Readers](src/main/java/org/openjax/standard/io/Readers.java)**: Utility functions for operations pertaining to `java.io.Reader`.
-* **[ReplayInputStream](src/main/java/org/openjax/standard/io/ReplayInputStream.java)**: Implementation of a FilterInputStream that allows its content to be re-read.
-* **[ReplayReader](src/main/java/org/openjax/standard/io/ReplayReader.java)**: Implementation of a FilterReader that allows its content to be re-read.
-* **[Streams](src/main/java/org/openjax/standard/io/Streams.java)**: Utility functions for operations pertaining to `java.io.InputStream` and `java.io.OutputStream`.
-* **[TeeOutputStream](src/main/java/org/openjax/standard/io/TeeOutputStream.java)**: `java.io.OutputStream` that propagates its method calls to an array of output streams.
-* **[UnicodeReader](src/main/java/org/openjax/standard/io/UnicodeReader.java)**: A `java.io.Reader` for decoding streams of escaped unicode encoded strings.
+* **[FastFiles](src/main/java/org/openjax/ext/io/FastFiles.java)**: Utility functions for operations pertaining to `java.io.File` and `java.nio.file.Path`.
+* **[Readers](src/main/java/org/openjax/ext/io/Readers.java)**: Utility functions for operations pertaining to `java.io.Reader`.
+* **[ReplayInputStream](src/main/java/org/openjax/ext/io/ReplayInputStream.java)**: Implementation of a FilterInputStream that allows its content to be re-read.
+* **[ReplayReader](src/main/java/org/openjax/ext/io/ReplayReader.java)**: Implementation of a FilterReader that allows its content to be re-read.
+* **[Streams](src/main/java/org/openjax/ext/io/Streams.java)**: Utility functions for operations pertaining to `java.io.InputStream` and `java.io.OutputStream`.
+* **[TeeOutputStream](src/main/java/org/openjax/ext/io/TeeOutputStream.java)**: `java.io.OutputStream` that propagates its method calls to an array of output streams.
+* **[UnicodeReader](src/main/java/org/openjax/ext/io/UnicodeReader.java)**: A `java.io.Reader` for decoding streams of escaped unicode encoded strings.
 
 ## Contributing
 

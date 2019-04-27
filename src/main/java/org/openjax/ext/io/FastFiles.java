@@ -14,9 +14,9 @@
  * program. If not, see <http://opensource.org/licenses/MIT/>.
  */
 
-package org.openjax.standard.io;
+package org.openjax.ext.io;
 
-import static org.openjax.standard.util.function.Throwing.*;
+import static org.openjax.ext.util.function.Throwing.*;
 
 import java.io.File;
 import java.io.IOException;
@@ -30,7 +30,7 @@ import java.nio.file.Path;
 import java.nio.file.StandardCopyOption;
 import java.nio.file.StandardOpenOption;
 
-import org.openjax.standard.util.Paths;
+import org.openjax.ext.util.Paths;
 
 /**
  * Utility functions for operations pertaining to {@link File} and {@link Path}.

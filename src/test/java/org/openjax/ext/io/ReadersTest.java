@@ -14,7 +14,7 @@
  * program. If not, see <http://opensource.org/licenses/MIT/>.
  */
 
-package org.openjax.standard.io;
+package org.openjax.ext.io;
 
 import static org.junit.Assert.*;
 
@@ -22,7 +22,7 @@ import java.io.IOException;
 import java.io.StringReader;
 
 import org.junit.Test;
-import org.openjax.standard.util.Strings;
+import org.openjax.ext.util.Strings;
 
 public class ReadersTest {
   @Test
