@@ -4,6 +4,8 @@
 
 [![Build Status](https://travis-ci.org/openjax/standard-io.png)](https://travis-ci.org/openjax/standard-io)
 [![Coverage Status](https://coveralls.io/repos/github/openjax/standard-io/badge.svg)](https://coveralls.io/github/openjax/standard-io)
+[![Javadocs](https://www.javadoc.io/badge/org.openjax.standard/io.svg)](https://www.javadoc.io/doc/org.openjax.standard/io)
+[![Released Version](https://img.shields.io/maven-central/v/org.openjax.standard/io.svg)](https://mvnrepository.com/artifact/org.openjax.standard/io)
 
 IO is a supplementary extension to the `java.io` and `java.nio` packages.
 
@@ -16,10 +18,6 @@ IO is a supplementary extension to the `java.io` and `java.nio` packages.
 * **[Streams](src/main/java/org/openjax/standard/io/Streams.java)**: Utility functions for operations pertaining to `java.io.InputStream` and `java.io.OutputStream`.
 * **[TeeOutputStream](src/main/java/org/openjax/standard/io/TeeOutputStream.java)**: `java.io.OutputStream` that propagates its method calls to an array of output streams.
 * **[UnicodeReader](src/main/java/org/openjax/standard/io/UnicodeReader.java)**: A `java.io.Reader` for decoding streams of escaped unicode encoded strings.
-
-### JavaDocs
-
-JavaDocs are available [here](https://standard.openjax.org/io/apidocs/).
 
 ## Contributing
 
