@@ -26,7 +26,10 @@
   </parent>
   <artifactId>io</artifactId>
   <version>0.7.5-SNAPSHOT</version>
-  <name>${project.groupId}:${project.artifactId}</name>
+  <name>OpenJAX Extensions IO</name>
+  <description>
+    A supplementary extension to the java.io and java.nio packages.
+  </description>
   <dependencies>
     <dependency>
       <groupId>org.openjax.ext</groupId>
