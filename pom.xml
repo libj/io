@@ -28,7 +28,7 @@
   <version>0.7.5-SNAPSHOT</version>
   <name>LibJ IO</name>
   <description>
-    A supplementary extension to the java.io and java.nio packages.
+    Supplementary extensions to the java.io and java.nio packages.
   </description>
   <dependencies>
     <dependency>
