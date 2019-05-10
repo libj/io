@@ -35,7 +35,7 @@ import org.libj.util.Paths;
 /**
  * Utility functions for operations pertaining to {@link File} and {@link Path}.
  */
-public final class FastFiles {
+public final class FileUtil {
   private static File CWD;
   private static File TEMP_DIR;
 
@@ -240,6 +240,6 @@ public final class FastFiles {
     return index == -1 ? name : name.substring(0, index);
   }
 
-  private FastFiles() {
+  private FileUtil() {
   }
 }
