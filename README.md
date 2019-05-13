@@ -1,7 +1,5 @@
 # LibJ IO
 
-> Java API Extensions for IO
-
 [![Build Status](https://travis-ci.org/libj/io.png)](https://travis-ci.org/libj/io)
 [![Coverage Status](https://coveralls.io/repos/github/libj/io/badge.svg)](https://coveralls.io/github/libj/io)
 [![Javadocs](https://www.javadoc.io/badge/org.libj/io.svg)](https://www.javadoc.io/doc/org.libj/io)
