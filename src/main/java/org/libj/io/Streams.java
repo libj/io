@@ -513,9 +513,6 @@ public final class Streams {
    * @see InputStream#read(byte[])
    */
   public static byte[] readBytes(final InputStream in) throws IOException {
-    if (in == null)
-      return null;
-
     final ByteArrayOutputStream buffer = new ByteArrayOutputStream(DEFAULT_SOCKET_BUFFER_SIZE);
     final byte[] data = new byte[DEFAULT_SOCKET_BUFFER_SIZE];
     for (int length; (length = in.read(data)) != -1; buffer.write(data, 0, length));
@@ -574,7 +571,7 @@ public final class Streams {
       }
     }) {
       final InputStream pipedIn = new PipedInputStream(pipedOut, DEFAULT_SOCKET_BUFFER_SIZE);
-      for (int i = 0; i < streams.length; ++i)
+      for (int i = 0; i < streams.length; ++i) {
         Streams.pipe(streams[i], pipedOut, false, sync, p -> {
           try {
             pipedOut.close();
@@ -583,6 +580,7 @@ public final class Streams {
             logger.debug(e.getMessage(), e);
           }
         });
+      }
 
       return pipedIn;
     }

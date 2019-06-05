@@ -29,14 +29,14 @@ import java.io.Reader;
  */
 public class ReplayReader extends FilterReader {
   /**
-   * A character writer that exposes readback APIs.
+   * A character writer with readback APIs.
    */
   protected class ReadbackCharArrayWriter extends CharArrayWriter {
     private int total;
     private int mark;
 
     /**
-     * Creates a new ReadbackCharArrayWriter with the specified initial size.
+     * Creates a new {@code ReadbackCharArrayWriter} with the specified initial size.
      *
      * @param initialSize An int specifying the initial buffer size.
      * @throws IllegalArgumentException If initialSize is negative.
@@ -46,15 +46,13 @@ public class ReplayReader extends FilterReader {
     }
 
     /**
-     * Creates a new ReadbackCharArrayWriter.
+     * Creates a new {@code ReadbackCharArrayWriter}.
      */
     public ReadbackCharArrayWriter() {
       super();
     }
 
     /**
-     * Returns the buffer where data is stored.
-     *
      * @return The buffer where data is stored.
      */
     public char[] buf() {
@@ -193,8 +191,6 @@ public class ReplayReader extends FilterReader {
     }
 
     /**
-     * Returns the number of characters available to read from the buffer.
-     *
      * @return The number of characters available to read from the buffer.
      */
     public int available() {

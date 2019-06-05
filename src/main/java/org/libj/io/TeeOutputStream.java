@@ -20,7 +20,7 @@ import java.io.IOException;
 import java.io.OutputStream;
 
 /**
- * {@link OutputStream} that propagates its method calls to an array of output
+ * {@link OutputStream} that delegates its method calls to an array of output
  * streams.
  */
 public class TeeOutputStream extends OutputStream {
@@ -30,14 +30,14 @@ public class TeeOutputStream extends OutputStream {
    * Construct a new {@code TeeOutputStream}.
    *
    * @param streams The streams to which this stream's method calls will be
-   *          propagated.
-   * @throws IllegalArgumentException If {@code streams.length == 0} or if any
-   *           of the output streams in the {@code streams} array is null.
+   *          delegated.
+   * @throws IllegalArgumentException If {@code streams} is empty, or if any
+   *           stream in the {@code streams} array is null.
    * @throws NullPointerException If {@code streams} is null.
    */
   public TeeOutputStream(final OutputStream ... streams) {
     if (streams.length == 0)
-      throw new IllegalArgumentException("streams.length == 0");
+      throw new IllegalArgumentException("Empty array");
 
     for (int i = 0; i < streams.length; ++i)
       if (streams[i] == null)

@@ -20,23 +20,44 @@ import static org.junit.Assert.*;
 
 import java.io.ByteArrayInputStream;
 import java.io.IOException;
+import java.io.InputStream;
 import java.io.Reader;
+import java.io.StringReader;
 
 import org.junit.Test;
 
 public class UnicodeReaderTest {
-  private static void test(final String expected, final String test) throws IOException {
+  private static void testInputStream(final String expected, final String test) throws IOException {
     try (final Reader reader = new UnicodeReader(new ByteArrayInputStream(test.getBytes()))) {
       final String actual = Math.random() < 0.5 ? Readers.readFully(reader) : Readers.readFully(reader, 1 + (int)(Math.random() * 50));
       assertEquals(expected, actual);
     }
   }
 
+  private static void testReader(final String expected, final String test) throws IOException {
+    try (final Reader reader = new UnicodeReader(new StringReader(test))) {
+      final String actual = Math.random() < 0.5 ? Readers.readFully(reader) : Readers.readFully(reader, 1 + (int)(Math.random() * 50));
+      assertEquals(expected, actual);
+    }
+  }
+
+  private static void test(final String expected, final String test) throws IOException {
+    testInputStream(expected, test);
+    testReader(expected, test);
+  }
+
   @Test
   @SuppressWarnings({"resource", "unused"})
   public void testExceptions() {
     try {
-      new UnicodeReader(null);
+      new UnicodeReader((InputStream)null);
+      fail("Expected NullPointerException");
+    }
+    catch (final NullPointerException e) {
+    }
+
+    try {
+      new UnicodeReader((Reader)null);
       fail("Expected NullPointerException");
     }
     catch (final NullPointerException e) {

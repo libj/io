@@ -62,7 +62,8 @@ public class UnicodeReader extends Reader {
     return 4 * (i % 2 == 0 ? (i - 1) * ((i - 1) % 2) : (i - 3) * (i % 2));
   }
 
-  private final InputStream reader;
+  private final InputStream in;
+  private final Reader reader;
   private final int[] buf = new int[9];
 
   private int limit = buf.length;
@@ -73,7 +74,25 @@ public class UnicodeReader extends Reader {
   private boolean le32 = false;
   private boolean flush = false;
 
-  public UnicodeReader(final InputStream reader) {
+  /**
+   * Creates a new {@code UnicodeReader} with the specified {@code InputStream}.
+   *
+   * @param in The {@code InputStream}.
+   * @throws NullPointerException If the specified {@code InputStream} is null.
+   */
+  public UnicodeReader(final InputStream in) {
+    this.in = Objects.requireNonNull(in);
+    this.reader = null;
+  }
+
+  /**
+   * Creates a new {@code UnicodeReader} with the specified {@code Reader}.
+   *
+   * @param reader The {@code Reader}.
+   * @throws NullPointerException If the specified {@code Reader} is null.
+   */
+  public UnicodeReader(final Reader reader) {
+    this.in = null;
     this.reader = Objects.requireNonNull(reader);
   }
 
@@ -87,6 +106,15 @@ public class UnicodeReader extends Reader {
     index = 0;
     flush = true;
     return ch;
+  }
+
+  /**
+   * @return The next character from the underlying {@code InputStream} or
+   *         {@code Reader}.
+   * @throws IOException If an I/O error has occurred.
+   */
+  private int _read() throws IOException {
+    return in != null ? in.read() : reader.read();
   }
 
   /**
@@ -110,7 +138,7 @@ public class UnicodeReader extends Reader {
         next = -2;
       }
       else {
-        ch0 = reader.read();
+        ch0 = _read();
       }
 
       if (ch0 != '\\')
@@ -122,14 +150,14 @@ public class UnicodeReader extends Reader {
           buf[i++] = buf[index++];
 
       index = i;
-      int ch1 = reader.read();
+      int ch1 = _read();
       buf[index++] = ch1;
       if (ch1 != 'u') {
         limit = index;
         return abort(ch0);
       }
 
-      while (index < buf.length && (next = ch1 = reader.read()) != -1 && ('0' <= ch1 && ch1 <= '9' || 'a' <= ch1 && ch1 <= 'f' || 'A' <= ch1 && ch1 <= 'F'))
+      while (index < buf.length && (next = ch1 = _read()) != -1 && ('0' <= ch1 && ch1 <= '9' || 'a' <= ch1 && ch1 <= 'f' || 'A' <= ch1 && ch1 <= 'F'))
         buf[index++] = ch1;
 
       if (index == buf.length)
@@ -207,6 +235,6 @@ public class UnicodeReader extends Reader {
 
   @Override
   public void close() throws IOException {
-    reader.close();
+    (in != null ? in : reader).close();
   }
 }

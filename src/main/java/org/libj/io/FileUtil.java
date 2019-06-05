@@ -53,12 +53,7 @@ public final class FileUtil {
     return TEMP_DIR == null ? TEMP_DIR = new File(System.getProperty("java.io.tmpdir")) : TEMP_DIR;
   }
 
-  private static final DirectoryStream.Filter<Path> anyStreamFilter = new DirectoryStream.Filter<Path>() {
-    @Override
-    public boolean accept(final Path entry) {
-      return true;
-    }
-  };
+  private static final DirectoryStream.Filter<Path> anyStreamFilter = p -> true;
 
   private static void delete(final Path path, final boolean onExit) throws IOException {
     if (onExit)
@@ -97,6 +92,17 @@ public final class FileUtil {
   }
 
   /**
+   * Register a path to be recursively deleted when the JVM exits.
+   *
+   * @param path The path to delete recursively.
+   * @throws IOException If an I/O error has occurred.
+   * @throws NullPointerException If {@code path} is null.
+   */
+  public static void deleteAllOnExit(final Path path) throws IOException {
+    deleteAll(path, anyStreamFilter, true);
+  }
+
+  /**
    * Delete a path recursively. Only the paths that pass the {@code filter} will
    * be deleted.
    *
@@ -111,17 +117,6 @@ public final class FileUtil {
   public static boolean deleteAll(final Path path, final DirectoryStream.Filter<Path> filter) throws IOException {
     deleteAll(path, filter != null ? filter : anyStreamFilter, false);
     return !Files.exists(path);
-  }
-
-  /**
-   * Register a path to be recursively deleted when the JVM exits.
-   *
-   * @param path The path to delete recursively.
-   * @throws IOException If an I/O error has occurred.
-   * @throws NullPointerException If {@code path} is null.
-   */
-  public static void deleteAllOnExit(final Path path) throws IOException {
-    deleteAll(path, anyStreamFilter, true);
   }
 
   /**
@@ -228,7 +223,7 @@ public final class FileUtil {
 
   /**
    * Returns the "short name" of {@code file}. The "short name" is the name of a
-   * file not including the dot and extension, if present.
+   * file not including the last dot and extension, if present.
    *
    * @param file The {@code File}.
    * @return The "short name" of {@code file}.
@@ -236,7 +231,7 @@ public final class FileUtil {
    */
   public static String getShortName(final File file) {
     final String name = file.getName();
-    final int index = name.indexOf('.');
+    final int index = name.lastIndexOf('.');
     return index == -1 ? name : name.substring(0, index);
   }
 

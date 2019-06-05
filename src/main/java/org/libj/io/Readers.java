@@ -49,7 +49,7 @@ public final class Readers {
    */
   public static String readFully(final Reader reader, final int bufferSize) throws IOException {
     if (bufferSize <= 0)
-      throw new IllegalArgumentException("bufferSize <= 0: " + bufferSize);
+      throw new IllegalArgumentException("Buffer size (" + bufferSize + ") must be greater or equal to 0");
 
     final StringBuilder builder = new StringBuilder();
     final char[] cbuf = new char[bufferSize];

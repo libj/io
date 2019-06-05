@@ -29,15 +29,15 @@ import java.io.InputStream;
  */
 public class ReplayInputStream extends FilterInputStream {
   /**
-   * A byte array output stream that exposes readback APIs.
+   * A byte array output stream with readback APIs.
    */
   protected class ReadbackByteArrayOutputStream extends ByteArrayOutputStream {
     private int total;
     private int mark;
 
     /**
-     * Creates a new ReadbackByteArrayOutputStream with the specified initial
-     * size.
+     * Creates a new {@code ReadbackByteArrayOutputStream} with the specified
+     * initial size.
      *
      * @param initialSize An int specifying the initial buffer size.
      * @throws IllegalArgumentException If initialSize is negative.
@@ -47,15 +47,13 @@ public class ReplayInputStream extends FilterInputStream {
     }
 
     /**
-     * Creates a new ReadbackByteArrayOutputStream.
+     * Creates a new {@code ReadbackByteArrayOutputStream}.
      */
     public ReadbackByteArrayOutputStream() {
       super();
     }
 
     /**
-     * Returns the buffer where data is stored.
-     *
      * @return The buffer where data is stored.
      */
     public byte[] buf() {
@@ -154,8 +152,6 @@ public class ReplayInputStream extends FilterInputStream {
     }
 
     /**
-     * Returns the number of bytes available to read from the buffer.
-     *
      * @return The number of bytes available to read from the buffer.
      */
     public int available() {
