@@ -24,6 +24,20 @@ import org.junit.Test;
 
 public class FileUtilTest {
   @Test
+  public void testGetCwd() {
+    final File cwd = FileUtil.getCwd();
+    assertNotNull(cwd);
+    assertSame(cwd, FileUtil.getCwd());
+  }
+
+  @Test
+  public void testGetTempDir() {
+    final File tmp = FileUtil.getTempDir();
+    assertNotNull(tmp);
+    assertSame(tmp, FileUtil.getTempDir());
+  }
+
+  @Test
   public void testCommonality() {
     try {
       FileUtil.commonality();
