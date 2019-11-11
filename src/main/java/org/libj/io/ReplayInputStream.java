@@ -314,7 +314,7 @@ public class ReplayInputStream extends FilterInputStream {
 
     if (avail > 0) {
       buffer.read(b, off, avail);
-      for (int ch; avail < b.length && (ch = read()) != -1; b[avail++] = (byte)ch);
+      for (int ch; avail < b.length && (ch = read()) != -1; b[off + avail++] = (byte)ch);
       return avail;
     }
 
