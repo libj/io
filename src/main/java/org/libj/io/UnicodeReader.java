@@ -22,9 +22,9 @@ import java.io.Reader;
 import java.util.Objects;
 
 /**
- * A {@code Reader} for decoding streams of escaped unicode encoded strings
+ * A {@link Reader} for decoding streams of escaped unicode encoded strings
  * (i.e. {@code "\\u48\\u65\\u6C\\u6C\\u6F"} -&gt; {@code "Hello"}). The
- * {@code UnicodeReader} supports:
+ * {@link UnicodeReader} supports:
  * <ul>
  * <li>{@code UTF-8}, {@code UTF-16be}, {@code UTF-16le}, {@code UTF-32be} and
  * {@code UTF-32le} encoded strings, and detects BOM (Byte Order Mark)
@@ -75,10 +75,10 @@ public class UnicodeReader extends Reader {
   private boolean flush = false;
 
   /**
-   * Creates a new {@code UnicodeReader} with the specified {@code InputStream}.
+   * Creates a new {@link UnicodeReader} with the specified {@link InputStream}.
    *
-   * @param in The {@code InputStream}.
-   * @throws NullPointerException If the specified {@code InputStream} is null.
+   * @param in The {@link InputStream}.
+   * @throws NullPointerException If the specified {@link InputStream} is null.
    */
   public UnicodeReader(final InputStream in) {
     this.in = Objects.requireNonNull(in);
@@ -86,10 +86,10 @@ public class UnicodeReader extends Reader {
   }
 
   /**
-   * Creates a new {@code UnicodeReader} with the specified {@code Reader}.
+   * Creates a new {@link UnicodeReader} with the specified {@link Reader}.
    *
-   * @param reader The {@code Reader}.
-   * @throws NullPointerException If the specified {@code Reader} is null.
+   * @param reader The {@link Reader}.
+   * @throws NullPointerException If the specified {@link Reader} is null.
    */
   public UnicodeReader(final Reader reader) {
     this.in = null;
@@ -109,8 +109,8 @@ public class UnicodeReader extends Reader {
   }
 
   /**
-   * @return The next character from the underlying {@code InputStream} or
-   *         {@code Reader}.
+   * @return The next character from the underlying {@link InputStream} or
+   *         {@link Reader}.
    * @throws IOException If an I/O error has occurred.
    */
   private int _read() throws IOException {

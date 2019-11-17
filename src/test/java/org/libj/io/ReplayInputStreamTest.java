@@ -28,21 +28,21 @@ public class ReplayInputStreamTest {
   @SuppressWarnings("resource")
   public void test() throws IOException {
     final byte[] array = new byte[26];
-    for (int i = 0; i < array.length; i++)
+    for (int i = 0; i < array.length; ++i)
       array[i] = (byte)('a' + i);
 
-    final ReplayInputStream reader = new ReplayInputStream(new ByteArrayInputStream(array));
+    final ReplayInputStream in = new ReplayInputStream(new ByteArrayInputStream(array));
     try {
-      reader.buffer.reset(-1);
+      in.buffer.reset(-1);
       fail("Expected IllegalArgumentException");
     }
     catch (final IllegalArgumentException e) {
     }
 
     // Read 1
-    assertEquals('a', reader.read());
+    assertEquals('a', in.read());
     try {
-      reader.buffer.reset(2);
+      in.buffer.reset(2);
       fail("Expected IllegalArgumentException");
     }
     catch (final IllegalArgumentException e) {
@@ -50,94 +50,94 @@ public class ReplayInputStreamTest {
 
     // Read 3
     final byte[] bytes = new byte[3];
-    assertEquals(3, reader.read(bytes));
+    assertEquals(3, in.read(bytes));
     assertArrayEquals(new byte[] {'b', 'c', 'd'}, bytes);
 
     // Go back to the beginning and read 3
-    reader.buffer.reset(0);
-    assertEquals(3, reader.read(bytes));
+    in.buffer.reset(0);
+    assertEquals(3, in.read(bytes));
     assertArrayEquals(new byte[] {'a', 'b', 'c'}, bytes);
 
     // Go back 1 step and read 3
-    reader.buffer.reset(0);
-    reader.buffer.reset(2);
-    assertEquals(3, reader.read(bytes));
+    in.buffer.reset(0);
+    in.buffer.reset(2);
+    assertEquals(3, in.read(bytes));
     assertArrayEquals(new byte[] {'c', 'd', 'e'}, bytes);
 
     // Go back 1 step and read 3
-    reader.buffer.reset(4);
-    assertEquals(3, reader.read(bytes));
+    in.buffer.reset(4);
+    assertEquals(3, in.read(bytes));
     assertArrayEquals(new byte[] {'e', 'f', 'g'}, bytes);
 
-    reader.mark(20);
+    in.mark(20);
     try {
-      reader.skip(-1);
+      in.skip(-1);
       fail("Expected IllegalArgumentException");
     }
     catch (final IllegalArgumentException e) {
     }
-    assertEquals(3, reader.skip(3));
-    assertEquals(3, reader.read(bytes));
+    assertEquals(3, in.skip(3));
+    assertEquals(3, in.read(bytes));
     assertArrayEquals(new byte[] {'k', 'l', 'm'}, bytes);
 
-    reader.reset();
-    assertEquals(3, reader.read(bytes));
+    in.reset();
+    assertEquals(3, in.read(bytes));
     assertArrayEquals(new byte[] {'h', 'i', 'j'}, bytes);
-    assertEquals(3, reader.skip(3));
+    assertEquals(3, in.skip(3));
 
-    assertEquals(13, reader.skip(40));
+    assertEquals(13, in.skip(40));
 
-    reader.buffer.reset(reader.buffer.size() + reader.buffer.available() - 1);
-    assertEquals('z', reader.read());
+    in.buffer.reset(in.buffer.size() + in.buffer.available() - 1);
+    assertEquals('z', in.read());
 
-    reader.buffer.reset(reader.buffer.size() + reader.buffer.available() - 1);
-    assertEquals(1, reader.read(bytes));
+    in.buffer.reset(in.buffer.size() + in.buffer.available() - 1);
+    assertEquals(1, in.read(bytes));
     assertArrayEquals(new byte[] {'z', 'i', 'j'}, bytes);
 
-    assertEquals(-1, reader.read());
+    assertEquals(-1, in.read());
 
-    reader.close();
+    in.close();
 
-    assertEquals('a', reader.read());
+    assertEquals('a', in.read());
 
-    assertEquals(3, reader.read(bytes));
+    assertEquals(3, in.read(bytes));
     assertArrayEquals(new byte[] {'b', 'c', 'd'}, bytes);
 
-    assertEquals(3, reader.skip(3));
-    assertEquals(3, reader.read(bytes));
+    assertEquals(3, in.skip(3));
+    assertEquals(3, in.read(bytes));
     assertArrayEquals(new byte[] {'h', 'i', 'j'}, bytes);
 
-    assertEquals(3, reader.skip(3));
-    assertEquals(3, reader.read(bytes));
+    assertEquals(3, in.skip(3));
+    assertEquals(3, in.read(bytes));
     assertArrayEquals(new byte[] {'n', 'o', 'p'}, bytes);
 
-    reader.reset();
-    assertEquals(3, reader.read(bytes));
+    in.reset();
+    assertEquals(3, in.read(bytes));
     assertArrayEquals(new byte[] {'h', 'i', 'j'}, bytes);
 
-    reader.close();
-    assertEquals('a', reader.read());
+    in.close();
+    assertEquals('a', in.read());
 
-    assertEquals(3, reader.read(bytes));
+    assertEquals(3, in.read(bytes));
     assertArrayEquals(new byte[] {'b', 'c', 'd'}, bytes);
 
-    reader.buffer.reset(0);
-    assertEquals('a', reader.read());
+    in.buffer.reset(0);
+    assertEquals('a', in.read());
 
-    assertEquals(3, reader.read(bytes));
+    assertEquals(3, in.read(bytes));
     assertArrayEquals(new byte[] {'b', 'c', 'd'}, bytes);
 
-    reader.buffer.reset(reader.buffer.size() - 1);
-    assertEquals(3, reader.read(bytes));
+    in.buffer.reset(in.buffer.size() - 1);
+    assertEquals(3, in.read(bytes));
     assertArrayEquals(new byte[] {'d', 'e', 'f'}, bytes);
 
-    reader.buffer.reset(reader.buffer.size() + reader.buffer.available() - 1);
-    assertEquals('z', reader.read());
+    in.buffer.reset(in.buffer.size() + in.buffer.available() - 1);
+    assertEquals('z', in.read());
 
-    reader.buffer.reset(reader.buffer.size() + reader.buffer.available() - 1);
-    assertEquals(1, reader.read(bytes));
+    in.buffer.reset(in.buffer.size() + in.buffer.available() - 1);
+    assertEquals(1, in.read(bytes));
     assertArrayEquals(new byte[] {'z', 'e', 'f'}, bytes);
 
-    assertEquals(-1, reader.read());
+    assertEquals(-1, in.read());
   }
 }

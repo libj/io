@@ -25,7 +25,7 @@ import java.io.InputStream;
  * This class implements a FilterInputStream that allows its content to be
  * re-read. With each call to its read methods, content is written to an
  * underlying buffer that automatically grows. This implementation supports a
- * maximum re-readable buffer length of {@code Integer.MAX_VALUE}.
+ * maximum re-readable buffer length of {@link Integer#MAX_VALUE}.
  */
 public class ReplayInputStream extends FilterInputStream {
   /**
@@ -36,7 +36,7 @@ public class ReplayInputStream extends FilterInputStream {
     private int mark;
 
     /**
-     * Creates a new {@code ReadbackByteArrayOutputStream} with the specified
+     * Creates a new {@link ReadbackByteArrayOutputStream} with the specified
      * initial size.
      *
      * @param initialSize An int specifying the initial buffer size.
@@ -47,7 +47,7 @@ public class ReplayInputStream extends FilterInputStream {
     }
 
     /**
-     * Creates a new {@code ReadbackByteArrayOutputStream}.
+     * Creates a new {@link ReadbackByteArrayOutputStream}.
      */
     public ReadbackByteArrayOutputStream() {
       super();
@@ -217,8 +217,9 @@ public class ReplayInputStream extends FilterInputStream {
   private boolean closed;
 
   /**
-   * Creates a new {@code ReplayInputStream} using the specified reader as its
-   * source, and the provided initial size for the re-readable buffer.
+   * Creates a new {@link ReplayInputStream} using the specified
+   * {@link InputStream} as its source, and the provided initial size for the
+   * re-readable buffer.
    *
    * @param in An InputStream object providing the underlying stream.
    * @param initialSize An int specifying the initial buffer size of the
@@ -232,8 +233,9 @@ public class ReplayInputStream extends FilterInputStream {
   }
 
   /**
-   * Creates a new {@code ReplayInputStream} using the specified reader as its
-   * source, and default initial size of 32 for the re-readable buffer.
+   * Creates a new {@link ReplayInputStream} using the specified
+   * {@link InputStream} as its source, and default initial size of 32 for the
+   * re-readable buffer.
    *
    * @param in A Reader object providing the underlying stream.
    * @throws NullPointerException If {@code in} is null.
@@ -408,10 +410,11 @@ public class ReplayInputStream extends FilterInputStream {
 
   /**
    * Closes the underlying underlying stream resource, and resets the underlying
-   * buffer position to 0. Subsequent calls to {@code read()}, {@code mark()}
-   * and {@code reset()} continue to function as before the underlying stream
-   * was closed. The purpose of this method is solely to release the underlying
-   * stream once its content has been satisfactorily read.
+   * buffer position to 0. Subsequent calls to {@link #read()},
+   * {@link #mark(int)} and {@link #reset()} continue to function as before the
+   * underlying stream was closed. The purpose of this method is solely to
+   * release the underlying stream once its content has been satisfactorily
+   * read.
    *
    * @throws IOException If an I/O error has occurred.
    */

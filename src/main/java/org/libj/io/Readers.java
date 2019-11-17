@@ -24,12 +24,14 @@ import java.io.Reader;
  */
 public final class Readers {
   /**
-   * Returns a string of the remaining contents from {@code reader}.
+   * Returns a string of the remaining contents from the specified
+   * {@link Reader}.
    *
-   * @param reader The {@code Reader}.
-   * @return A string of the remaining contents from {@code reader}.
+   * @param reader The {@link Reader}.
+   * @return A string of the remaining contents from the specified
+   *         {@link Reader}.
    * @throws IOException If an I/O error has occurred.
-   * @throws NullPointerException If {@code reader} is null.
+   * @throws NullPointerException If the specified {@link Reader} is null.
    */
   public static String readFully(final Reader reader) throws IOException {
     final StringBuilder builder = new StringBuilder();
@@ -38,14 +40,16 @@ public final class Readers {
   }
 
   /**
-   * Returns a string of the remaining contents from {@code reader}.
+   * Returns a string of the remaining contents from the specified
+   * {@link Reader}.
    *
-   * @param reader The {@code Reader}.
+   * @param reader The {@link Reader}.
    * @param bufferSize The size of the read buffer to use when reading.
-   * @return A string of the remaining contents from {@code reader}.
+   * @return A string of the remaining contents from the specified
+   *         {@link Reader}.
    * @throws IOException If an I/O error has occurred.
-   * @throws NullPointerException If {@code reader} is null.
-   * @throws IllegalArgumentException If {@code bufferSize <= 0}.
+   * @throws NullPointerException If the specified {@link Reader} is null.
+   * @throws IllegalArgumentException If {@code bufferSize} is negative.
    */
   public static String readFully(final Reader reader, final int bufferSize) throws IOException {
     if (bufferSize <= 0)

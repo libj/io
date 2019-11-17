@@ -95,10 +95,10 @@ public class ReaderInputStream extends InputStream {
   private boolean endOfInput;
 
   /**
-   * Construct a new {@code ReaderInputStream} with the specified
-   * {@code Reader}, {@code CharsetEncoder}, and buffer size.
+   * Construct a new {@link ReaderInputStream} with the specified
+   * {@link Reader}, {@link CharsetEncoder}, and buffer size.
    *
-   * @param reader The target {@code Reader}.
+   * @param reader The target {@link Reader}.
    * @param encoder The charset encoder.
    * @param bufferSize The size of the input buffer in number of characters.
    * @throws NullPointerException If {@code reader} or {@code encoder} is null.
@@ -114,10 +114,10 @@ public class ReaderInputStream extends InputStream {
   }
 
   /**
-   * Construct a new {@code ReaderInputStream} with the specified {@code Reader}
-   * and {@code CharsetEncoder}.
+   * Construct a new {@link ReaderInputStream} with the specified {@link Reader}
+   * and {@link CharsetEncoder}.
    *
-   * @param reader The target {@code Reader}.
+   * @param reader The target {@link Reader}.
    * @param encoder The charset encoder.
    * @throws NullPointerException If {@code reader} or {@code encoder} is null.
    */
@@ -126,12 +126,12 @@ public class ReaderInputStream extends InputStream {
   }
 
   /**
-   * Construct a new {@code ReaderInputStream} with the specified
-   * {@code Reader}, {@code Charset}, and buffer size. Characters from the
+   * Construct a new {@link ReaderInputStream} with the specified
+   * {@link Reader}, {@link Charset}, and buffer size. Characters from the
    * specified reader that do not map or are invalid to the provided encoder
    * will be replaced.
    *
-   * @param reader The target {@code Reader}.
+   * @param reader The target {@link Reader}.
    * @param charset The charset encoding.
    * @param bufferSize The size of the input buffer in number of characters.
    * @throws NullPointerException If {@code reader} or {@code charset} is null.
@@ -142,12 +142,12 @@ public class ReaderInputStream extends InputStream {
   }
 
   /**
-   * Construct a new {@code ReaderInputStream} with the specified
-   * {@code Reader}, {@code Charset}, and a default input buffer size of 1024
+   * Construct a new {@link ReaderInputStream} with the specified
+   * {@link Reader}, {@link Charset}, and a default input buffer size of 1024
    * characters. Characters from the specified reader that do not map or are
    * invalid to the provided encoder will be replaced.
    *
-   * @param reader The target {@code Reader}.
+   * @param reader The target {@link Reader}.
    * @param charset The charset encoding.
    * @throws NullPointerException If {@code reader} or {@code charset} is null.
    */
@@ -156,12 +156,12 @@ public class ReaderInputStream extends InputStream {
   }
 
   /**
-   * Construct a new {@code ReaderInputStream} with the specified
-   * {@code Reader}, {@code Charset}, and buffer size. Characters from the
+   * Construct a new {@link ReaderInputStream} with the specified
+   * {@link Reader}, {@link Charset}, and buffer size. Characters from the
    * specified reader that do not map or are invalid to the provided encoder
    * will be replaced.
    *
-   * @param reader The target {@code Reader}.
+   * @param reader The target {@link Reader}.
    * @param charsetName The name of the charset encoding.
    * @param bufferSize The size of the input buffer in number of characters.
    * @throws NullPointerException If {@code reader} is null.
@@ -173,12 +173,12 @@ public class ReaderInputStream extends InputStream {
   }
 
   /**
-   * Construct a new {@code ReaderInputStream} with the specified
-   * {@code Reader}, {@code Charset}, and a default input buffer size of 1024
+   * Construct a new {@link ReaderInputStream} with the specified
+   * {@link Reader}, {@link Charset}, and a default input buffer size of 1024
    * characters. Characters from the specified reader that do not map or are
    * invalid to the provided encoder will be replaced.
    *
-   * @param reader The target {@code Reader}.
+   * @param reader The target {@link Reader}.
    * @param charsetName The name of the charset encoding.
    * @throws NullPointerException If {@code reader} is null.
    * @throws IllegalCharsetNameException If the given charset name is illegal.
@@ -255,8 +255,8 @@ public class ReaderInputStream extends InputStream {
    * Read the specified number of bytes into an array.
    *
    * @param b The buffer into which the data is read.
-   * @return The total number of bytes read into the buffer, or {@code -1}
-   *         if there is no more data because the end of the stream has been
+   * @return The total number of bytes read into the buffer, or {@code -1} if
+   *         there is no more data because the end of the stream has been
    *         reached.
    * @throws IOException If an I/O error has occurred.
    * @throws NullPointerException If the specified array is null.

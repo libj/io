@@ -83,77 +83,95 @@ public class StreamsTest {
   @Test
   public void testReadBytes() throws IOException {
     final byte[] bytes = createRandomBytes(65536);
-    final InputStream in = new ByteArrayInputStream(bytes);
-    assertArrayEquals(bytes, Streams.readBytes(in));
+    try (final InputStream in = new ByteArrayInputStream(bytes)) {
+      assertArrayEquals(bytes, Streams.readBytes(in));
+    }
   }
 
   @Test
   public void testPipe() throws IOException {
     final byte[] bytes = createRandomBytes(65536);
-    final ByteArrayInputStream in = new ByteArrayInputStream(bytes);
-    final ByteArrayOutputStream out = new ByteArrayOutputStream();
-    Streams.pipe(in, out);
-    assertArrayEquals(bytes, out.toByteArray());
+    try (
+      final ByteArrayInputStream in = new ByteArrayInputStream(bytes);
+      final ByteArrayOutputStream out = new ByteArrayOutputStream();
+    ) {
+      Streams.pipe(in, out);
+      assertArrayEquals(bytes, out.toByteArray());
+    }
   }
 
   @Test
   public void testPipeAsync() throws InterruptedException, IOException {
     final byte[] bytes = createRandomBytes(65536);
-    final ByteArrayInputStream in = new ByteArrayInputStream(bytes);
-    final ByteArrayOutputStream out = new ByteArrayOutputStream();
-    Streams.pipeAsync(in, out);
-    Thread.sleep(100);
-    assertArrayEquals(bytes, out.toByteArray());
+    try (
+      final ByteArrayInputStream in = new ByteArrayInputStream(bytes);
+      final ByteArrayOutputStream out = new ByteArrayOutputStream();
+    ) {
+      Streams.pipeAsync(in, out);
+      Thread.sleep(100);
+      assertArrayEquals(bytes, out.toByteArray());
+    }
   }
 
   @Test
   public void testTee() throws IOException {
     final byte[] bytes = createRandomBytes(65536);
-    final ByteArrayInputStream in = new ByteArrayInputStream(bytes);
-    final ByteArrayOutputStream out = new ByteArrayOutputStream();
-    final InputStream tee = Streams.tee(in, out);
-    assertArrayEquals(bytes, out.toByteArray());
+    try (
+      final ByteArrayInputStream in = new ByteArrayInputStream(bytes);
+      final ByteArrayOutputStream out = new ByteArrayOutputStream();
+      final InputStream tee = Streams.tee(in, out);
+    ) {
+      assertArrayEquals(bytes, out.toByteArray());
 
-    final byte[] teeBytes = Streams.readBytes(tee);
-    assertArrayEquals(bytes, teeBytes);
+      final byte[] teeBytes = Streams.readBytes(tee);
+      assertArrayEquals(bytes, teeBytes);
+    }
   }
 
   @Test
   public void testTeeAsync() throws InterruptedException, IOException {
     final byte[] bytes = createRandomBytes(65536);
-    final ByteArrayInputStream in = new ByteArrayInputStream(bytes);
-    final ByteArrayOutputStream out = new ByteArrayOutputStream();
-    final InputStream tee = Streams.teeAsync(in, out);
+    try (
+      final ByteArrayInputStream in = new ByteArrayInputStream(bytes);
+      final ByteArrayOutputStream out = new ByteArrayOutputStream();
+      final InputStream tee = Streams.tee(in, out);
+    ) {
+      Thread.sleep(100);
+      assertArrayEquals(bytes, out.toByteArray());
 
-    Thread.sleep(100);
-    assertArrayEquals(bytes, out.toByteArray());
-
-    final byte[] teeBytes = Streams.readBytes(tee);
-    assertArrayEquals(bytes, teeBytes);
+      final byte[] teeBytes = Streams.readBytes(tee);
+      assertArrayEquals(bytes, teeBytes);
+    }
   }
 
   @Test
   public void testMerge() throws IOException {
     final byte[] bytes = createRandomBytes(16384);
-    final ByteArrayInputStream in1 = new ByteArrayInputStream(bytes);
-    final ByteArrayInputStream in2 = new ByteArrayInputStream(bytes);
-    final ByteArrayInputStream in3 = new ByteArrayInputStream(bytes);
-    final ByteArrayInputStream in4 = new ByteArrayInputStream(bytes);
-    final InputStream merged = Streams.merge(in1, in2, in3, in4);
-    final byte[] mergedBytes = Streams.readBytes(merged);
-    assertEquals(16384 * 4, mergedBytes.length);
+    try (
+      final ByteArrayInputStream in1 = new ByteArrayInputStream(bytes);
+      final ByteArrayInputStream in2 = new ByteArrayInputStream(bytes);
+      final ByteArrayInputStream in3 = new ByteArrayInputStream(bytes);
+      final ByteArrayInputStream in4 = new ByteArrayInputStream(bytes);
+      final InputStream merged = Streams.merge(in1, in2, in3, in4);
+    ) {
+      final byte[] mergedBytes = Streams.readBytes(merged);
+      assertEquals(16384 * 4, mergedBytes.length);
+    }
   }
 
   @Test
   public void testMergeAsync() throws InterruptedException, IOException {
     final byte[] bytes = createRandomBytes(16384);
-    final ByteArrayInputStream in1 = new ByteArrayInputStream(bytes);
-    final ByteArrayInputStream in2 = new ByteArrayInputStream(bytes);
-    final ByteArrayInputStream in3 = new ByteArrayInputStream(bytes);
-    final ByteArrayInputStream in4 = new ByteArrayInputStream(bytes);
-    final InputStream merged = Streams.mergeAsync(in1, in2, in3, in4);
-    Thread.sleep(500);
-    final byte[] mergedBytes = Streams.readBytes(merged);
-    assertEquals(16384 * 4, mergedBytes.length);
+    try (
+      final ByteArrayInputStream in1 = new ByteArrayInputStream(bytes);
+      final ByteArrayInputStream in2 = new ByteArrayInputStream(bytes);
+      final ByteArrayInputStream in3 = new ByteArrayInputStream(bytes);
+      final ByteArrayInputStream in4 = new ByteArrayInputStream(bytes);
+      final InputStream merged = Streams.mergeAsync(in1, in2, in3, in4);
+    ) {
+      Thread.sleep(500);
+      final byte[] mergedBytes = Streams.readBytes(merged);
+      assertEquals(16384 * 4, mergedBytes.length);
+    }
   }
 }

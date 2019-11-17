@@ -27,7 +27,8 @@ public class TeeOutputStream extends OutputStream {
   private final OutputStream[] streams;
 
   /**
-   * Construct a new {@code TeeOutputStream}.
+   * Construct a new {@link TeeOutputStream} with the specified
+   * {@link OutputStream} instances.
    *
    * @param streams The streams to which this stream's method calls will be
    *          delegated.

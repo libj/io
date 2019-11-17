@@ -22,25 +22,23 @@ import java.io.OutputStream;
 import java.util.Objects;
 
 /**
- * An {@code OutputStream} that counts the number of bytes written.
+ * An {@link OutputStream} that counts the number of bytes written.
  */
 public class CountingOutputStream extends FilterOutputStream {
-  private long count;
+  protected long count;
 
   /**
-   * Creates a new {@code CountingOutputStream} wrapping the specified
-   * {@code OutputStream}.
+   * Creates a new {@link CountingOutputStream} wrapping the specified
+   * {@link OutputStream}.
    *
    * @param out The output stream to be wrapped.
-   * @throws NullPointerException If {@code out} is null.
+   * @throws NullPointerException If the specified {@link OutputStream} is null.
    */
   public CountingOutputStream(final OutputStream out) {
     super(Objects.requireNonNull(out));
   }
 
   /**
-   * Returns the number of bytes written.
-   *
    * @return The number of bytes written.
    */
   public long getCount() {

@@ -22,26 +22,24 @@ import java.io.InputStream;
 import java.util.Objects;
 
 /**
- * An {@code InputStream} that counts the number of bytes read.
+ * An {@link InputStream} that counts the number of bytes read.
  */
 public class CountingInputStream extends FilterInputStream {
-  private long count;
+  protected long count;
   private long mark = -1;
 
   /**
-   * Creates a new {@code CountingInputStream} wrapping the specified
-   * {@code InputStream}.
+   * Creates a new {@link CountingInputStream} wrapping the specified
+   * {@link InputStream}.
    *
    * @param in The output stream to be wrapped.
-   * @throws NullPointerException If {@code in} is null.
+   * @throws NullPointerException If the specified {@link InputStream} is null.
    */
   public CountingInputStream(final InputStream in) {
     super(Objects.requireNonNull(in));
   }
 
   /**
-   * Returns the number of bytes read.
-   *
    * @return The number of bytes read.
    */
   public long getCount() {
@@ -50,27 +48,27 @@ public class CountingInputStream extends FilterInputStream {
 
   @Override
   public int read() throws IOException {
-    final int result = in.read();
-    if (result != -1)
+    final int ch = in.read();
+    if (ch != -1)
       ++count;
 
-    return result;
+    return ch;
   }
 
   @Override
   public int read(final byte[] b, final int off, final int len) throws IOException {
-    final int result = in.read(b, off, len);
-    if (result > 0)
-      count += result;
+    final int read = in.read(b, off, len);
+    if (read > 0)
+      count += read;
 
-    return result;
+    return read;
   }
 
   @Override
   public long skip(final long n) throws IOException {
-    final long result = in.skip(n);
-    count += result;
-    return result;
+    final long skip = in.skip(n);
+    count += skip;
+    return skip;
   }
 
   @Override

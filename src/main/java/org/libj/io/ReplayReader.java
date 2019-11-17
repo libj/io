@@ -25,7 +25,7 @@ import java.io.Reader;
  * This class implements a FilterReader that allows its content to be re-read.
  * With each call to its read methods, content is written to an underlying
  * buffer that automatically grows. This implementation supports a maximum
- * re-readable buffer length of {@code Integer.MAX_VALUE}.
+ * re-readable buffer length of {@link Integer#MAX_VALUE}.
  */
 public class ReplayReader extends FilterReader {
   /**
@@ -36,7 +36,7 @@ public class ReplayReader extends FilterReader {
     private int mark;
 
     /**
-     * Creates a new {@code ReadbackCharArrayWriter} with the specified initial size.
+     * Creates a new {@link ReadbackCharArrayWriter} with the specified initial size.
      *
      * @param initialSize An int specifying the initial buffer size.
      * @throws IllegalArgumentException If initialSize is negative.
@@ -46,7 +46,7 @@ public class ReplayReader extends FilterReader {
     }
 
     /**
-     * Creates a new {@code ReadbackCharArrayWriter}.
+     * Creates a new {@link ReadbackCharArrayWriter}.
      */
     public ReadbackCharArrayWriter() {
       super();
@@ -256,8 +256,8 @@ public class ReplayReader extends FilterReader {
   protected boolean closed;
 
   /**
-   * Creates a new {@code ReplayReader} using the specified reader as its
-   * source, and the provided initial size for the re-readable buffer.
+   * Creates a new {@link ReplayReader} using the specified {@link Reader} as
+   * its source, and the provided initial size for the re-readable buffer.
    *
    * @param in A Reader object providing the underlying stream.
    * @param initialSize An int specifying the initial buffer size of the
@@ -271,8 +271,8 @@ public class ReplayReader extends FilterReader {
   }
 
   /**
-   * Creates a new {@code ReplayReader} using the specified reader as its
-   * source, and default initial size of 32 for the re-readable buffer.
+   * Creates a new {@link ReplayReader} using the specified {@link Reader} as
+   * its source, and default initial size of 32 for the re-readable buffer.
    *
    * @param in A Reader object providing the underlying stream.
    * @throws NullPointerException If {@code in} is null.
@@ -448,10 +448,11 @@ public class ReplayReader extends FilterReader {
 
   /**
    * Closes the underlying underlying reader resource, and resets the underlying
-   * buffer position to 0. Subsequent calls to {@code read()}, {@code mark()}
-   * and {@code reset()} continue to function as before the underlying stream
-   * was closed. The purpose of this method is solely to release the underlying
-   * stream once its content has been satisfactorily read.
+   * buffer position to 0. Subsequent calls to {@link #read()},
+   * {@link #mark(int)} and {@link #reset()} continue to function as before the
+   * underlying stream was closed. The purpose of this method is solely to
+   * release the underlying stream once its content has been satisfactorily
+   * read.
    *
    * @throws IOException If an I/O error has occurred.
    */

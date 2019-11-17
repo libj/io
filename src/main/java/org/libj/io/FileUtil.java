@@ -82,8 +82,7 @@ public final class FileUtil {
    * on exit, only the paths that pass the {@code filter} will be deleted.
    *
    * @param path The path to delete recursively.
-   * @param filter The filter of paths to delete, or null to match all
-   *          paths.
+   * @param filter The filter of paths to delete, or null to match all paths.
    * @throws IOException If an I/O error has occurred.
    * @throws NullPointerException If {@code path} is null.
    */
@@ -96,7 +95,7 @@ public final class FileUtil {
    *
    * @param path The path to delete recursively.
    * @throws IOException If an I/O error has occurred.
-   * @throws NullPointerException If {@code path} is null.
+   * @throws NullPointerException If the specified {@link Path} is null.
    */
   public static void deleteAllOnExit(final Path path) throws IOException {
     deleteAll(path, anyStreamFilter, true);
@@ -107,12 +106,11 @@ public final class FileUtil {
    * be deleted.
    *
    * @param path The path to delete recursively.
-   * @param filter The filter of paths to delete, or null to match all
-   *          paths.
+   * @param filter The filter of paths to delete, or null to match all paths.
    * @return {@code true} if and only if the file or directory was successfully
    *         deleted; {@code false} otherwise.
    * @throws IOException If an I/O error has occurred.
-   * @throws NullPointerException If {@code path} is null.
+   * @throws NullPointerException If the specified {@link Path} is null.
    */
   public static boolean deleteAll(final Path path, final DirectoryStream.Filter<Path> filter) throws IOException {
     deleteAll(path, filter != null ? filter : anyStreamFilter, false);
@@ -126,7 +124,7 @@ public final class FileUtil {
    * @return {@code true} if and only if the file or directory was successfully
    *         deleted; {@code false} otherwise.
    * @throws IOException If an I/O error has occurred.
-   * @throws NullPointerException If {@code path} is null.
+   * @throws NullPointerException If the specified {@link Path} is null.
    */
   public static boolean deleteAll(final Path path) throws IOException {
     deleteAll(path, anyStreamFilter, false);
@@ -150,11 +148,12 @@ public final class FileUtil {
    * @throws UnsupportedOperationException If the array contains a copy option
    *           that is not supported.
    * @throws FileAlreadyExistsException If the target file exists but cannot be
-   *           replaced because the {@code REPLACE_EXISTING} option is not
-   *           specified <i>(optional specific exception)</i>.
-   * @throws DirectoryNotEmptyException The {@code REPLACE_EXISTING} option is
-   *           specified but the target path could not be deleted <i>(optional
-   *           specific exception)</i>.
+   *           replaced because the {@link StandardCopyOption#REPLACE_EXISTING}
+   *           option is not specified <i>(optional specific exception)</i>.
+   * @throws DirectoryNotEmptyException The
+   *           {@link StandardCopyOption#REPLACE_EXISTING} option is specified
+   *           but the target path could not be deleted <i>(optional specific
+   *           exception)</i>.
    * @throws SecurityException In the case of the default provider, and a
    *           security manager is installed, the
    *           {@link SecurityManager#checkRead(String) checkRead} method is
@@ -163,7 +162,8 @@ public final class FileUtil {
    *           to check write access to the target file. If a symbolic link is
    *           copied the security manager is invoked to check
    *           {@link LinkPermission}{@code ("symbolic")}.
-   * @throws NullPointerException If {@code source} or {@code target} is null.
+   * @throws NullPointerException If {@code source}, {@code target}, or
+   *           {@code options} is null.
    * @see Files#copy(Path,Path,CopyOption...)
    */
   public static Path copyAll(final Path source, final Path target, final CopyOption ... options) throws IOException {
@@ -175,23 +175,23 @@ public final class FileUtil {
         if (options[i] == StandardCopyOption.REPLACE_EXISTING && !deleteAll(target))
           throw new DirectoryNotEmptyException(target.toString());
 
-    Files.walk(source).forEach(rethrow(s -> {
-      final Path t = target.resolve(source.relativize(s));
-      if (Files.isRegularFile(s))
-        Files.copy(s, t, options);
-      else if (!Files.exists(t))
-        Files.createDirectory(t);
+    Files.walk(source).forEach(rethrow(path -> {
+      final Path resolved = target.resolve(source.relativize(path));
+      if (Files.isRegularFile(path))
+        Files.copy(path, resolved, options);
+      else if (!Files.exists(resolved))
+        Files.createDirectory(resolved);
     }));
 
     return target;
   }
 
   /**
-   * Returns a {@code File} having a path that is common to the argument
+   * Returns a {@link File} having a path that is common to the argument
    * {@code files}.
    *
    * @param files The files.
-   * @return A {@code File} having a path that is common to the argument
+   * @return A {@link File} having a path that is common to the argument
    *         {@code files}.
    * @throws IllegalArgumentException If {@code files.length == 0}.
    * @throws NullPointerException If {@code files} is null.
@@ -225,7 +225,7 @@ public final class FileUtil {
    * Returns the "short name" of {@code file}. The "short name" is the name of a
    * file not including the last dot and extension, if present.
    *
-   * @param file The {@code File}.
+   * @param file The {@link File}.
    * @return The "short name" of {@code file}.
    * @throws NullPointerException If {@code file} is null.
    */
