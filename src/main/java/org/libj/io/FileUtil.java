@@ -40,6 +40,8 @@ public final class FileUtil {
   private static File TEMP_DIR;
 
   /**
+   * Returns the current working directory.
+   *
    * @return The current working directory.
    */
   public static File getCwd() {
@@ -47,6 +49,8 @@ public final class FileUtil {
   }
 
   /**
+   * Returns the default path the JVM uses to store temporary files.
+   *
    * @return The default path the JVM uses to store temporary files.
    */
   public static File getTempDir() {

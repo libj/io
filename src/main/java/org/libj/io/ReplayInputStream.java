@@ -54,6 +54,8 @@ public class ReplayInputStream extends FilterInputStream {
     }
 
     /**
+     * Returns the buffer where data is stored.
+     *
      * @return The buffer where data is stored.
      */
     public byte[] buf() {
@@ -152,6 +154,8 @@ public class ReplayInputStream extends FilterInputStream {
     }
 
     /**
+     * Returns the number of bytes available to read from the buffer.
+     *
      * @return The number of bytes available to read from the buffer.
      */
     public int available() {

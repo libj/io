@@ -53,6 +53,8 @@ public class ReplayReader extends FilterReader {
     }
 
     /**
+     * Returns the buffer where data is stored.
+     *
      * @return The buffer where data is stored.
      */
     public char[] buf() {
@@ -191,6 +193,8 @@ public class ReplayReader extends FilterReader {
     }
 
     /**
+     * Returns the number of characters available to read from the buffer.
+     *
      * @return The number of characters available to read from the buffer.
      */
     public int available() {

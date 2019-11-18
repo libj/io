@@ -109,6 +109,9 @@ public class UnicodeReader extends Reader {
   }
 
   /**
+   * Returns the next character from the underlying {@link InputStream} or
+   * {@link Reader}.
+   *
    * @return The next character from the underlying {@link InputStream} or
    *         {@link Reader}.
    * @throws IOException If an I/O error has occurred.
