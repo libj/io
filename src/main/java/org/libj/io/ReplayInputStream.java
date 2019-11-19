@@ -209,7 +209,7 @@ public class ReplayInputStream extends FilterInputStream {
 
     /**
      * Resets the position of the writer to 0. This method does not release the
-     * buffer, such that it can be re-read.
+     * buffer, allowing it to be re-read.
      */
     @Override
     public void close() throws IOException {
@@ -250,11 +250,12 @@ public class ReplayInputStream extends FilterInputStream {
   }
 
   /**
-   * Reads a single byte. If the stream's position was previously reset such
-   * that the buffer has a byte available to be re-read, the byte will be
-   * re-read from the underlying buffer. Otherwise, a byte will be read from the
-   * underlying stream, in which case this method will block until a byte is
-   * available, an I/O error occurs, or the end of the stream is reached.
+   * Reads a single byte. If the stream's position was previously reset
+   * resulting in the buffer having a byte available to be re-read, the byte
+   * will be re-read from the underlying buffer. Otherwise, a byte will be read
+   * from the underlying stream, in which case this method will block until a
+   * byte is available, an I/O error occurs, or the end of the stream is
+   * reached.
    *
    * @throws IOException If an I/O error has occurred.
    * @return The byte read, as an integer in the range 0 to 255, or -1 if the
@@ -277,10 +278,11 @@ public class ReplayInputStream extends FilterInputStream {
 
   /**
    * Reads bytes into an array. If the stream's position was previously reset
-   * such that the buffer has bytes available to be re-read, the available bytes
-   * will be re-read from the underlying buffer. The remaining bytes will be
-   * read from the underlying stream, in which case this method will block bytes
-   * are available, an I/O error occurs, or the end of the stream is reached.
+   * resulting in the buffer having bytes available to be re-read, the available
+   * bytes will be re-read from the underlying buffer. The remaining bytes will
+   * be read from the underlying stream, in which case this method will block
+   * bytes are available, an I/O error occurs, or the end of the stream is
+   * reached.
    *
    * @param b Destination buffer.
    * @return The number of bytes read, or -1 if the end of the stream has been
@@ -295,11 +297,11 @@ public class ReplayInputStream extends FilterInputStream {
 
   /**
    * Reads bytes into a portion of an array. If the stream's position was
-   * previously reset such that the buffer has bytes available to be re-read,
-   * the available bytes will be re-read from the underlying buffer. The
-   * remaining bytes will be read from the underlying stream, in which case this
-   * method will block bytes are available, an I/O error occurs, or the end of
-   * the stream is reached.
+   * previously reset resulting in the buffer having bytes available to be
+   * re-read, the available bytes will be re-read from the underlying buffer.
+   * The remaining bytes will be read from the underlying stream, in which case
+   * this method will block bytes are available, an I/O error occurs, or the end
+   * of the stream is reached.
    *
    * @param b Destination buffer.
    * @param off Offset at which to start storing bytes.
@@ -324,6 +326,9 @@ public class ReplayInputStream extends FilterInputStream {
       return avail;
     }
 
+    if (closed)
+      return -1;
+
     final int ch = in.read(b, off, len);
     if (ch > 0)
       buffer.write(b, off, ch);
@@ -332,12 +337,12 @@ public class ReplayInputStream extends FilterInputStream {
   }
 
   /**
-   * Skips bytes. If the stream's position was previously reset such that the
-   * buffer has bytes available to be re-read, the available bytes will first be
-   * skipped in the underlying buffer. The remaining bytes will be read from the
-   * underlying stream, written to the buffer, and skipped, in which case this
-   * method will block bytes are available, an I/O error occurs, or the end of
-   * the stream is reached.
+   * Skips bytes. If the stream's position was previously reset resulting in the
+   * buffer having bytes available to be re-read, the available bytes will first
+   * be skipped in the underlying buffer. The remaining bytes will be read from
+   * the underlying stream, written to the buffer, and skipped, in which case
+   * this method will block bytes are available, an I/O error occurs, or the end
+   * of the stream is reached.
    *
    * @param n The number of bytes to skip.
    * @return The number of bytes actually skipped.
@@ -367,8 +372,8 @@ public class ReplayInputStream extends FilterInputStream {
    * Returns an estimate of the number of bytes that can be read (or skipped
    * over) from this input stream without blocking by the next caller of a
    * method for this input stream. If the stream's position was previously reset
-   * such that the buffer has bytes available to be re-read, the available bytes
-   * will contribute to the total returned by this method. The remaining
+   * resulting in the buffer having bytes available to be re-read, the available
+   * bytes will contribute to the total returned by this method. The remaining
    * estimate is delegated to the available() method of the underlying stream.
    *
    * @return An estimate of the number of bytes that can be read (or skipped

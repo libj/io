@@ -248,7 +248,7 @@ public class ReplayReader extends FilterReader {
 
     /**
      * Resets the position of the writer to 0. This method does not release the
-     * buffer, such that it can be re-read.
+     * buffer, allowing it to be re-read.
      */
     @Override
     public void close() {
@@ -288,13 +288,13 @@ public class ReplayReader extends FilterReader {
 
   /**
    * Tells whether this stream is ready to be read. If the reader's position was
-   * previously reset such that the buffer has a character available to be
+   * previously reset resulting in the buffer having a character available to be
    * re-read, this method returns {@code true}. Otherwise, this method is
    * delegated to the underlying reader.
    *
-   * @return {@code true} if the reader's position was previously reset such
-   *         that the buffer has a character available to be re-read. Otherwise,
-   *         this method is delegated to the underlying reader.
+   * @return {@code true} if the reader's position was previously reset
+   *         resulting in the buffer having a character available to be re-read.
+   *         Otherwise, this method is delegated to the underlying reader.
    * @throws IOException If an I/O error has occurred.
    */
   @Override
@@ -304,7 +304,7 @@ public class ReplayReader extends FilterReader {
 
   /**
    * Reads a single character. If the reader's position was previously reset
-   * such that the buffer has a character available to be re-read, the character
+   * resulting in the buffer having a character available to be re-read, the character
    * will be re-read from the underlying buffer. Otherwise, a character will be
    * read from the underlying stream, in which case this method will block until
    * a character is available, an I/O error occurs, or the end of the stream is
@@ -332,7 +332,7 @@ public class ReplayReader extends FilterReader {
 
   /**
    * Reads characters into an array. If the reader's position was previously
-   * reset such that the buffer has characters available to be re-read, the
+   * reset resulting in the buffer having characters available to be re-read, the
    * available characters will be re-read from the underlying buffer. The
    * remaining characters will be read from the underlying stream, in which case
    * this method will block characters are available, an I/O error occurs, or
@@ -351,7 +351,7 @@ public class ReplayReader extends FilterReader {
 
   /**
    * Reads characters into a portion of an array. If the reader's position was
-   * previously reset such that the buffer has characters available to be
+   * previously reset resulting in the buffer having characters available to be
    * re-read, the available characters will be re-read from the underlying
    * buffer. The remaining characters will be read from the underlying stream,
    * in which case this method will block characters are available, an I/O error
@@ -380,6 +380,9 @@ public class ReplayReader extends FilterReader {
       return avail;
     }
 
+    if (closed)
+      return -1;
+
     final int ch = in.read(cbuf, off, len);
     if (ch > 0)
       buffer.write(cbuf, off, ch);
@@ -388,12 +391,12 @@ public class ReplayReader extends FilterReader {
   }
 
   /**
-   * Skips characters. If the reader's position was previously reset such that
-   * the buffer has characters available to be re-read, the available characters
-   * will first be skipped in the underlying buffer. The remaining characters
-   * will be read from the underlying stream, written to the buffer, and
-   * skipped, in which case this method will block characters are available, an
-   * I/O error occurs, or the end of the stream is reached.
+   * Skips characters. If the reader's position was previously reset resulting
+   * in the buffer having characters available to be re-read, the available
+   * characters will first be skipped in the underlying buffer. The remaining
+   * characters will be read from the underlying stream, written to the buffer,
+   * and skipped, in which case this method will block characters are available,
+   * an I/O error occurs, or the end of the stream is reached.
    *
    * @param n The number of characters to skip
    * @return The number of characters actually skipped.
