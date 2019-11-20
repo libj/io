@@ -96,7 +96,7 @@ public class ReplayInputStreamTest {
 
     assertEquals(-1, in.read());
 
-    in.close();
+    in.buffer.reset(0);
 
     assertEquals('a', in.read());
 
@@ -115,7 +115,8 @@ public class ReplayInputStreamTest {
     assertEquals(3, in.read(bytes));
     assertArrayEquals(new byte[] {'h', 'i', 'j'}, bytes);
 
-    in.close();
+    in.buffer.reset(0);
+
     assertEquals('a', in.read());
 
     assertEquals(3, in.read(bytes));

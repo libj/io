@@ -64,12 +64,18 @@ public class ReplayInputStream extends FilterInputStream {
 
     @Override
     public void write(final int c) {
+      if (closed)
+        return;
+
       super.write(c);
       ++total;
     }
 
     @Override
     public void write(final byte[] c, final int off, final int len) {
+      if (closed)
+        return;
+
       super.write(c, off, len);
       total += len;
     }
@@ -81,7 +87,7 @@ public class ReplayInputStream extends FilterInputStream {
      *         end of the buffer has been reached.
      */
     public int read() {
-      return count >= total ? -1 : buf[count++];
+      return closed || count >= total ? -1 : buf[count++];
     }
 
     /**
@@ -110,7 +116,7 @@ public class ReplayInputStream extends FilterInputStream {
      * @throws NullPointerException If {@code b} is null.
      */
     public int read(final byte[] b, final int off, final int len) {
-      if (count >= total)
+      if (closed || count >= total)
         return -1;
 
       final int delta = len - available() - 1;
@@ -141,10 +147,7 @@ public class ReplayInputStream extends FilterInputStream {
      * @return The number of bytes actually skipped.
      */
     private long skip0(final long n) {
-      if (count >= total)
-        return 0;
-
-      if (n <= 0)
+      if (closed || count >= total || n <= 0)
         return 0;
 
       final long check = total - count - n;
@@ -159,7 +162,7 @@ public class ReplayInputStream extends FilterInputStream {
      * @return The number of bytes available to read from the buffer.
      */
     public int available() {
-      return total - count;
+      return closed ? 0 : total - count;
     }
 
     /**
@@ -208,17 +211,16 @@ public class ReplayInputStream extends FilterInputStream {
     }
 
     /**
-     * Resets the position of the writer to 0. This method does not release the
-     * buffer, allowing it to be re-read.
+     * Close the stream, and release the buffer.
      */
     @Override
-    public void close() throws IOException {
-      count = 0;
+    public void close() {
+      buf = null;
     }
   }
 
   protected final ReadbackByteArrayOutputStream buffer;
-  private boolean closed;
+  private volatile boolean closed;
 
   /**
    * Creates a new {@link ReplayInputStream} using the specified
@@ -382,7 +384,7 @@ public class ReplayInputStream extends FilterInputStream {
    */
   @Override
   public int available() throws IOException {
-    return buffer.available() + super.available();
+    return buffer.available() + in.available();
   }
 
   /**
@@ -418,12 +420,11 @@ public class ReplayInputStream extends FilterInputStream {
   }
 
   /**
-   * Closes the underlying underlying stream resource, and resets the underlying
-   * buffer position to 0. Subsequent calls to {@link #read()},
-   * {@link #mark(int)} and {@link #reset()} continue to function as before the
-   * underlying stream was closed. The purpose of this method is solely to
-   * release the underlying stream once its content has been satisfactorily
-   * read.
+   * Closes the stream and releases any system resources associated with it.
+   * Once the stream has been closed, further {@link #read()},
+   * {@link #available()}, {@link #mark(int)}, {@link #reset()}, or
+   * {@link #skip(long)} invocations will throw an {@link IOException}. Closing
+   * a previously closed stream has no effect.
    *
    * @throws IOException If an I/O error has occurred.
    */

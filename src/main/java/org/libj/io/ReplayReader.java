@@ -63,6 +63,9 @@ public class ReplayReader extends FilterReader {
 
     @Override
     public CharArrayWriter append(final char c) {
+      if (closed)
+        return this;
+
       final CharArrayWriter writer = super.append(c);
       ++total;
       return writer;
@@ -70,6 +73,9 @@ public class ReplayReader extends FilterReader {
 
     @Override
     public CharArrayWriter append(final CharSequence csq) {
+      if (closed)
+        return this;
+
       final CharArrayWriter writer = super.append(csq);
       total += csq.length();
       return writer;
@@ -77,6 +83,9 @@ public class ReplayReader extends FilterReader {
 
     @Override
     public CharArrayWriter append(final CharSequence csq, final int start, final int end) {
+      if (closed)
+        return this;
+
       final CharArrayWriter writer = super.append(csq, start, end);
       total += end - start;
       return writer;
@@ -84,30 +93,45 @@ public class ReplayReader extends FilterReader {
 
     @Override
     public void write(final int c) {
+      if (closed)
+        return;
+
       super.write(c);
       ++total;
     }
 
     @Override
     public void write(final char[] c, final int off, final int len) {
+      if (closed)
+        return;
+
       super.write(c, off, len);
       total += len;
     }
 
     @Override
     public void write(final String str, final int off, final int len) {
+      if (closed)
+        return;
+
       super.write(str, off, len);
       total += len;
     }
 
     @Override
     public void write(final char[] cbuf) throws IOException {
+      if (closed)
+        return;
+
       super.write(cbuf);
       total += cbuf.length;
     }
 
     @Override
     public void write(final String str) throws IOException {
+      if (closed)
+        return;
+
       super.write(str);
       total += str.length();
     }
@@ -120,7 +144,7 @@ public class ReplayReader extends FilterReader {
      *         reached.
      */
     public int read() {
-      return count >= total ? -1 : buf[count++];
+      return closed || count >= total ? -1 : buf[count++];
     }
 
     /**
@@ -149,7 +173,7 @@ public class ReplayReader extends FilterReader {
      * @throws NullPointerException If {@code cbuf} is null.
      */
     public int read(final char[] cbuf, final int off, final int len) {
-      if (count >= total)
+      if (closed || count >= total)
         return -1;
 
       final int delta = len - available() - 1;
@@ -180,10 +204,7 @@ public class ReplayReader extends FilterReader {
      * @return The number of characters actually skipped.
      */
     private long skip0(final long n) {
-      if (count >= total)
-        return 0;
-
-      if (n <= 0)
+      if (closed || count >= total || n <= 0)
         return 0;
 
       final long check = total - count - n;
@@ -198,7 +219,7 @@ public class ReplayReader extends FilterReader {
      * @return The number of characters available to read from the buffer.
      */
     public int available() {
-      return total - count;
+      return closed ? 0 : total - count;
     }
 
     /**
@@ -247,17 +268,17 @@ public class ReplayReader extends FilterReader {
     }
 
     /**
-     * Resets the position of the writer to 0. This method does not release the
-     * buffer, allowing it to be re-read.
+     * Close the stream, and release the buffer.
      */
     @Override
     public void close() {
-      count = 0;
+      buf = null;
+      lock = null;
     }
   }
 
   protected final ReadbackCharArrayWriter buffer;
-  protected boolean closed;
+  protected volatile boolean closed;
 
   /**
    * Creates a new {@link ReplayReader} using the specified {@link Reader} as
@@ -454,19 +475,22 @@ public class ReplayReader extends FilterReader {
   }
 
   /**
-   * Closes the underlying underlying reader resource, and resets the underlying
-   * buffer position to 0. Subsequent calls to {@link #read()},
-   * {@link #mark(int)} and {@link #reset()} continue to function as before the
-   * underlying stream was closed. The purpose of this method is solely to
-   * release the underlying stream once its content has been satisfactorily
-   * read.
+   * Closes the stream and releases any system resources associated with it.
+   * Once the stream has been closed, further {@link #read()}, {@link #ready()},
+   * {@link #mark(int)}, {@link #reset()}, or {@link #skip(long)} invocations
+   * will throw an {@link IOException}. Closing a previously closed stream has
+   * no effect.
    *
    * @throws IOException If an I/O error has occurred.
    */
   @Override
   public void close() throws IOException {
+    if (closed)
+      return;
+
     buffer.close();
     in.close();
+    lock = null;
     closed = true;
   }
 }

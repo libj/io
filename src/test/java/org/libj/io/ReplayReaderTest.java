@@ -96,7 +96,7 @@ public class ReplayReaderTest {
 
     assertEquals(-1, reader.read());
 
-    reader.close();
+    reader.buffer.reset(0);
 
     assertEquals('a', reader.read());
 
@@ -115,7 +115,8 @@ public class ReplayReaderTest {
     assertEquals(3, reader.read(bytes));
     assertArrayEquals(new char[] {'h', 'i', 'j'}, bytes);
 
-    reader.close();
+    reader.buffer.reset(0);
+
     assertEquals('a', reader.read());
 
     assertEquals(3, reader.read(bytes));
