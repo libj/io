@@ -507,9 +507,6 @@ public final class Streams {
    * Reads all bytes from the input stream and returns the resulting buffer
    * array. This method blocks until all contents have been read, end of file is
    * detected, or an exception is thrown.
-   * <p>
-   * If the InputStream {@code in} is null, then null is returned; otherwise, a
-   * byte[] of at least size 0 will be returned.
    *
    * @param in The input stream to read from.
    * @return The byte[] containing all bytes that were read from the InputStream

@@ -86,7 +86,8 @@ public final class FileUtil {
    * on exit, only the paths that pass the {@code filter} will be deleted.
    *
    * @param path The path to delete recursively.
-   * @param filter The filter of paths to delete, or null to match all paths.
+   * @param filter The filter of paths to delete, or {@code null} to match all
+   *          paths.
    * @throws IOException If an I/O error has occurred.
    * @throws NullPointerException If {@code path} is null.
    */
@@ -110,7 +111,8 @@ public final class FileUtil {
    * be deleted.
    *
    * @param path The path to delete recursively.
-   * @param filter The filter of paths to delete, or null to match all paths.
+   * @param filter The filter of paths to delete, or {@code null} to match all
+   *          paths.
    * @return {@code true} if and only if the file or directory was successfully
    *         deleted; {@code false} otherwise.
    * @throws IOException If an I/O error has occurred.
