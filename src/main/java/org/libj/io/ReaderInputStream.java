@@ -51,10 +51,12 @@ import org.libj.util.Assertions;
  * the charset encoding):
  *
  * <pre>
+ * {@code
  * InputStream in = ...
  * Charset cs = ...
  * InputStreamReader reader = new InputStreamReader(in, cs);
  * ReaderInputStream in2 = new ReaderInputStream(reader, cs);
+ * }
  * </pre>
  *
  * The {@link ReaderInputStream} implements the same transformation as
@@ -214,7 +216,7 @@ public class ReaderInputStream extends InputStream {
    * Read the specified number of bytes into an array.
    *
    * @param b The buffer into which the data is read.
-   * @param off The start offset in array <code>b</code> at which the data is
+   * @param off The start offset in array {@code b} at which the data is
    *          written.
    * @param len The maximum number of bytes to read.
    * @return The total number of bytes read into the buffer, or {@code -1} if
@@ -269,9 +271,9 @@ public class ReaderInputStream extends InputStream {
   /**
    * Read a single byte.
    *
-   * @return either the byte read or <code>-1</code> if the end of the stream
-   *         has been reached
-   * @throws IOException if an I/O error occurs
+   * @return Either the byte read or {@code -1} if the end of the stream has
+   *         been reached.
+   * @throws IOException If an I/O error has occurred.
    */
   @Override
   public int read() throws IOException {

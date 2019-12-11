@@ -29,22 +29,26 @@ import java.util.Objects;
  * <li>{@code UTF-8}, {@code UTF-16be}, {@code UTF-16le}, {@code UTF-32be} and
  * {@code UTF-32le} encoded strings, and detects BOM (Byte Order Mark)
  * characters to identify the encoding.</li>
- *
  * <li>Streams can contain mixed unicode encodings:
  *
- * <pre>{@code "\\u48\\u0065\\u0000006C\\ufffe\\u6C00\\ufffe0000\\u6F000000"}
- * -&gt; {@code "Hello"})</pre></li>
+ * <pre>
+ * {@code "\\u48\\u0065\\u0000006C\\ufffe\\u6C00\\ufffe0000\\u6F000000" -> "Hello"}
+ * </pre>
  *
+ * </li>
  * <li>Streams can contain mixed {@code UTF} multibyte characters, as well as
  * escaped unicode sequences of Latin1 {@code ISO 8859-1} bytes (i.e. intermixed
  * {@code UTF} multibyte characters are preserved).</li>
- *
  * <li>Malformed unicode sequences are returned in their original unicode
  * encoded form:
  *
- * <pre>{@code "\\u48\\u6\\u48"} -&gt; {@code "H\\u6H"}</pre></li>
+ * <pre>
+ * {@code "\\u48\\u6\\u48" -> "H\\u6H"}
+ * </pre>
  *
- * <li>If no BOM is detected, streams are assumed to be in big-endian encoding.</li>
+ * </li>
+ * <li>If no BOM is detected, streams are assumed to be in big-endian
+ * encoding.</li>
  * </ul>
  */
 public class UnicodeReader extends Reader {
@@ -53,7 +57,9 @@ public class UnicodeReader extends Reader {
    * <p>
    * This function defines the following series:
    *
-   * <pre>4 0 12 8 20 16 28 24</pre>
+   * <pre>
+   * {@code 4 0 12 8 20 16 28 24}
+   * </pre>
    *
    * @param i The unicode character index plus 2.
    * @return The little-endian bit shift amount for the given {@code i}.
