@@ -66,7 +66,7 @@ public final class FileUtil {
       Files.delete(path);
   }
 
-  private static void deleteAll(final Path path, final DirectoryStream.Filter<Path> filter, final boolean onExit) throws IOException {
+  private static void deleteAll(final Path path, final DirectoryStream.Filter<? super Path> filter, final boolean onExit) throws IOException {
     if (Files.isDirectory(path)) {
       try (final DirectoryStream<Path> stream = Files.newDirectoryStream(path, filter)) {
         for (final Path entry : stream) {
@@ -91,7 +91,7 @@ public final class FileUtil {
    * @throws IOException If an I/O error has occurred.
    * @throws NullPointerException If {@code path} is null.
    */
-  public static void deleteAllOnExit(final Path path, final DirectoryStream.Filter<Path> filter) throws IOException {
+  public static void deleteAllOnExit(final Path path, final DirectoryStream.Filter<? super Path> filter) throws IOException {
     deleteAll(path, filter != null ? filter : anyStreamFilter, true);
   }
 
@@ -118,7 +118,7 @@ public final class FileUtil {
    * @throws IOException If an I/O error has occurred.
    * @throws NullPointerException If the specified {@link Path} is null.
    */
-  public static boolean deleteAll(final Path path, final DirectoryStream.Filter<Path> filter) throws IOException {
+  public static boolean deleteAll(final Path path, final DirectoryStream.Filter<? super Path> filter) throws IOException {
     deleteAll(path, filter != null ? filter : anyStreamFilter, false);
     return !Files.exists(path);
   }

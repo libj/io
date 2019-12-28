@@ -415,7 +415,7 @@ public class ReplayInputStream extends FilterInputStream {
    * {@link #mark(int)} method.
    */
   @Override
-  public void reset() throws IOException {
+  public void reset() {
     buffer.reset();
   }
 

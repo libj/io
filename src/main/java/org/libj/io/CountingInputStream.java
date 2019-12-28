@@ -74,20 +74,24 @@ public class CountingInputStream extends FilterInputStream {
   }
 
   @Override
-  public synchronized void mark(final int readlimit) {
-    in.mark(readlimit);
-    mark = count;
+  public void mark(final int readlimit) {
+    synchronized (in) {
+      in.mark(readlimit);
+      mark = count;
+    }
   }
 
   @Override
-  public synchronized void reset() throws IOException {
-    if (!in.markSupported())
-      throw new IOException("Mark not supported");
+  public void reset() throws IOException {
+    synchronized (in) {
+      if (!in.markSupported())
+        throw new IOException("Mark not supported");
 
-    if (mark == -1)
-      throw new IOException("Mark not set");
+      if (mark == -1)
+        throw new IOException("Mark not set");
 
-    in.reset();
-    count = mark;
+      in.reset();
+      count = mark;
+    }
   }
 }

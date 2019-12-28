@@ -76,9 +76,9 @@ public class UnicodeReader extends Reader {
   private int index = 0;
   private int next = -2;
 
-  private boolean le16 = false;
-  private boolean le32 = false;
-  private boolean flush = false;
+  private boolean le16;
+  private boolean le32;
+  private boolean flush;
 
   /**
    * Creates a new {@link UnicodeReader} with the specified {@link InputStream}.

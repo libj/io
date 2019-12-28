@@ -498,9 +498,9 @@ public final class Streams {
    */
   public static long readLong(final InputStream in, final boolean isBigEndian) throws IOException {
     if (isBigEndian)
-      return (in.read() & 0xFFl) << 56 | (in.read() & 0xFFl) << 48 | (in.read() & 0xFFl) << 40 | (in.read() & 0xFFl) << 32 | (in.read() & 0xFFl) << 24 | (in.read() & 0xFFl) << 16 | (in.read() & 0xFFl) << 8 | (in.read() & 0xFFl);
+      return (in.read() & 0xFFL) << 56 | (in.read() & 0xFFL) << 48 | (in.read() & 0xFFL) << 40 | (in.read() & 0xFFL) << 32 | (in.read() & 0xFFL) << 24 | (in.read() & 0xFFL) << 16 | (in.read() & 0xFFL) << 8 | (in.read() & 0xFFL);
 
-    return (in.read() & 0xFFl) | (in.read() & 0xFFl) << 8 | (in.read() & 0xFFl) << 16 | (in.read() & 0xFFl) << 24 | (in.read() & 0xFFl) << 32 | (in.read() & 0xFFl) << 40 | (in.read() & 0xFFl) << 48 | (in.read() & 0xFFl) << 56;
+    return (in.read() & 0xFFL) | (in.read() & 0xFFL) << 8 | (in.read() & 0xFFL) << 16 | (in.read() & 0xFFL) << 24 | (in.read() & 0xFFL) << 32 | (in.read() & 0xFFL) << 40 | (in.read() & 0xFFL) << 48 | (in.read() & 0xFFL) << 56;
   }
 
   /**
@@ -631,7 +631,7 @@ public final class Streams {
    * @throws IOException If an I/O error has occurred.
    * @throws NullPointerException If {@code src} or {@code snk} is null.
    */
-  public static void pipeAsync(final InputStream src, final OutputStream snk, final Consumer<IOException> onThreadExit) throws IOException {
+  public static void pipeAsync(final InputStream src, final OutputStream snk, final Consumer<? super IOException> onThreadExit) throws IOException {
     pipe(src, snk, false, false, onThreadExit);
   }
 
@@ -680,11 +680,11 @@ public final class Streams {
    * @throws IOException If an I/O error has occurred.
    * @throws NullPointerException If {@code src} or {@code snk} is null.
    */
-  public static InputStream teeAsync(final InputStream src, final OutputStream snk, final Consumer<IOException> onThreadExit) throws IOException {
+  public static InputStream teeAsync(final InputStream src, final OutputStream snk, final Consumer<? super IOException> onThreadExit) throws IOException {
     return pipe(src, snk, true, false, onThreadExit);
   }
 
-  private static InputStream pipe(final InputStream src, final OutputStream snk, final boolean tee, final boolean sync, final Consumer<IOException> onExit) throws IOException {
+  private static InputStream pipe(final InputStream src, final OutputStream snk, final boolean tee, final boolean sync, final Consumer<? super IOException> onExit) throws IOException {
     final PipedOutputStream pipedOut;
     final InputStream pipedIn;
     if (tee) {
@@ -711,7 +711,7 @@ public final class Streams {
     return pipedIn;
   }
 
-  private static void pipe(final InputStream src, final OutputStream snk, final PipedOutputStream pipedOut, final int bufferSize, final Consumer<IOException> onExit) {
+  private static void pipe(final InputStream src, final OutputStream snk, final PipedOutputStream pipedOut, final int bufferSize, final Consumer<? super IOException> onExit) {
     int len;
     final byte[] bytes = new byte[bufferSize];
     try {
@@ -746,7 +746,7 @@ public final class Streams {
         snk.flush();
       }
       else {
-        while ((len = src.read(bytes)) != -1);
+        while (src.read(bytes) != -1);
       }
 
       if (onExit != null)
