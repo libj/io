@@ -30,7 +30,7 @@ import java.nio.file.Path;
 import java.nio.file.StandardCopyOption;
 import java.nio.file.StandardOpenOption;
 
-import org.libj.util.Paths;
+import org.libj.util.StringPaths;
 
 /**
  * Utility functions for operations pertaining to {@link File} and {@link Path}.
@@ -208,10 +208,10 @@ public final class FileUtil {
 
     if (files.length > 1) {
       final String[] canons = new String[files.length];
-      canons[0] = Paths.canonicalize(files[0].getPath());
+      canons[0] = StringPaths.canonicalize(files[0].getPath());
       int length = canons[0].length();
       for (int i = 1; i < files.length; ++i) {
-        canons[i] = Paths.canonicalize(files[i].getPath());
+        canons[i] = StringPaths.canonicalize(files[i].getPath());
         if (canons[i].length() < length)
           length = canons[i].length();
       }

@@ -63,7 +63,7 @@ public class ReplayInputStream extends FilterInputStream {
     }
 
     @Override
-    public void write(final int c) {
+    public synchronized void write(final int c) {
       if (closed)
         return;
 
@@ -72,7 +72,7 @@ public class ReplayInputStream extends FilterInputStream {
     }
 
     @Override
-    public void write(final byte[] c, final int off, final int len) {
+    public synchronized void write(final byte[] c, final int off, final int len) {
       if (closed)
         return;
 
@@ -206,6 +206,7 @@ public class ReplayInputStream extends FilterInputStream {
      * Resets the buffer to the position previously marked by {@link #mark()}.
      */
     @Override
+    @SuppressWarnings("sync-override")
     public void reset() {
       reset0(mark);
     }
@@ -394,9 +395,12 @@ public class ReplayInputStream extends FilterInputStream {
    * @param readlimit This argument is ignored.
    */
   @Override
+  @SuppressWarnings("sync-override")
   public void mark(final int readlimit) {
-    in.mark(readlimit);
-    buffer.mark();
+    synchronized (in) {
+      in.mark(readlimit);
+      buffer.mark();
+    }
   }
 
   /**
@@ -415,6 +419,7 @@ public class ReplayInputStream extends FilterInputStream {
    * {@link #mark(int)} method.
    */
   @Override
+  @SuppressWarnings("sync-override")
   public void reset() {
     buffer.reset();
   }
