@@ -29,6 +29,8 @@ public class TeeOutputStream extends OutputStream {
   /**
    * Construct a new {@link TeeOutputStream} with the specified
    * {@link OutputStream} instances.
+   * <p>
+   * Streams will be written to in the order of the provided array.
    *
    * @param streams The streams to which this stream's method calls will be
    *          delegated.
