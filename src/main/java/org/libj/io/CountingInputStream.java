@@ -74,6 +74,16 @@ public class CountingInputStream extends FilterInputStream {
   }
 
   @Override
+  public int available() throws IOException {
+    return in.available();
+  }
+
+  @Override
+  public boolean markSupported() {
+    return in.markSupported();
+  }
+
+  @Override
   @SuppressWarnings("sync-override")
   public void mark(final int readlimit) {
     synchronized (in) {
@@ -95,5 +105,10 @@ public class CountingInputStream extends FilterInputStream {
       in.reset();
       count = mark;
     }
+  }
+
+  @Override
+  public void close() throws IOException {
+    in.close();
   }
 }
