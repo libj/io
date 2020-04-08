@@ -28,7 +28,7 @@ import java.nio.charset.CodingErrorAction;
 import java.nio.charset.IllegalCharsetNameException;
 import java.util.Objects;
 
-import org.libj.util.Assertions;
+import org.libj.lang.Assertions;
 
 /**
  * Implementation of {@link InputStream} that reads a character stream from a
