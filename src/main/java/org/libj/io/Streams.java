@@ -35,7 +35,7 @@ import org.slf4j.LoggerFactory;
  */
 public final class Streams {
   private static final Logger logger = LoggerFactory.getLogger(Streams.class);
-  private static final int DEFAULT_SOCKET_BUFFER_SIZE = 65536;
+  static final int DEFAULT_SOCKET_BUFFER_SIZE = 65536;
 
   /**
    * Write a 2-byte {@code short} value to the specified {@link OutputStream} in
@@ -577,7 +577,7 @@ public final class Streams {
     }) {
       final InputStream pipedIn = new PipedInputStream(pipedOut, DEFAULT_SOCKET_BUFFER_SIZE);
       for (int i = 0; i < streams.length; ++i) {
-        Streams.pipe(streams[i], pipedOut, false, sync, p -> {
+        pipe(streams[i], pipedOut, false, sync, p -> {
           try {
             pipedOut.close();
           }
@@ -697,13 +697,13 @@ public final class Streams {
     }
 
     if (sync) {
-      Streams.pipe(src, snk, pipedOut, DEFAULT_SOCKET_BUFFER_SIZE, onExit);
+      pipe(src, snk, pipedOut, DEFAULT_SOCKET_BUFFER_SIZE, onExit);
     }
     else {
       new Thread(tee ? "tee" : "pipe") {
         @Override
         public void run() {
-          Streams.pipe(src, snk, pipedOut, DEFAULT_SOCKET_BUFFER_SIZE, onExit);
+          pipe(src, snk, pipedOut, DEFAULT_SOCKET_BUFFER_SIZE, onExit);
         }
       }.start();
     }

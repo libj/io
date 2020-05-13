@@ -62,6 +62,7 @@ public class ReplayReader extends FilterReader {
     }
 
     @Override
+    @SuppressWarnings("resource")
     public CharArrayWriter append(final char c) {
       if (closed)
         return this;
@@ -72,6 +73,7 @@ public class ReplayReader extends FilterReader {
     }
 
     @Override
+    @SuppressWarnings("resource")
     public CharArrayWriter append(final CharSequence csq) {
       if (closed)
         return this;
@@ -82,6 +84,7 @@ public class ReplayReader extends FilterReader {
     }
 
     @Override
+    @SuppressWarnings("resource")
     public CharArrayWriter append(final CharSequence csq, final int start, final int end) {
       if (closed)
         return this;
@@ -484,7 +487,7 @@ public class ReplayReader extends FilterReader {
    * @throws IOException If an I/O error has occurred.
    */
   @Override
-  public void close() throws IOException {
+  public synchronized void close() throws IOException {
     if (closed)
       return;
 
