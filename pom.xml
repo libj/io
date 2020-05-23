@@ -22,10 +22,10 @@
   <parent>
     <groupId>org.libj</groupId>
     <artifactId>libj</artifactId>
-    <version>0.9.7-SNAPSHOT</version>
+    <version>0.9.7</version>
   </parent>
   <artifactId>io</artifactId>
-  <version>0.7.7-SNAPSHOT</version>
+  <version>0.7.7</version>
   <name>LibJ IO</name>
   <description>
     Supplementary extensions to the java.io and java.nio packages.
@@ -34,12 +34,12 @@
     <dependency>
       <groupId>org.libj</groupId>
       <artifactId>util</artifactId>
-      <version>0.8.1-SNAPSHOT</version>
+      <version>0.8.1</version>
     </dependency>
     <dependency>
       <groupId>org.libj</groupId>
       <artifactId>test</artifactId>
-      <version>0.7.1-SNAPSHOT</version>
+      <version>0.7.1</version>
     </dependency>
   </dependencies>
 </project>
