@@ -1,6 +1,8 @@
 # Changes by Version
 
-## [v0.7.7](https://github.com/libj/io/compare/c487802c095868ea65620a3db2eef6fb77930b5e..HEAD) (2020-05-23)
+## [v0.7.8-SNAPSHOT](https://github.com/libj/io/compare/fd4e15b7912455c645fb4f288e2ef6117327a2e3..HEAD)
+
+## [v0.7.7](https://github.com/libj/io/compare/c487802c095868ea65620a3db2eef6fb77930b5e..fd4e15b7912455c645fb4f288e2ef6117327a2e3) (2020-05-23)
 * Add `Charsets` utility class.
 * Add `CountingReader`.
 * Add `ReaderInputStream`.
