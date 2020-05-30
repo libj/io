@@ -4,6 +4,7 @@
 [![Coverage Status](https://coveralls.io/repos/github/libj/io/badge.svg?1)](https://coveralls.io/github/libj/io)
 [![Javadocs](https://www.javadoc.io/badge/org.libj/io.svg?1)](https://www.javadoc.io/doc/org.libj/io)
 [![Released Version](https://img.shields.io/maven-central/v/org.libj/io.svg?1)](https://mvnrepository.com/artifact/org.libj/io)
+![Snapshot Version](https://img.shields.io/nexus/s/org.libj/io?label=maven-snapshot&server=https%3A%2F%2Foss.sonatype.org)
 
 IO is a supplementary extension to the `java.io` and `java.nio` packages.
 
