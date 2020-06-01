@@ -17,22 +17,12 @@
 package org.libj.io;
 
 import java.io.IOException;
-import java.io.PipedReader;
-import java.io.PipedWriter;
 import java.io.Reader;
-import java.io.Writer;
-import java.util.concurrent.CountDownLatch;
-import java.util.function.Consumer;
-
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 /**
  * Utility functions for operations pertaining to {@link Reader}.
  */
 public final class Readers {
-  private static final Logger logger = LoggerFactory.getLogger(Readers.class);
-
   /**
    * Returns a string of the remaining contents from the specified
    * {@link Reader}.
