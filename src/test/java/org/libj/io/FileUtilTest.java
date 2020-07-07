@@ -71,4 +71,10 @@ public class FileUtilTest {
     assertEquals("resolv", FileUtil.getShortName(new File("/etc/resolv.conf")));
     assertEquals("name", FileUtil.getShortName(new File("name")));
   }
+
+  @Test
+  public void testExistsOrNull() {
+    assertNull(FileUtil.existsOrNull("foo/bar"));
+    assertNotNull(FileUtil.existsOrNull("target"));
+  }
 }

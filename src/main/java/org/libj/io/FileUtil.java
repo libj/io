@@ -27,6 +27,7 @@ import java.nio.file.FileAlreadyExistsException;
 import java.nio.file.Files;
 import java.nio.file.LinkPermission;
 import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.nio.file.StandardCopyOption;
 import java.nio.file.StandardOpenOption;
 
@@ -38,6 +39,16 @@ import org.libj.util.StringPaths;
 public final class FileUtil {
   private static File CWD;
   private static File TEMP_DIR;
+
+  /**
+   * Returns a new {@link File} with the given {@code pathname} if the {@code pathname} exists, otherwise {@code null}.
+   * @param pathname The pathname.
+   * @return A new {@link File} with the given {@code pathname} if the {@code pathname} exists, otherwise {@code null}.
+   */
+  public static File existsOrNull(final String pathname) {
+    final File file = new File(pathname);
+    return file.exists() ? file : null;
+  }
 
   /**
    * Returns the current working directory.
