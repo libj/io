@@ -25,7 +25,6 @@ import org.junit.Test;
 
 public class ReplayInputStreamTest {
   @Test
-  @SuppressWarnings("resource")
   public void test() throws IOException {
     final byte[] array = new byte[26];
     for (int i = 0; i < array.length; ++i)

@@ -25,7 +25,6 @@ import org.junit.Test;
 
 public class ReplayReaderTest {
   @Test
-  @SuppressWarnings("resource")
   public void test() throws IOException {
     final char[] array = new char[26];
     for (int i = 0; i < array.length; ++i)
