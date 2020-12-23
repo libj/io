@@ -56,13 +56,14 @@ public final class FileUtil {
             public void run() {
               for (final Map.Entry<Path,List<DirectoryStream.Filter<? super Path>>> entry : deleteOnExit.entrySet()) {
                 final Path path = entry.getKey();
-                for (final DirectoryStream.Filter<? super Path> filter : entry.getValue())
+                for (final DirectoryStream.Filter<? super Path> filter : entry.getValue()) {
                   try {
                     deleteAll0(path, filter);
                   }
                   catch (final IOException e) {
                     e.printStackTrace();
                   }
+                }
               }
             }
           });
@@ -86,9 +87,12 @@ public final class FileUtil {
   }
 
   /**
-   * Returns a new {@link File} with the given {@code pathname} if the {@code pathname} exists, otherwise {@code null}.
+   * Returns a new {@link File} with the given {@code pathname} if the
+   * {@code pathname} exists, otherwise {@code null}.
+   *
    * @param pathname The pathname.
-   * @return A new {@link File} with the given {@code pathname} if the {@code pathname} exists, otherwise {@code null}.
+   * @return A new {@link File} with the given {@code pathname} if the
+   *         {@code pathname} exists, otherwise {@code null}.
    */
   public static File existsOrNull(final String pathname) {
     final File file = new File(pathname);
@@ -134,8 +138,8 @@ public final class FileUtil {
    * Register a path to be recursively deleted when the JVM exits. When executed
    * on exit, only the paths that pass the {@code filter} will be deleted.
    * <p>
-   * <i><b>Note:</b> Filtering will be performed at the time the JVM exists (not at
-   * the time when this method is called).</i>
+   * <i><b>Note:</b> Filtering will be performed at the time the JVM exists (not
+   * at the time when this method is called).</i>
    *
    * @param path The path to delete recursively.
    * @param filter The filter of paths to delete, or {@code null} to match all
@@ -155,14 +159,14 @@ public final class FileUtil {
    * Register a path to be recursively deleted when the JVM exits. When executed
    * on exit, only the paths that pass the {@code filter} will be deleted.
    * <p>
-   * <i><b>Note:</b> Filtering will be performed at the time the JVM exists (not at
-   * the time when this method is called).</i>
+   * <i><b>Note:</b> Filtering will be performed at the time the JVM exists (not
+   * at the time when this method is called).</i>
    *
    * @param file The file to delete recursively.
    * @param filter The filter of paths to delete, or {@code null} to match all
    *          paths.
    * @throws IOException If an I/O error has occurred.
-   * @throws NullPointerException If {@code path} is null.
+   * @throws NullPointerException If {@code file} is null.
    */
   public static void deleteAllOnExit(final File file, final DirectoryStream.Filter<? super Path> filter) throws IOException {
     final Path path = file.toPath();
@@ -177,7 +181,7 @@ public final class FileUtil {
    *
    * @param path The path to delete recursively.
    * @throws IOException If an I/O error has occurred.
-   * @throws NullPointerException If the specified {@link Path} is null.
+   * @throws NullPointerException If the {@code path} is null.
    */
   public static void deleteAllOnExit(final Path path) throws IOException {
     deleteAllOnExit(path, anyStreamFilter);
@@ -188,7 +192,7 @@ public final class FileUtil {
    *
    * @param file The file to delete recursively.
    * @throws IOException If an I/O error has occurred.
-   * @throws NullPointerException If the specified {@link Path} is null.
+   * @throws NullPointerException If the {@code file} is null.
    */
   public static void deleteAllOnExit(final File file) throws IOException {
     deleteAllOnExit(file, anyStreamFilter);
@@ -204,7 +208,7 @@ public final class FileUtil {
    * @return {@code true} if and only if the file or directory was successfully
    *         deleted; {@code false} otherwise.
    * @throws IOException If an I/O error has occurred.
-   * @throws NullPointerException If the specified {@link Path} is null.
+   * @throws NullPointerException If the {@code path} is null.
    */
   public static boolean deleteAll(final Path path, final DirectoryStream.Filter<? super Path> filter) throws IOException {
     deleteAll0(path, filter != null ? filter : anyStreamFilter);
@@ -218,7 +222,7 @@ public final class FileUtil {
    * @return {@code true} if and only if the file or directory was successfully
    *         deleted; {@code false} otherwise.
    * @throws IOException If an I/O error has occurred.
-   * @throws NullPointerException If the specified {@link Path} is null.
+   * @throws NullPointerException If the {@code path} is null.
    */
   public static boolean deleteAll(final Path path) throws IOException {
     deleteAll0(path, anyStreamFilter);
