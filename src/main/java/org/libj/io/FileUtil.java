@@ -43,7 +43,7 @@ import org.libj.util.StringPaths;
 public final class FileUtil {
   private static File CWD;
   private static File TEMP_DIR;
-  private static ConcurrentMap<Path,List<DirectoryStream.Filter<? super Path>>> deleteOnExit;
+  private static volatile ConcurrentMap<Path,List<DirectoryStream.Filter<? super Path>>> deleteOnExit;
   private static final AtomicBoolean deleteOnExitMutex = new AtomicBoolean();
 
   private static void deleteOnExit(final Path path, final DirectoryStream.Filter<? super Path> filter) {
@@ -74,14 +74,8 @@ public final class FileUtil {
     }
 
     List<DirectoryStream.Filter<? super Path>> filters = deleteOnExit.get(path);
-    if (filters == null) {
-      synchronized (deleteOnExit) {
-        filters = deleteOnExit.get(path);
-        if (filters == null) {
-          deleteOnExit.put(path, filters = new ArrayList<>(1));
-        }
-      }
-    }
+    if (filters == null)
+      deleteOnExit.put(path, filters = new ArrayList<>(1));
 
     filters.add(filter != null ? filter : anyStreamFilter);
   }
