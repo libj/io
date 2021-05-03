@@ -16,26 +16,38 @@
 
 package org.libj.io;
 
-import java.io.FilterOutputStream;
+import java.io.BufferedOutputStream;
 import java.io.IOException;
 import java.io.OutputStream;
 import java.util.Objects;
 
 /**
- * A {@link FilterOutputStream} that counts the number of bytes written.
+ * A {@link BufferedOutputStream} that counts the number of bytes written.
  */
-public class CountingOutputStream extends FilterOutputStream {
+public class CountingBufferedOutputStream extends BufferedOutputStream {
   protected long count;
 
   /**
-   * Creates a new {@link CountingOutputStream} wrapping the specified
+   * Creates a new {@link CountingBufferedOutputStream} wrapping the specified
    * {@link OutputStream}.
    *
    * @param out The output stream to be wrapped.
    * @throws NullPointerException If the specified {@link OutputStream} is null.
    */
-  public CountingOutputStream(final OutputStream out) {
+  public CountingBufferedOutputStream(final OutputStream out) {
     super(Objects.requireNonNull(out));
+  }
+
+  /**
+   * Creates a new {@link CountingBufferedOutputStream} wrapping the specified
+   * {@link OutputStream}.
+   *
+   * @param out The output stream to be wrapped.
+   * @param size The buffer size.
+   * @throws NullPointerException If the specified {@link OutputStream} is null.
+   */
+  public CountingBufferedOutputStream(final OutputStream out, final int size) {
+    super(Objects.requireNonNull(out), size);
   }
 
   /**
@@ -48,7 +60,7 @@ public class CountingOutputStream extends FilterOutputStream {
   }
 
   @Override
-  public void write(final byte[] b, final int off, final int len) throws IOException {
+  public synchronized void write(final byte[] b, final int off, final int len) throws IOException {
     out.write(b, off, len);
     count += len;
   }
@@ -60,7 +72,7 @@ public class CountingOutputStream extends FilterOutputStream {
   }
 
   @Override
-  public void write(final int b) throws IOException {
+  public synchronized void write(final int b) throws IOException {
     out.write(b);
     ++count;
   }
