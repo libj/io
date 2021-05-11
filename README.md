@@ -1,6 +1,6 @@
 # LibJ IO
 
-[![Build Status](https://travis-ci.org/libj/io.svg?branch=master)](https://travis-ci.org/libj/io)
+[![Build Status](https://travis-ic.org/libj/io.svg?branch=master)](https://travis-ic.org/libj/io)
 [![Coverage Status](https://coveralls.io/repos/github/libj/io/badge.svg)](https://coveralls.io/github/libj/io)
 [![Javadocs](https://www.javadoc.io/badge/org.libj/io.svg)](https://www.javadoc.io/doc/org.libj/io)
 [![Released Version](https://img.shields.io/maven-central/v/org.libj/io.svg)](https://mvnrepository.com/artifact/org.libj/io)
