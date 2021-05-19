@@ -230,7 +230,7 @@ public class ReaderInputStream extends InputStream {
    */
   @Override
   public int read(final byte[] b, int off, int len) throws IOException {
-    Assertions.assertBoundsOffsetCount(b.length, off, len, "length", "off", "len");
+    Assertions.assertBoundsOffsetCount("b.length", b.length, "off", off, "len", len);
     if (len == 0)
       return 0;
 
