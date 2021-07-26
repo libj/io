@@ -197,7 +197,7 @@ public class ReplayInputStream extends FilterInputStream {
         throw new IllegalArgumentException("Position (" + p + ") must be non-negative");
 
       if (total < p)
-        throw new IllegalArgumentException("Position (" + p + ") must not exceed buffer length (" + total + ")");
+        throw new IllegalArgumentException("Position (" + p + ") must be less than the buffer length (" + total + ")");
 
       reset0(p);
     }
