@@ -582,7 +582,8 @@ public final class Streams {
             pipedOut.close();
           }
           catch (final IOException e) {
-            logger.debug(e.getMessage(), e);
+            if (logger.isDebugEnabled())
+              logger.debug(e.getMessage(), e);
           }
         });
       }
