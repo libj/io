@@ -19,6 +19,8 @@ package org.libj.io;
 import java.io.IOException;
 import java.io.Reader;
 
+import org.libj.lang.Assertions;
+
 /**
  * Utility functions for operations pertaining to {@link Reader}.
  */
@@ -31,7 +33,7 @@ public final class Readers {
    * @return A string of the remaining contents from the specified
    *         {@link Reader}.
    * @throws IOException If an I/O error has occurred.
-   * @throws NullPointerException If the specified {@link Reader} is null.
+   * @throws IllegalArgumentException If {@code reader} is null.
    */
   public static String readFully(final Reader reader) throws IOException {
     return readFully(reader, new StringBuilder()).toString();
@@ -46,11 +48,11 @@ public final class Readers {
    *          {@link Reader} is to be read.
    * @return The provided {@link StringBuilder}.
    * @throws IOException If an I/O error has occurred.
-   * @throws NullPointerException If the specified {@code reader} or
-   *           {@code builder} is null.
+   * @throws IllegalArgumentException If {@code reader} or {@code builder} is
+   *           null.
    */
   public static StringBuilder readFully(final Reader reader, final StringBuilder builder) throws IOException {
-    for (int ch; (ch = reader.read()) != -1; builder.append((char)ch));
+    for (int ch; (ch = Assertions.assertNotNull(reader).read()) != -1; builder.append((char)ch));
     return builder;
   }
 
@@ -63,8 +65,8 @@ public final class Readers {
    * @return A string of the remaining contents from the specified
    *         {@link Reader}.
    * @throws IOException If an I/O error has occurred.
-   * @throws NullPointerException If the specified {@link Reader} is null.
-   * @throws IllegalArgumentException If {@code bufferSize} is negative.
+   * @throws IllegalArgumentException If {@code reader} is null, or if
+   *           {@code bufferSize} is negative.
    */
   public static String readFully(final Reader reader, final int bufferSize) throws IOException {
     return readFully(reader, new StringBuilder(), bufferSize).toString();
@@ -80,16 +82,15 @@ public final class Readers {
    * @param bufferSize The size of the read buffer to use when reading.
    * @return The provided {@link StringBuilder}.
    * @throws IOException If an I/O error has occurred.
-   * @throws NullPointerException If the specified {@code reader} or
-   *           {@code builder} is null.
-   * @throws IllegalArgumentException If {@code bufferSize} is negative.
+   * @throws IllegalArgumentException If {@code reader} or {@code builder} is
+   *           null, or if {@code bufferSize} is negative.
    */
   public static StringBuilder readFully(final Reader reader, final StringBuilder builder, final int bufferSize) throws IOException {
     if (bufferSize <= 0)
       throw new IllegalArgumentException("Buffer size (" + bufferSize + ") must be greater than 0");
 
     final char[] cbuf = new char[bufferSize];
-    for (int size; (size = reader.read(cbuf)) > 0; builder.append(cbuf, 0, size));
+    for (int size; (size = Assertions.assertNotNull(reader).read(cbuf)) > 0; builder.append(cbuf, 0, size));
     return builder;
   }
 

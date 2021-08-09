@@ -21,6 +21,8 @@ import java.io.FilterReader;
 import java.io.IOException;
 import java.io.Reader;
 
+import org.libj.lang.Assertions;
+
 /**
  * This class implements a FilterReader that allows its content to be re-read.
  * With each call to its read methods, content is written to an underlying
@@ -156,7 +158,7 @@ public class ReplayReader extends FilterReader {
      * @param cbuf Destination buffer.
      * @return The number of characters read, or -1 if the end of the stream has
      *         been reached.
-     * @throws NullPointerException If {@code cbuf} is null.
+     * @throws IllegalArgumentException If {@code cbuf} is null.
      */
     public int read(final char[] cbuf) {
       return read(cbuf, 0, cbuf.length);
@@ -173,9 +175,10 @@ public class ReplayReader extends FilterReader {
      * @throws IndexOutOfBoundsException If {@code off} is negative, or
      *           {@code len} is negative, or {@code len} is greater than
      *           {@code cbuf.length - off}.
-     * @throws NullPointerException If {@code cbuf} is null.
+     * @throws IllegalArgumentException If {@code cbuf} is null.
      */
     public int read(final char[] cbuf, final int off, final int len) {
+      Assertions.assertNotNull(cbuf);
       if (closed || count >= total)
         return -1;
 
@@ -290,11 +293,11 @@ public class ReplayReader extends FilterReader {
    * @param in A Reader object providing the underlying stream.
    * @param initialSize An int specifying the initial buffer size of the
    *          re-readable buffer.
-   * @throws IllegalArgumentException If {@code initialSize} is negative.
-   * @throws NullPointerException If {@code in} is null.
+   * @throws IllegalArgumentException If {@code in} is null, or if
+   *           {@code initialSize} is negative.
    */
   public ReplayReader(final Reader in, final int initialSize) {
-    super(in);
+    super(Assertions.assertNotNull(in));
     this.buffer = new ReadbackCharArrayWriter(initialSize);
   }
 
@@ -303,10 +306,10 @@ public class ReplayReader extends FilterReader {
    * its source, and default initial size of 32 for the re-readable buffer.
    *
    * @param in A Reader object providing the underlying stream.
-   * @throws NullPointerException If {@code in} is null.
+   * @throws IllegalArgumentException If {@code in} is null.
    */
   public ReplayReader(final Reader in) {
-    super(in);
+    super(Assertions.assertNotNull(in));
     this.buffer = new ReadbackCharArrayWriter();
   }
 
@@ -366,7 +369,7 @@ public class ReplayReader extends FilterReader {
    * @return The number of characters read, or -1 if the end of the stream has
    *         been reached.
    * @throws IOException If an I/O error has occurred.
-   * @throws NullPointerException If {@code cbuf} is null.
+   * @throws IllegalArgumentException If {@code cbuf} is null.
    */
   @Override
   public int read(final char[] cbuf) throws IOException {
@@ -390,10 +393,11 @@ public class ReplayReader extends FilterReader {
    * @throws IndexOutOfBoundsException If {@code off} is negative, or
    *           {@code len} is negative, or {@code len} is greater than
    *           {@code cbuf.length - off}.
-   * @throws NullPointerException If {@code cbuf} is null.
+   * @throws IllegalArgumentException If {@code cbuf} is null.
    */
   @Override
   public int read(final char[] cbuf, final int off, final int len) throws IOException {
+    Assertions.assertNotNull(cbuf);
     int avail = buffer.available();
     if (avail >= len)
       return buffer.read(cbuf, off, len);

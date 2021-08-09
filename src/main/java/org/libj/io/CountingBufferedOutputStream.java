@@ -19,7 +19,8 @@ package org.libj.io;
 import java.io.BufferedOutputStream;
 import java.io.IOException;
 import java.io.OutputStream;
-import java.util.Objects;
+
+import org.libj.lang.Assertions;
 
 /**
  * A {@link BufferedOutputStream} that counts the number of bytes written.
@@ -32,10 +33,10 @@ public class CountingBufferedOutputStream extends BufferedOutputStream {
    * {@link OutputStream}.
    *
    * @param out The output stream to be wrapped.
-   * @throws NullPointerException If the specified {@link OutputStream} is null.
+   * @throws IllegalArgumentException If {@code out} is null.
    */
   public CountingBufferedOutputStream(final OutputStream out) {
-    super(Objects.requireNonNull(out));
+    super(Assertions.assertNotNull(out));
   }
 
   /**
@@ -44,10 +45,10 @@ public class CountingBufferedOutputStream extends BufferedOutputStream {
    *
    * @param out The output stream to be wrapped.
    * @param size The buffer size.
-   * @throws NullPointerException If the specified {@link OutputStream} is null.
+   * @throws IllegalArgumentException If {@code out} is null.
    */
   public CountingBufferedOutputStream(final OutputStream out, final int size) {
-    super(Objects.requireNonNull(out), size);
+    super(Assertions.assertNotNull(out), size);
   }
 
   /**

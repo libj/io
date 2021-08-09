@@ -19,6 +19,8 @@ package org.libj.io;
 import java.io.IOException;
 import java.io.OutputStream;
 
+import org.libj.lang.Assertions;
+
 /**
  * {@link OutputStream} that delegates its method calls to an array of output
  * streams.
@@ -34,17 +36,15 @@ public class TeeOutputStream extends OutputStream {
    *
    * @param streams The streams to which this stream's method calls will be
    *          delegated.
-   * @throws IllegalArgumentException If {@code streams} is empty, or if any
-   *           stream in the {@code streams} array is null.
-   * @throws NullPointerException If {@code streams} is null.
+   * @throws IllegalArgumentException If @{@code streams} is null or empty, or
+   *           if any stream in the {@code streams} array is null.
    */
   public TeeOutputStream(final OutputStream ... streams) {
-    if (streams.length == 0)
+    if (Assertions.assertNotNull(streams).length == 0)
       throw new IllegalArgumentException("Empty array");
 
     for (int i = 0; i < streams.length; ++i)
-      if (streams[i] == null)
-        throw new IllegalArgumentException("member at index " + i + " is null");
+      Assertions.assertNotNull(streams[i], "member at index " + i + " is null");
 
     this.streams = streams;
   }

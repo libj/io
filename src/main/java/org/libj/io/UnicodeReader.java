@@ -19,7 +19,8 @@ package org.libj.io;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.Reader;
-import java.util.Objects;
+
+import org.libj.lang.Assertions;
 
 /**
  * A {@link Reader} for decoding streams of escaped unicode encoded strings
@@ -84,10 +85,10 @@ public class UnicodeReader extends Reader {
    * Creates a new {@link UnicodeReader} with the specified {@link InputStream}.
    *
    * @param in The {@link InputStream}.
-   * @throws NullPointerException If the specified {@link InputStream} is null.
+   * @throws IllegalArgumentException If {@code in} is null.
    */
   public UnicodeReader(final InputStream in) {
-    this.in = Objects.requireNonNull(in);
+    this.in = Assertions.assertNotNull(in);
     this.reader = null;
   }
 
@@ -95,11 +96,11 @@ public class UnicodeReader extends Reader {
    * Creates a new {@link UnicodeReader} with the specified {@link Reader}.
    *
    * @param reader The {@link Reader}.
-   * @throws NullPointerException If the specified {@link Reader} is null.
+   * @throws IllegalArgumentException If {@code reader} is null.
    */
   public UnicodeReader(final Reader reader) {
     this.in = null;
-    this.reader = Objects.requireNonNull(reader);
+    this.reader = Assertions.assertNotNull(reader);
   }
 
   /**

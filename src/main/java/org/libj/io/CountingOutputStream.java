@@ -19,7 +19,8 @@ package org.libj.io;
 import java.io.FilterOutputStream;
 import java.io.IOException;
 import java.io.OutputStream;
-import java.util.Objects;
+
+import org.libj.lang.Assertions;
 
 /**
  * A {@link FilterOutputStream} that counts the number of bytes written.
@@ -32,10 +33,10 @@ public class CountingOutputStream extends FilterOutputStream {
    * {@link OutputStream}.
    *
    * @param out The output stream to be wrapped.
-   * @throws NullPointerException If the specified {@link OutputStream} is null.
+   * @throws IllegalArgumentException If {@code out} is null.
    */
   public CountingOutputStream(final OutputStream out) {
-    super(Objects.requireNonNull(out));
+    super(Assertions.assertNotNull(out));
   }
 
   /**

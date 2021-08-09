@@ -26,6 +26,7 @@ import java.io.PipedOutputStream;
 import java.util.concurrent.CountDownLatch;
 import java.util.function.Consumer;
 
+import org.libj.lang.Assertions;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -44,7 +45,7 @@ public final class Streams {
    * @param out The {@link OutputStream}.
    * @param s The {@code short} value to write.
    * @throws IOException If an I/O error has occurred.
-   * @throws NullPointerException If the specified {@link OutputStream} is null.
+   * @throws IllegalArgumentException If the {@code out} is null.
    */
   public static void writeShort(final OutputStream out, final short s) throws IOException {
     writeShort(out, s, true);
@@ -58,9 +59,10 @@ public final class Streams {
    * @param isBigEndian If {@code true}, bytes will be written in big-endian
    *          encoding. If {@code false}, in little-endian.
    * @throws IOException If an I/O error has occurred.
-   * @throws NullPointerException If the specified {@link OutputStream} is null.
+   * @throws IllegalArgumentException If the {@code out} is null.
    */
   public static void writeShort(final OutputStream out, final short s, final boolean isBigEndian) throws IOException {
+    Assertions.assertNotNull(out);
     if (isBigEndian) {
       out.write((byte)((s >> 8) & 0xff));
       out.write((byte)(s & 0xff));
@@ -78,7 +80,7 @@ public final class Streams {
    * @param out The {@link OutputStream}.
    * @param s The {@code short} value to write.
    * @throws IOException If an I/O error has occurred.
-   * @throws NullPointerException If the specified {@link OutputStream} is null.
+   * @throws IllegalArgumentException If the {@code out} is null.
    */
   public static void writeShort(final DataOutput out, final short s) throws IOException {
     writeShort(out, s, true);
@@ -92,9 +94,10 @@ public final class Streams {
    * @param isBigEndian If {@code true}, bytes will be written in big-endian
    *          encoding. If {@code false}, in little-endian.
    * @throws IOException If an I/O error has occurred.
-   * @throws NullPointerException If the specified {@link OutputStream} is null.
+   * @throws IllegalArgumentException If the {@code out} is null.
    */
   public static void writeShort(final DataOutput out, final short s, final boolean isBigEndian) throws IOException {
+    Assertions.assertNotNull(out);
     if (isBigEndian) {
       out.write((byte)((s >> 8) & 0xff));
       out.write((byte)(s & 0xff));
@@ -112,7 +115,7 @@ public final class Streams {
    * @param out The {@link OutputStream}.
    * @param c The {@code char} value to write.
    * @throws IOException If an I/O error has occurred.
-   * @throws NullPointerException If the specified {@link OutputStream} is null.
+   * @throws IllegalArgumentException If the {@code out} is null.
    */
   public static void writeChar(final OutputStream out, final char c) throws IOException {
     writeChar(out, c, true);
@@ -126,9 +129,10 @@ public final class Streams {
    * @param isBigEndian If {@code true}, bytes will be written in big-endian
    *          encoding. If {@code false}, in little-endian.
    * @throws IOException If an I/O error has occurred.
-   * @throws NullPointerException If the specified {@link OutputStream} is null.
+   * @throws IllegalArgumentException If the {@code out} is null.
    */
   public static void writeChar(final OutputStream out, final char c, final boolean isBigEndian) throws IOException {
+    Assertions.assertNotNull(out);
     if (isBigEndian) {
       out.write((byte)((c >> 8) & 0xff));
       out.write((byte)(c & 0xff));
@@ -140,29 +144,30 @@ public final class Streams {
   }
 
   /**
-   * Write a 2-byte {@code char} value to the specified {@link DataOutput} in
+   * Write a 2-byte {@code char} value to the {@code out} is null in
    * big-endian encoding.
    *
    * @param out The {@link DataOutput}.
    * @param c The {@code char} value to write.
    * @throws IOException If an I/O error has occurred.
-   * @throws NullPointerException If the specified {@link DataOutput} is null.
+   * @throws IllegalArgumentException If the {@code out} is null.
    */
   public static void writeChar(final DataOutput out, final char c) throws IOException {
     writeChar(out, c, true);
   }
 
   /**
-   * Write a 2-byte {@code char} value to the specified {@link DataOutput}.
+   * Write a 2-byte {@code char} value to the {@code out} is null.
    *
    * @param out The {@link DataOutput}.
    * @param c The {@code char} value to write.
    * @param isBigEndian If {@code true}, bytes will be written in big-endian
    *          encoding. If {@code false}, in little-endian.
    * @throws IOException If an I/O error has occurred.
-   * @throws NullPointerException If the specified {@link DataOutput} is null.
+   * @throws IllegalArgumentException If the {@code out} is null.
    */
   public static void writeChar(final DataOutput out, final char c, final boolean isBigEndian) throws IOException {
+    Assertions.assertNotNull(out);
     if (isBigEndian) {
       out.write((byte)((c >> 8) & 0xff));
       out.write((byte)(c & 0xff));
@@ -180,7 +185,7 @@ public final class Streams {
    * @param out The {@link OutputStream}.
    * @param i The {@code int} value to write.
    * @throws IOException If an I/O error has occurred.
-   * @throws NullPointerException If the specified {@link OutputStream} is null.
+   * @throws IllegalArgumentException If the {@code out} is null.
    */
   public static void writeInt(final OutputStream out, final int i) throws IOException {
     writeInt(out, i, true);
@@ -194,9 +199,10 @@ public final class Streams {
    * @param isBigEndian If {@code true}, bytes will be written in big-endian
    *          encoding. If {@code false}, in little-endian.
    * @throws IOException If an I/O error has occurred.
-   * @throws NullPointerException If the specified {@link OutputStream} is null.
+   * @throws IllegalArgumentException If the {@code out} is null.
    */
   public static void writeInt(final OutputStream out, final int i, final boolean isBigEndian) throws IOException {
+    Assertions.assertNotNull(out);
     if (isBigEndian) {
       out.write((byte)((i >> 24) & 0xff));
       out.write((byte)((i >> 16) & 0xff));
@@ -212,29 +218,30 @@ public final class Streams {
   }
 
   /**
-   * Write a 4-byte {@code int} value to the specified {@link DataOutput} in
+   * Write a 4-byte {@code int} value to the {@code out} is null in
    * big-endian encoding.
    *
    * @param out The {@link DataOutput}.
    * @param i The {@code int} value to write.
    * @throws IOException If an I/O error has occurred.
-   * @throws NullPointerException If the specified {@link DataOutput} is null.
+   * @throws IllegalArgumentException If the {@code out} is null.
    */
   public static void writeInt(final DataOutput out, final int i) throws IOException {
     writeInt(out, i, true);
   }
 
   /**
-   * Write a 4-byte {@code int} value to the specified {@link DataOutput}.
+   * Write a 4-byte {@code int} value to the {@code out} is null.
    *
    * @param out The {@link DataOutput}.
    * @param i The {@code int} value to write.
    * @param isBigEndian If {@code true}, bytes will be written in big-endian
    *          encoding. If {@code false}, in little-endian.
    * @throws IOException If an I/O error has occurred.
-   * @throws NullPointerException If the specified {@link DataOutput} is null.
+   * @throws IllegalArgumentException If the {@code out} is null.
    */
   public static void writeInt(final DataOutput out, final int i, final boolean isBigEndian) throws IOException {
+    Assertions.assertNotNull(out);
     if (isBigEndian) {
       out.write((byte)((i >> 24) & 0xff));
       out.write((byte)((i >> 16) & 0xff));
@@ -256,7 +263,7 @@ public final class Streams {
    * @param out The {@link OutputStream}.
    * @param l The {@code long} value to write.
    * @throws IOException If an I/O error has occurred.
-   * @throws NullPointerException If the specified {@link OutputStream} is null.
+   * @throws IllegalArgumentException If the {@code out} is null.
    */
   public static void writeLong(final OutputStream out, final long l) throws IOException {
     writeLong(out, l, true);
@@ -270,9 +277,10 @@ public final class Streams {
    * @param isBigEndian If {@code true}, bytes will be written in big-endian
    *          encoding. If {@code false}, in little-endian.
    * @throws IOException If an I/O error has occurred.
-   * @throws NullPointerException If the specified {@link OutputStream} is null.
+   * @throws IllegalArgumentException If the {@code out} is null.
    */
   public static void writeLong(final OutputStream out, final long l, final boolean isBigEndian) throws IOException {
+    Assertions.assertNotNull(out);
     if (isBigEndian) {
       out.write((byte)((l >> 56) & 0xff));
       out.write((byte)((l >> 48) & 0xff));
@@ -296,29 +304,30 @@ public final class Streams {
   }
 
   /**
-   * Write a 8-byte {@code long} value to the specified {@link DataOutput} in
+   * Write a 8-byte {@code long} value to the {@code out} is null in
    * big-endian encoding.
    *
    * @param out The {@link DataOutput}.
    * @param l The {@code long} value to write.
    * @throws IOException If an I/O error has occurred.
-   * @throws NullPointerException If the specified {@link DataOutput} is null.
+   * @throws IllegalArgumentException If the {@code out} is null.
    */
   public static void writeLong(final DataOutput out, final long l) throws IOException {
     writeLong(out, l, true);
   }
 
   /**
-   * Write a 8-byte {@code long} value to the specified {@link DataOutput}.
+   * Write a 8-byte {@code long} value to the {@code out} is null.
    *
    * @param out The {@link DataOutput}.
    * @param l The {@code long} value to write.
    * @param isBigEndian If {@code true}, bytes will be written in big-endian
    *          encoding. If {@code false}, in little-endian.
    * @throws IOException If an I/O error has occurred.
-   * @throws NullPointerException If the specified {@link DataOutput} is null.
+   * @throws IllegalArgumentException If the {@code out} is null.
    */
   public static void writeLong(final DataOutput out, final long l, final boolean isBigEndian) throws IOException {
+    Assertions.assertNotNull(out);
     if (isBigEndian) {
       out.write((byte)((l >> 56) & 0xff));
       out.write((byte)((l >> 48) & 0xff));
@@ -350,7 +359,7 @@ public final class Streams {
    * @param out The {@link OutputStream}.
    * @param f The {@code float} value to write.
    * @throws IOException If an I/O error has occurred.
-   * @throws NullPointerException If the specified {@link OutputStream} is null.
+   * @throws IllegalArgumentException If the {@code out} is null.
    */
   public static void writeFloat(final OutputStream out, final float f) throws IOException {
     writeInt(out, Float.floatToIntBits(f));
@@ -365,7 +374,7 @@ public final class Streams {
    * @param out The {@link OutputStream}.
    * @param d The {@code double} value to write.
    * @throws IOException If an I/O error has occurred.
-   * @throws NullPointerException If the specified {@link OutputStream} is null.
+   * @throws IllegalArgumentException If the {@code out} is null.
    */
   public static void writeDouble(final OutputStream out, final double d) throws IOException {
     writeLong(out, Double.doubleToLongBits(d));
@@ -379,7 +388,7 @@ public final class Streams {
    * @return A {@code short} value constructed from the 2-byte big-endian
    *         representation read from {@code in}.
    * @throws IOException If an I/O error has occurred.
-   * @throws NullPointerException If {@code in} is null.
+   * @throws IllegalArgumentException If {@code in} is null.
    */
   public static short readShort(final InputStream in) throws IOException {
     return readShort(in, true);
@@ -395,9 +404,10 @@ public final class Streams {
    * @param isBigEndian If {@code true}, bytes will be read in big-endian
    *          encoding. If {@code false}, in little-endian.
    * @throws IOException If an I/O error has occurred.
-   * @throws NullPointerException If {@code in} is null.
+   * @throws IllegalArgumentException If {@code in} is null.
    */
   public static short readShort(final InputStream in, final boolean isBigEndian) throws IOException {
+    Assertions.assertNotNull(in);
     if (isBigEndian)
       return (short)(((in.read() & 0xFF) << 8) | (in.read() & 0xFF));
 
@@ -412,7 +422,7 @@ public final class Streams {
    * @return A {@code short} value constructed from the 2-byte unsigned
    *         big-endian representation read from {@code in}.
    * @throws IOException If an I/O error has occurred.
-   * @throws NullPointerException If {@code in} is null.
+   * @throws IllegalArgumentException If {@code in} is null.
    */
   public static char readChar(final InputStream in) throws IOException {
     return readChar(in, true);
@@ -428,9 +438,10 @@ public final class Streams {
    * @param isBigEndian If {@code true}, bytes will be read in big-endian
    *          encoding. If {@code false}, in little-endian.
    * @throws IOException If an I/O error has occurred.
-   * @throws NullPointerException If {@code in} is null.
+   * @throws IllegalArgumentException If {@code in} is null.
    */
   public static char readChar(final InputStream in, final boolean isBigEndian) throws IOException {
+    Assertions.assertNotNull(in);
     if (isBigEndian)
       return (char)((in.read() & 0xFF) << 8 | (in.read() & 0xFF));
 
@@ -445,7 +456,7 @@ public final class Streams {
    * @return An {@code int} value constructed from the 4-byte big-endian
    *         representation read from {@code in}.
    * @throws IOException If an I/O error has occurred.
-   * @throws NullPointerException If {@code in} is null.
+   * @throws IllegalArgumentException If {@code in} is null.
    */
   public static int readInt(final InputStream in) throws IOException {
     return readInt(in, true);
@@ -461,9 +472,10 @@ public final class Streams {
    * @param isBigEndian If {@code true}, bytes will be read in big-endian
    *          encoding. If {@code false}, in little-endian.
    * @throws IOException If an I/O error has occurred.
-   * @throws NullPointerException If {@code in} is null.
+   * @throws IllegalArgumentException If {@code in} is null.
    */
   public static int readInt(final InputStream in, final boolean isBigEndian) throws IOException {
+    Assertions.assertNotNull(in);
     if (isBigEndian)
       return ((in.read() & 0xFF) << 24) | ((in.read() & 0xFF) << 16) | ((in.read() & 0xFF) << 8) | (in.read() & 0xFF);
 
@@ -478,7 +490,7 @@ public final class Streams {
    * @return A {@code long} value constructed from the 8-byte big-endian
    *         representation read from {@code in}.
    * @throws IOException If an I/O error has occurred.
-   * @throws NullPointerException If {@code in} is null.
+   * @throws IllegalArgumentException If {@code in} is null.
    */
   public static long readLong(final InputStream in) throws IOException {
     return readLong(in, true);
@@ -494,9 +506,10 @@ public final class Streams {
    * @param isBigEndian If {@code true}, bytes will be read in big-endian
    *          encoding. If {@code false}, in little-endian.
    * @throws IOException If an I/O error has occurred.
-   * @throws NullPointerException If {@code in} is null.
+   * @throws IllegalArgumentException If {@code in} is null.
    */
   public static long readLong(final InputStream in, final boolean isBigEndian) throws IOException {
+    Assertions.assertNotNull(in);
     if (isBigEndian)
       return (in.read() & 0xFFL) << 56 | (in.read() & 0xFFL) << 48 | (in.read() & 0xFFL) << 40 | (in.read() & 0xFFL) << 32 | (in.read() & 0xFFL) << 24 | (in.read() & 0xFFL) << 16 | (in.read() & 0xFFL) << 8 | (in.read() & 0xFFL);
 
@@ -514,10 +527,11 @@ public final class Streams {
    * @throws IOException If the first byte cannot be read for any reason other
    *           than the end of the file, if the input stream has been closed, or
    *           if some other I/O error occurs.
-   * @throws NullPointerException If {@code in} is null.
+   * @throws IllegalArgumentException If {@code in} is null.
    * @see InputStream#read(byte[])
    */
   public static byte[] readBytes(final InputStream in) throws IOException {
+    Assertions.assertNotNull(in);
     final ByteArrayOutputStream buffer = new ByteArrayOutputStream(DEFAULT_SOCKET_BUFFER_SIZE);
     final byte[] data = new byte[DEFAULT_SOCKET_BUFFER_SIZE];
     for (int length; (length = in.read(data)) != -1; buffer.write(data, 0, length));
@@ -536,7 +550,8 @@ public final class Streams {
    * @return A merged {@link InputStream} receiving its input from the array of
    *         {@code streams} input streams.
    * @throws IOException If an I/O error has occurred.
-   * @throws IllegalArgumentException If {@code streams.length == 0}.
+   * @throws IllegalArgumentException If @{@code streams} is null, or if
+   *           {@code streams.length == 0}.
    */
   public static InputStream merge(final InputStream ... streams) throws IOException {
     return merge(true, streams);
@@ -559,7 +574,7 @@ public final class Streams {
   }
 
   private static InputStream merge(final boolean sync, final InputStream ... streams) throws IOException {
-    if (streams.length == 0)
+    if (Assertions.assertNotNull(streams).length == 0)
       throw new IllegalArgumentException("streams.length == 0");
 
     if (streams.length == 1)
@@ -599,7 +614,7 @@ public final class Streams {
    * @param src The source {@link InputStream}.
    * @param snk The sink {@link OutputStream}.
    * @throws IOException If an I/O error has occurred.
-   * @throws NullPointerException If {@code src} or {@code snk} is null.
+   * @throws IllegalArgumentException If {@code src} or {@code snk} is null.
    */
   public static void pipe(final InputStream src, final OutputStream snk) throws IOException {
     pipe(src, snk, false, true, null);
@@ -612,7 +627,7 @@ public final class Streams {
    * @param src The source {@link InputStream}.
    * @param snk The sink {@link OutputStream}.
    * @throws IOException If an I/O error has occurred.
-   * @throws NullPointerException If {@code src} or {@code snk} is null.
+   * @throws IllegalArgumentException If {@code src} or {@code snk} is null.
    */
   public static void pipeAsync(final InputStream src, final OutputStream snk) throws IOException {
     pipeAsync(src, snk, null);
@@ -630,7 +645,7 @@ public final class Streams {
    *          completion (in which case null will be passed to the consumer
    *          instance).
    * @throws IOException If an I/O error has occurred.
-   * @throws NullPointerException If {@code src} or {@code snk} is null.
+   * @throws IllegalArgumentException If {@code src} or {@code snk} is null.
    */
   public static void pipeAsync(final InputStream src, final OutputStream snk, final Consumer<? super IOException> onThreadExit) throws IOException {
     pipe(src, snk, false, false, onThreadExit);
@@ -644,7 +659,7 @@ public final class Streams {
    * @param snk The sink {@link OutputStream}.
    * @return The {@link InputStream} teed from {@code src}.
    * @throws IOException If an I/O error has occurred.
-   * @throws NullPointerException If {@code src} or {@code snk} is null.
+   * @throws IllegalArgumentException If {@code src} or {@code snk} is null.
    */
   public static InputStream tee(final InputStream src, final OutputStream snk) throws IOException {
     return pipe(src, snk, true, true, null);
@@ -659,7 +674,7 @@ public final class Streams {
    * @param snk The sink {@link OutputStream}.
    * @return The {@link InputStream} teed from {@code src}.
    * @throws IOException If an I/O error has occurred.
-   * @throws NullPointerException If {@code src} or {@code snk} is null.
+   * @throws IllegalArgumentException If {@code src} or {@code snk} is null.
    */
   public static InputStream teeAsync(final InputStream src, final OutputStream snk) throws IOException {
     return teeAsync(src, snk, null);
@@ -679,13 +694,15 @@ public final class Streams {
    *          consumer instance).
    * @return The {@link InputStream} teed from {@code src}.
    * @throws IOException If an I/O error has occurred.
-   * @throws NullPointerException If {@code src} or {@code snk} is null.
+   * @throws IllegalArgumentException If {@code src} or {@code snk} is null.
    */
   public static InputStream teeAsync(final InputStream src, final OutputStream snk, final Consumer<? super IOException> onThreadExit) throws IOException {
     return pipe(src, snk, true, false, onThreadExit);
   }
 
   private static InputStream pipe(final InputStream src, final OutputStream snk, final boolean tee, final boolean sync, final Consumer<? super IOException> onExit) throws IOException {
+    Assertions.assertNotNull(src);
+    Assertions.assertNotNull(snk);
     final PipedOutputStream pipedOut;
     final InputStream pipedIn;
     if (tee) {

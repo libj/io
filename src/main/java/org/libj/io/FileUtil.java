@@ -35,6 +35,7 @@ import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.ConcurrentMap;
 import java.util.concurrent.atomic.AtomicBoolean;
 
+import org.libj.lang.Assertions;
 import org.libj.util.StringPaths;
 
 /**
@@ -139,10 +140,10 @@ public final class FileUtil {
    * @param filter The filter of paths to delete, or {@code null} to match all
    *          paths.
    * @throws IOException If an I/O error has occurred.
-   * @throws NullPointerException If {@code path} is null.
+   * @throws IllegalArgumentException If {@code path} is null.
    */
   public static void deleteAllOnExit(final Path path, final DirectoryStream.Filter<? super Path> filter) throws IOException {
-    final File file = path.toFile();
+    final File file = Assertions.assertNotNull(path).toFile();
     if (file.isDirectory())
       deleteOnExit(path, filter);
     else if (filter != null && filter.accept(path))
@@ -160,10 +161,10 @@ public final class FileUtil {
    * @param filter The filter of paths to delete, or {@code null} to match all
    *          paths.
    * @throws IOException If an I/O error has occurred.
-   * @throws NullPointerException If {@code file} is null.
+   * @throws IllegalArgumentException If {@code file} is null.
    */
   public static void deleteAllOnExit(final File file, final DirectoryStream.Filter<? super Path> filter) throws IOException {
-    final Path path = file.toPath();
+    final Path path = Assertions.assertNotNull(file).toPath();
     if (file.isDirectory())
       deleteOnExit(path, filter);
     else if (filter != null && filter.accept(path))
@@ -175,7 +176,7 @@ public final class FileUtil {
    *
    * @param path The path to delete recursively.
    * @throws IOException If an I/O error has occurred.
-   * @throws NullPointerException If the {@code path} is null.
+   * @throws IllegalArgumentException If the {@code path} is null.
    */
   public static void deleteAllOnExit(final Path path) throws IOException {
     deleteAllOnExit(path, anyStreamFilter);
@@ -186,7 +187,7 @@ public final class FileUtil {
    *
    * @param file The file to delete recursively.
    * @throws IOException If an I/O error has occurred.
-   * @throws NullPointerException If the {@code file} is null.
+   * @throws IllegalArgumentException If the {@code file} is null.
    */
   public static void deleteAllOnExit(final File file) throws IOException {
     deleteAllOnExit(file, anyStreamFilter);
@@ -202,7 +203,7 @@ public final class FileUtil {
    * @return {@code true} if and only if the file or directory was successfully
    *         deleted; {@code false} otherwise.
    * @throws IOException If an I/O error has occurred.
-   * @throws NullPointerException If the {@code path} is null.
+   * @throws IllegalArgumentException If the {@code path} is null.
    */
   public static boolean deleteAll(final Path path, final DirectoryStream.Filter<? super Path> filter) throws IOException {
     deleteAll0(path, filter != null ? filter : anyStreamFilter);
@@ -216,7 +217,7 @@ public final class FileUtil {
    * @return {@code true} if and only if the file or directory was successfully
    *         deleted; {@code false} otherwise.
    * @throws IOException If an I/O error has occurred.
-   * @throws NullPointerException If the {@code path} is null.
+   * @throws IllegalArgumentException If the {@code path} is null.
    */
   public static boolean deleteAll(final Path path) throws IOException {
     deleteAll0(path, anyStreamFilter);
@@ -254,11 +255,14 @@ public final class FileUtil {
    *           to check write access to the target file. If a symbolic link is
    *           copied the security manager is invoked to check
    *           {@link LinkPermission}{@code ("symbolic")}.
-   * @throws NullPointerException If {@code source}, {@code target}, or
+   * @throws IllegalArgumentException If {@code source}, {@code target}, or
    *           {@code options} is null.
    * @see Files#copy(Path,Path,CopyOption...)
    */
   public static Path copyAll(final Path source, final Path target, final CopyOption ... options) throws IOException {
+    Assertions.assertNotNull(source);
+    Assertions.assertNotNull(target);
+    Assertions.assertNotNull(options);
     if (Files.isRegularFile(source))
       return Files.copy(source, target, options);
 
@@ -285,11 +289,10 @@ public final class FileUtil {
    * @param files The files.
    * @return A {@link File} having a path that is common to the argument
    *         {@code files}.
-   * @throws IllegalArgumentException If {@code files.length == 0}.
-   * @throws NullPointerException If {@code files} is null.
+   * @throws IllegalArgumentException If @{@code files} is null or {@code files.length == 0}.
    */
   public static File commonality(final File ... files) {
-    if (files.length == 0)
+    if (Assertions.assertNotNull(files).length == 0)
       throw new IllegalArgumentException("files.length == 0");
 
     if (files.length > 1) {
@@ -319,10 +322,10 @@ public final class FileUtil {
    *
    * @param file The {@link File}.
    * @return The "short name" of {@code file}.
-   * @throws NullPointerException If {@code file} is null.
+   * @throws IllegalArgumentException If {@code file} is null.
    */
   public static String getShortName(final File file) {
-    final String name = file.getName();
+    final String name = Assertions.assertNotNull(file).getName();
     final int index = name.lastIndexOf('.');
     return index == -1 ? name : name.substring(0, index);
   }

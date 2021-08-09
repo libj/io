@@ -51,16 +51,16 @@ public class UnicodeReaderTest {
   public void testExceptions() {
     try {
       new UnicodeReader((InputStream)null);
-      fail("Expected NullPointerException");
+      fail("Expected IllegalArgumentException");
     }
-    catch (final NullPointerException e) {
+    catch (final IllegalArgumentException e) {
     }
 
     try {
       new UnicodeReader((Reader)null);
-      fail("Expected NullPointerException");
+      fail("Expected IllegalArgumentException");
     }
-    catch (final NullPointerException e) {
+    catch (final IllegalArgumentException e) {
     }
   }
 

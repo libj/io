@@ -19,7 +19,8 @@ package org.libj.io;
 import java.io.FilterReader;
 import java.io.IOException;
 import java.io.Reader;
-import java.util.Objects;
+
+import org.libj.lang.Assertions;
 
 /**
  * An {@link Reader} that counts the number of bytes read.
@@ -29,14 +30,13 @@ public class CountingReader extends FilterReader {
   private long mark = -1;
 
   /**
-   * Creates a new {@link CountingReader} wrapping the specified
-   * {@link Reader}.
+   * Creates a new {@link CountingReader} wrapping the specified {@link Reader}.
    *
    * @param in The output stream to be wrapped.
-   * @throws NullPointerException If the specified {@link Reader} is null.
+   * @throws IllegalArgumentException If {@code in} is null.
    */
   public CountingReader(final Reader in) {
-    super(Objects.requireNonNull(in));
+    super(Assertions.assertNotNull(in));
   }
 
   /**
