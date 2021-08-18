@@ -517,13 +517,14 @@ public final class Streams {
   }
 
   /**
-   * Reads all bytes from the input stream and returns the resulting buffer
-   * array. This method blocks until all contents have been read, end of file is
-   * detected, or an exception is thrown.
+   * Reads all bytes from the provided {@link InputStream} and returns the
+   * resulting buffer array. This method blocks until all contents have been
+   * read, end of file is detected, or an exception is thrown.
    *
-   * @param in The input stream to read from.
-   * @return The byte[] containing all bytes that were read from the InputStream
-   *         {@code in} until an end of file is detected.
+   * @param in The {@link InputStream} from which to read.
+   * @return The {@code byte[]} containing all bytes that were read from the
+   *         provided {@link InputStream} {@code in} until an end of file is
+   *         detected.
    * @throws IOException If the first byte cannot be read for any reason other
    *           than the end of the file, if the input stream has been closed, or
    *           if some other I/O error occurs.
@@ -532,10 +533,10 @@ public final class Streams {
    */
   public static byte[] readBytes(final InputStream in) throws IOException {
     Assertions.assertNotNull(in);
-    final ByteArrayOutputStream buffer = new ByteArrayOutputStream(DEFAULT_SOCKET_BUFFER_SIZE);
+    final ByteArrayOutputStream buf = new ByteArrayOutputStream(DEFAULT_SOCKET_BUFFER_SIZE);
     final byte[] data = new byte[DEFAULT_SOCKET_BUFFER_SIZE];
-    for (int length; (length = in.read(data)) != -1; buffer.write(data, 0, length));
-    return buffer.toByteArray();
+    for (int length; (length = in.read(data)) != -1; buf.write(data, 0, length));
+    return buf.toByteArray();
   }
 
   /**
