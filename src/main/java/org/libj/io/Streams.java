@@ -551,7 +551,7 @@ public final class Streams {
    * @return A merged {@link InputStream} receiving its input from the array of
    *         {@code streams} input streams.
    * @throws IOException If an I/O error has occurred.
-   * @throws IllegalArgumentException If @{@code streams} is null, or if
+   * @throws IllegalArgumentException If {@code streams} is null, or if
    *           {@code streams.length == 0}.
    */
   public static InputStream merge(final InputStream ... streams) throws IOException {

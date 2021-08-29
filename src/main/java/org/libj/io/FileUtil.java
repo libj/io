@@ -289,7 +289,8 @@ public final class FileUtil {
    * @param files The files.
    * @return A {@link File} having a path that is common to the argument
    *         {@code files}.
-   * @throws IllegalArgumentException If @{@code files} is null or {@code files.length == 0}.
+   * @throws IllegalArgumentException If {@code files} is null or
+   *           {@code files.length == 0}.
    */
   public static File commonality(final File ... files) {
     if (Assertions.assertNotNull(files).length == 0)

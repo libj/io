@@ -36,8 +36,8 @@ public class TeeOutputStream extends OutputStream {
    *
    * @param streams The streams to which this stream's method calls will be
    *          delegated.
-   * @throws IllegalArgumentException If @{@code streams} is null or empty, or
-   *           if any stream in the {@code streams} array is null.
+   * @throws IllegalArgumentException If {@code streams} is null or empty, or if
+   *           any stream in the {@code streams} array is null.
    */
   public TeeOutputStream(final OutputStream ... streams) {
     if (Assertions.assertNotNull(streams).length == 0)
