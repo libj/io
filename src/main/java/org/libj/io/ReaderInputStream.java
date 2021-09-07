@@ -70,8 +70,8 @@ import org.libj.lang.Assertions;
  * to provide a meaningful implementation of the {@link InputStream#available()}
  * method. A call to this method will always return 0. Also, this class does not
  * support {@link InputStream#mark(int)}.
- * <p>
- * The {@link ReaderInputStream} is not thread safe.
+ *
+ * @implSpec {@link ReaderInputStream} is not thread safe.
  */
 public class ReaderInputStream extends InputStream {
   private static final int DEFAULT_BUFFER_SIZE = 1024;
