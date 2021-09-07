@@ -132,10 +132,9 @@ public final class FileUtil {
   /**
    * Register a path to be recursively deleted when the JVM exits. When executed
    * on exit, only the paths that pass the {@code filter} will be deleted.
-   * <p>
-   * <i><b>Note:</b> Filtering will be performed at the time the JVM exists (not
-   * at the time when this method is called).</i>
    *
+   * @implNote Filtering will be performed at the time the JVM exists (not at
+   *           the time when this method is called).
    * @param path The path to delete recursively.
    * @param filter The filter of paths to delete, or {@code null} to match all
    *          paths.
@@ -153,10 +152,9 @@ public final class FileUtil {
   /**
    * Register a path to be recursively deleted when the JVM exits. When executed
    * on exit, only the paths that pass the {@code filter} will be deleted.
-   * <p>
-   * <i><b>Note:</b> Filtering will be performed at the time the JVM exists (not
-   * at the time when this method is called).</i>
    *
+   * @implNote Filtering will be performed at the time the JVM exists (not at
+   *           the time when this method is called).
    * @param file The file to delete recursively.
    * @param filter The filter of paths to delete, or {@code null} to match all
    *          paths.
