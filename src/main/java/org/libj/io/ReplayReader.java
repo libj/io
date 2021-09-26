@@ -16,12 +16,12 @@
 
 package org.libj.io;
 
+import static org.libj.lang.Assertions.*;
+
 import java.io.CharArrayWriter;
 import java.io.FilterReader;
 import java.io.IOException;
 import java.io.Reader;
-
-import org.libj.lang.Assertions;
 
 /**
  * This class implements a FilterReader that allows its content to be re-read.
@@ -178,7 +178,7 @@ public class ReplayReader extends FilterReader {
      * @throws IllegalArgumentException If {@code cbuf} is null.
      */
     public int read(final char[] cbuf, final int off, final int len) {
-      Assertions.assertNotNull(cbuf);
+      assertNotNull(cbuf);
       if (closed || count >= total)
         return -1;
 
@@ -297,7 +297,7 @@ public class ReplayReader extends FilterReader {
    *           {@code initialSize} is negative.
    */
   public ReplayReader(final Reader in, final int initialSize) {
-    super(Assertions.assertNotNull(in));
+    super(assertNotNull(in));
     this.buffer = new ReadbackCharArrayWriter(initialSize);
   }
 
@@ -309,7 +309,7 @@ public class ReplayReader extends FilterReader {
    * @throws IllegalArgumentException If {@code in} is null.
    */
   public ReplayReader(final Reader in) {
-    super(Assertions.assertNotNull(in));
+    super(assertNotNull(in));
     this.buffer = new ReadbackCharArrayWriter();
   }
 
@@ -397,7 +397,7 @@ public class ReplayReader extends FilterReader {
    */
   @Override
   public int read(final char[] cbuf, final int off, final int len) throws IOException {
-    Assertions.assertNotNull(cbuf);
+    assertNotNull(cbuf);
     int avail = buffer.available();
     if (avail >= len)
       return buffer.read(cbuf, off, len);

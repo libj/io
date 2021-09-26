@@ -16,12 +16,12 @@
 
 package org.libj.io;
 
+import static org.libj.lang.Assertions.*;
+
 import java.io.ByteArrayOutputStream;
 import java.io.FilterInputStream;
 import java.io.IOException;
 import java.io.InputStream;
-
-import org.libj.lang.Assertions;
 
 /**
  * This class implements a FilterInputStream that allows its content to be
@@ -118,7 +118,7 @@ public class ReplayInputStream extends FilterInputStream {
      * @throws IllegalArgumentException If {@code b} is null.
      */
     public int read(final byte[] b, final int off, final int len) {
-      Assertions.assertNotNull(b);
+      assertNotNull(b);
       if (closed || count >= total)
         return -1;
 
@@ -238,7 +238,7 @@ public class ReplayInputStream extends FilterInputStream {
    *           {@code initialSize} is negative.
    */
   public ReplayInputStream(final InputStream in, final int initialSize) {
-    super(Assertions.assertNotNull(in));
+    super(assertNotNull(in));
     this.buffer = new ReadbackByteArrayOutputStream(initialSize);
   }
 
@@ -251,7 +251,7 @@ public class ReplayInputStream extends FilterInputStream {
    * @throws IllegalArgumentException If {@code in} is null.
    */
   public ReplayInputStream(final InputStream in) {
-    super(Assertions.assertNotNull(in));
+    super(assertNotNull(in));
     this.buffer = new ReadbackByteArrayOutputStream();
   }
 
@@ -298,7 +298,7 @@ public class ReplayInputStream extends FilterInputStream {
    */
   @Override
   public int read(final byte[] b) throws IOException {
-    return read(b, 0, Assertions.assertNotNull(b).length);
+    return read(b, 0, assertNotNull(b).length);
   }
 
   /**
@@ -322,7 +322,7 @@ public class ReplayInputStream extends FilterInputStream {
    */
   @Override
   public int read(final byte[] b, final int off, final int len) throws IOException {
-    Assertions.assertNotNull(b);
+    assertNotNull(b);
     int avail = buffer.available();
     if (avail >= len)
       return buffer.read(b, off, len);

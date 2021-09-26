@@ -16,10 +16,10 @@
 
 package org.libj.io;
 
+import static org.libj.lang.Assertions.*;
+
 import java.io.IOException;
 import java.io.OutputStream;
-
-import org.libj.lang.Assertions;
 
 /**
  * {@link OutputStream} that delegates its method calls to an array of output
@@ -40,11 +40,11 @@ public class TeeOutputStream extends OutputStream {
    *           any stream in the {@code streams} array is null.
    */
   public TeeOutputStream(final OutputStream ... streams) {
-    if (Assertions.assertNotNull(streams).length == 0)
+    if (assertNotNull(streams).length == 0)
       throw new IllegalArgumentException("Empty array");
 
     for (int i = 0; i < streams.length; ++i)
-      Assertions.assertNotNull(streams[i], "member at index " + i + " is null");
+      assertNotNull(streams[i], "member at index " + i + " is null");
 
     this.streams = streams;
   }

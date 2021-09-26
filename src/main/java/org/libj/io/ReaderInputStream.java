@@ -16,6 +16,8 @@
 
 package org.libj.io;
 
+import static org.libj.lang.Assertions.*;
+
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.Reader;
@@ -26,8 +28,6 @@ import java.nio.charset.CharsetEncoder;
 import java.nio.charset.CoderResult;
 import java.nio.charset.CodingErrorAction;
 import java.nio.charset.IllegalCharsetNameException;
-
-import org.libj.lang.Assertions;
 
 /**
  * Implementation of {@link InputStream} that reads a character stream from a
@@ -106,8 +106,8 @@ public class ReaderInputStream extends InputStream {
    *           null, or if {@code bufferSize} is negative.
    */
   public ReaderInputStream(final Reader reader, final CharsetEncoder encoder, final int bufferSize) {
-    this.reader = Assertions.assertNotNull(reader);
-    this.encoder = Assertions.assertNotNull(encoder);
+    this.reader = assertNotNull(reader);
+    this.encoder = assertNotNull(encoder);
     this.encoderIn = CharBuffer.allocate(bufferSize);
     this.encoderIn.flip();
     this.encoderOut = ByteBuffer.allocate(128);
@@ -229,7 +229,7 @@ public class ReaderInputStream extends InputStream {
    */
   @Override
   public int read(final byte[] b, int off, int len) throws IOException {
-    Assertions.assertBoundsOffsetCount("b.length", b.length, "off", off, "len", len);
+    assertBoundsOffsetCount("b.length", b.length, "off", off, "len", len);
     if (len == 0)
       return 0;
 

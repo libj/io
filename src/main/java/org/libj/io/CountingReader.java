@@ -16,11 +16,11 @@
 
 package org.libj.io;
 
+import static org.libj.lang.Assertions.*;
+
 import java.io.FilterReader;
 import java.io.IOException;
 import java.io.Reader;
-
-import org.libj.lang.Assertions;
 
 /**
  * An {@link Reader} that counts the number of bytes read.
@@ -36,7 +36,7 @@ public class CountingReader extends FilterReader {
    * @throws IllegalArgumentException If {@code in} is null.
    */
   public CountingReader(final Reader in) {
-    super(Assertions.assertNotNull(in));
+    super(assertNotNull(in));
   }
 
   /**

@@ -16,10 +16,10 @@
 
 package org.libj.io;
 
+import static org.libj.lang.Assertions.*;
+
 import java.io.IOException;
 import java.io.Reader;
-
-import org.libj.lang.Assertions;
 
 /**
  * Utility functions for operations pertaining to {@link Reader}.
@@ -52,7 +52,7 @@ public final class Readers {
    *           null.
    */
   public static StringBuilder readFully(final Reader reader, final StringBuilder builder) throws IOException {
-    for (int ch; (ch = Assertions.assertNotNull(reader).read()) != -1; builder.append((char)ch));
+    for (int ch; (ch = assertNotNull(reader).read()) != -1; builder.append((char)ch));
     return builder;
   }
 
@@ -90,7 +90,7 @@ public final class Readers {
       throw new IllegalArgumentException("Buffer size (" + bufferSize + ") must be greater than 0");
 
     final char[] cbuf = new char[bufferSize];
-    for (int size; (size = Assertions.assertNotNull(reader).read(cbuf)) > 0; builder.append(cbuf, 0, size));
+    for (int size; (size = assertNotNull(reader).read(cbuf)) > 0; builder.append(cbuf, 0, size));
     return builder;
   }
 

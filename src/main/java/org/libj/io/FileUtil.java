@@ -16,6 +16,7 @@
 
 package org.libj.io;
 
+import static org.libj.lang.Assertions.*;
 import static org.libj.util.function.Throwing.*;
 
 import java.io.File;
@@ -35,7 +36,6 @@ import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.ConcurrentMap;
 import java.util.concurrent.atomic.AtomicBoolean;
 
-import org.libj.lang.Assertions;
 import org.libj.util.StringPaths;
 
 /**
@@ -142,7 +142,7 @@ public final class FileUtil {
    * @throws IllegalArgumentException If {@code path} is null.
    */
   public static void deleteAllOnExit(final Path path, final DirectoryStream.Filter<? super Path> filter) throws IOException {
-    final File file = Assertions.assertNotNull(path).toFile();
+    final File file = assertNotNull(path).toFile();
     if (file.isDirectory())
       deleteOnExit(path, filter);
     else if (filter != null && filter.accept(path))
@@ -162,7 +162,7 @@ public final class FileUtil {
    * @throws IllegalArgumentException If {@code file} is null.
    */
   public static void deleteAllOnExit(final File file, final DirectoryStream.Filter<? super Path> filter) throws IOException {
-    final Path path = Assertions.assertNotNull(file).toPath();
+    final Path path = assertNotNull(file).toPath();
     if (file.isDirectory())
       deleteOnExit(path, filter);
     else if (filter != null && filter.accept(path))
@@ -258,9 +258,9 @@ public final class FileUtil {
    * @see Files#copy(Path,Path,CopyOption...)
    */
   public static Path copyAll(final Path source, final Path target, final CopyOption ... options) throws IOException {
-    Assertions.assertNotNull(source);
-    Assertions.assertNotNull(target);
-    Assertions.assertNotNull(options);
+    assertNotNull(source);
+    assertNotNull(target);
+    assertNotNull(options);
     if (Files.isRegularFile(source))
       return Files.copy(source, target, options);
 
@@ -291,7 +291,7 @@ public final class FileUtil {
    *           {@code files.length == 0}.
    */
   public static File commonality(final File ... files) {
-    if (Assertions.assertNotNull(files).length == 0)
+    if (assertNotNull(files).length == 0)
       throw new IllegalArgumentException("files.length == 0");
 
     if (files.length > 1) {
@@ -324,7 +324,7 @@ public final class FileUtil {
    * @throws IllegalArgumentException If {@code file} is null.
    */
   public static String getShortName(final File file) {
-    final String name = Assertions.assertNotNull(file).getName();
+    final String name = assertNotNull(file).getName();
     final int index = name.lastIndexOf('.');
     return index == -1 ? name : name.substring(0, index);
   }

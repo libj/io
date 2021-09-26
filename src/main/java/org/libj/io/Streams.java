@@ -16,6 +16,8 @@
 
 package org.libj.io;
 
+import static org.libj.lang.Assertions.*;
+
 import java.io.ByteArrayOutputStream;
 import java.io.DataOutput;
 import java.io.IOException;
@@ -26,7 +28,6 @@ import java.io.PipedOutputStream;
 import java.util.concurrent.CountDownLatch;
 import java.util.function.Consumer;
 
-import org.libj.lang.Assertions;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -62,7 +63,7 @@ public final class Streams {
    * @throws IllegalArgumentException If the {@code out} is null.
    */
   public static void writeShort(final OutputStream out, final short s, final boolean isBigEndian) throws IOException {
-    Assertions.assertNotNull(out);
+    assertNotNull(out);
     if (isBigEndian) {
       out.write((byte)((s >> 8) & 0xff));
       out.write((byte)(s & 0xff));
@@ -97,7 +98,7 @@ public final class Streams {
    * @throws IllegalArgumentException If the {@code out} is null.
    */
   public static void writeShort(final DataOutput out, final short s, final boolean isBigEndian) throws IOException {
-    Assertions.assertNotNull(out);
+    assertNotNull(out);
     if (isBigEndian) {
       out.write((byte)((s >> 8) & 0xff));
       out.write((byte)(s & 0xff));
@@ -132,7 +133,7 @@ public final class Streams {
    * @throws IllegalArgumentException If the {@code out} is null.
    */
   public static void writeChar(final OutputStream out, final char c, final boolean isBigEndian) throws IOException {
-    Assertions.assertNotNull(out);
+    assertNotNull(out);
     if (isBigEndian) {
       out.write((byte)((c >> 8) & 0xff));
       out.write((byte)(c & 0xff));
@@ -167,7 +168,7 @@ public final class Streams {
    * @throws IllegalArgumentException If the {@code out} is null.
    */
   public static void writeChar(final DataOutput out, final char c, final boolean isBigEndian) throws IOException {
-    Assertions.assertNotNull(out);
+    assertNotNull(out);
     if (isBigEndian) {
       out.write((byte)((c >> 8) & 0xff));
       out.write((byte)(c & 0xff));
@@ -202,7 +203,7 @@ public final class Streams {
    * @throws IllegalArgumentException If the {@code out} is null.
    */
   public static void writeInt(final OutputStream out, final int i, final boolean isBigEndian) throws IOException {
-    Assertions.assertNotNull(out);
+    assertNotNull(out);
     if (isBigEndian) {
       out.write((byte)((i >> 24) & 0xff));
       out.write((byte)((i >> 16) & 0xff));
@@ -241,7 +242,7 @@ public final class Streams {
    * @throws IllegalArgumentException If the {@code out} is null.
    */
   public static void writeInt(final DataOutput out, final int i, final boolean isBigEndian) throws IOException {
-    Assertions.assertNotNull(out);
+    assertNotNull(out);
     if (isBigEndian) {
       out.write((byte)((i >> 24) & 0xff));
       out.write((byte)((i >> 16) & 0xff));
@@ -280,7 +281,7 @@ public final class Streams {
    * @throws IllegalArgumentException If the {@code out} is null.
    */
   public static void writeLong(final OutputStream out, final long l, final boolean isBigEndian) throws IOException {
-    Assertions.assertNotNull(out);
+    assertNotNull(out);
     if (isBigEndian) {
       out.write((byte)((l >> 56) & 0xff));
       out.write((byte)((l >> 48) & 0xff));
@@ -327,7 +328,7 @@ public final class Streams {
    * @throws IllegalArgumentException If the {@code out} is null.
    */
   public static void writeLong(final DataOutput out, final long l, final boolean isBigEndian) throws IOException {
-    Assertions.assertNotNull(out);
+    assertNotNull(out);
     if (isBigEndian) {
       out.write((byte)((l >> 56) & 0xff));
       out.write((byte)((l >> 48) & 0xff));
@@ -407,7 +408,7 @@ public final class Streams {
    * @throws IllegalArgumentException If {@code in} is null.
    */
   public static short readShort(final InputStream in, final boolean isBigEndian) throws IOException {
-    Assertions.assertNotNull(in);
+    assertNotNull(in);
     if (isBigEndian)
       return (short)(((in.read() & 0xFF) << 8) | (in.read() & 0xFF));
 
@@ -441,7 +442,7 @@ public final class Streams {
    * @throws IllegalArgumentException If {@code in} is null.
    */
   public static char readChar(final InputStream in, final boolean isBigEndian) throws IOException {
-    Assertions.assertNotNull(in);
+    assertNotNull(in);
     if (isBigEndian)
       return (char)((in.read() & 0xFF) << 8 | (in.read() & 0xFF));
 
@@ -475,7 +476,7 @@ public final class Streams {
    * @throws IllegalArgumentException If {@code in} is null.
    */
   public static int readInt(final InputStream in, final boolean isBigEndian) throws IOException {
-    Assertions.assertNotNull(in);
+    assertNotNull(in);
     if (isBigEndian)
       return ((in.read() & 0xFF) << 24) | ((in.read() & 0xFF) << 16) | ((in.read() & 0xFF) << 8) | (in.read() & 0xFF);
 
@@ -509,7 +510,7 @@ public final class Streams {
    * @throws IllegalArgumentException If {@code in} is null.
    */
   public static long readLong(final InputStream in, final boolean isBigEndian) throws IOException {
-    Assertions.assertNotNull(in);
+    assertNotNull(in);
     if (isBigEndian)
       return (in.read() & 0xFFL) << 56 | (in.read() & 0xFFL) << 48 | (in.read() & 0xFFL) << 40 | (in.read() & 0xFFL) << 32 | (in.read() & 0xFFL) << 24 | (in.read() & 0xFFL) << 16 | (in.read() & 0xFFL) << 8 | (in.read() & 0xFFL);
 
@@ -532,7 +533,7 @@ public final class Streams {
    * @see InputStream#read(byte[])
    */
   public static byte[] readBytes(final InputStream in) throws IOException {
-    Assertions.assertNotNull(in);
+    assertNotNull(in);
     final ByteArrayOutputStream buf = new ByteArrayOutputStream(DEFAULT_SOCKET_BUFFER_SIZE);
     final byte[] data = new byte[DEFAULT_SOCKET_BUFFER_SIZE];
     for (int length; (length = in.read(data)) != -1; buf.write(data, 0, length));
@@ -575,7 +576,7 @@ public final class Streams {
   }
 
   private static InputStream merge(final boolean sync, final InputStream ... streams) throws IOException {
-    if (Assertions.assertNotNull(streams).length == 0)
+    if (assertNotNull(streams).length == 0)
       throw new IllegalArgumentException("streams.length == 0");
 
     if (streams.length == 1)
@@ -702,8 +703,8 @@ public final class Streams {
   }
 
   private static InputStream pipe(final InputStream src, final OutputStream snk, final boolean tee, final boolean sync, final Consumer<? super IOException> onExit) throws IOException {
-    Assertions.assertNotNull(src);
-    Assertions.assertNotNull(snk);
+    assertNotNull(src);
+    assertNotNull(snk);
     final PipedOutputStream pipedOut;
     final InputStream pipedIn;
     if (tee) {

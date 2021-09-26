@@ -16,11 +16,11 @@
 
 package org.libj.io;
 
+import static org.libj.lang.Assertions.*;
+
 import java.io.FilterInputStream;
 import java.io.IOException;
 import java.io.InputStream;
-
-import org.libj.lang.Assertions;
 
 /**
  * An {@link InputStream} that counts the number of bytes read.
@@ -37,7 +37,7 @@ public class CountingInputStream extends FilterInputStream {
    * @throws IllegalArgumentException If {@code in} is null.
    */
   public CountingInputStream(final InputStream in) {
-    super(Assertions.assertNotNull(in));
+    super(assertNotNull(in));
   }
 
   /**

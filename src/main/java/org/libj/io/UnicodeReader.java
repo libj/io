@@ -16,11 +16,11 @@
 
 package org.libj.io;
 
+import static org.libj.lang.Assertions.*;
+
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.Reader;
-
-import org.libj.lang.Assertions;
 
 /**
  * A {@link Reader} for decoding streams of escaped unicode encoded strings
@@ -88,7 +88,7 @@ public class UnicodeReader extends Reader {
    * @throws IllegalArgumentException If {@code in} is null.
    */
   public UnicodeReader(final InputStream in) {
-    this.in = Assertions.assertNotNull(in);
+    this.in = assertNotNull(in);
     this.reader = null;
   }
 
@@ -100,7 +100,7 @@ public class UnicodeReader extends Reader {
    */
   public UnicodeReader(final Reader reader) {
     this.in = null;
-    this.reader = Assertions.assertNotNull(reader);
+    this.reader = assertNotNull(reader);
   }
 
   /**
