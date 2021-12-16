@@ -27,6 +27,7 @@ import java.nio.file.DirectoryStream;
 import java.nio.file.FileAlreadyExistsException;
 import java.nio.file.Files;
 import java.nio.file.LinkPermission;
+import java.nio.file.NoSuchFileException;
 import java.nio.file.Path;
 import java.nio.file.StandardCopyOption;
 import java.util.ArrayList;
@@ -61,6 +62,8 @@ public final class FileUtil {
                   try {
                     deleteAll0(path, filter);
                   }
+                  catch (final NoSuchFileException e) {
+                  }
                   catch (final IOException e) {
                     e.printStackTrace();
                   }
@@ -82,12 +85,10 @@ public final class FileUtil {
   }
 
   /**
-   * Returns a new {@link File} with the given {@code pathname} if the
-   * {@code pathname} exists, otherwise {@code null}.
+   * Returns a new {@link File} with the given {@code pathname} if the {@code pathname} exists, otherwise {@code null}.
    *
    * @param pathname The pathname.
-   * @return A new {@link File} with the given {@code pathname} if the
-   *         {@code pathname} exists, otherwise {@code null}.
+   * @return A new {@link File} with the given {@code pathname} if the {@code pathname} exists, otherwise {@code null}.
    */
   public static File existsOrNull(final String pathname) {
     final File file = new File(pathname);
@@ -130,14 +131,12 @@ public final class FileUtil {
   }
 
   /**
-   * Register a path to be recursively deleted when the JVM exits. When executed
-   * on exit, only the paths that pass the {@code filter} will be deleted.
+   * Register a path to be recursively deleted when the JVM exits. When executed on exit, only the paths that pass the
+   * {@code filter} will be deleted.
    *
-   * @implNote Filtering will be performed at the time the JVM exists (not at
-   *           the time when this method is called).
+   * @implNote Filtering will be performed at the time the JVM exists (not at the time when this method is called).
    * @param path The path to delete recursively.
-   * @param filter The filter of paths to delete, or {@code null} to match all
-   *          paths.
+   * @param filter The filter of paths to delete, or {@code null} to match all paths.
    * @throws IOException If an I/O error has occurred.
    * @throws IllegalArgumentException If {@code path} is null.
    */
@@ -150,14 +149,12 @@ public final class FileUtil {
   }
 
   /**
-   * Register a path to be recursively deleted when the JVM exits. When executed
-   * on exit, only the paths that pass the {@code filter} will be deleted.
+   * Register a path to be recursively deleted when the JVM exits. When executed on exit, only the paths that pass the
+   * {@code filter} will be deleted.
    *
-   * @implNote Filtering will be performed at the time the JVM exists (not at
-   *           the time when this method is called).
+   * @implNote Filtering will be performed at the time the JVM exists (not at the time when this method is called).
    * @param file The file to delete recursively.
-   * @param filter The filter of paths to delete, or {@code null} to match all
-   *          paths.
+   * @param filter The filter of paths to delete, or {@code null} to match all paths.
    * @throws IOException If an I/O error has occurred.
    * @throws IllegalArgumentException If {@code file} is null.
    */
@@ -192,14 +189,11 @@ public final class FileUtil {
   }
 
   /**
-   * Delete a path recursively. Only the paths that pass the {@code filter} will
-   * be deleted.
+   * Delete a path recursively. Only the paths that pass the {@code filter} will be deleted.
    *
    * @param path The path to delete recursively.
-   * @param filter The filter of paths to delete, or {@code null} to match all
-   *          paths.
-   * @return {@code true} if and only if the file or directory was successfully
-   *         deleted; {@code false} otherwise.
+   * @param filter The filter of paths to delete, or {@code null} to match all paths.
+   * @return {@code true} if and only if the file or directory was successfully deleted; {@code false} otherwise.
    * @throws IOException If an I/O error has occurred.
    * @throws IllegalArgumentException If the {@code path} is null.
    */
@@ -212,8 +206,7 @@ public final class FileUtil {
    * Delete a path recursively.
    *
    * @param path The path to delete recursively.
-   * @return {@code true} if and only if the file or directory was successfully
-   *         deleted; {@code false} otherwise.
+   * @return {@code true} if and only if the file or directory was successfully deleted; {@code false} otherwise.
    * @throws IOException If an I/O error has occurred.
    * @throws IllegalArgumentException If the {@code path} is null.
    */
@@ -223,38 +216,26 @@ public final class FileUtil {
   }
 
   /**
-   * Copy a source path to a target path recursively with the {@code options}
-   * parameter specifying how the copy is performed. If the source path is a
-   * directory, this method traverses all child paths, creates child
-   * directories, and applies the {@code options} parameter to the
-   * {@link Files#copy(Path,Path,CopyOption...)} operation applied to each child
-   * file. If the source path is a file, this method delegate to
-   * {@link Files#copy(Path,Path,CopyOption...)}.
+   * Copy a source path to a target path recursively with the {@code options} parameter specifying how the copy is performed. If the
+   * source path is a directory, this method traverses all child paths, creates child directories, and applies the {@code options}
+   * parameter to the {@link Files#copy(Path,Path,CopyOption...)} operation applied to each child file. If the source path is a
+   * file, this method delegate to {@link Files#copy(Path,Path,CopyOption...)}.
    *
    * @param source The source path to copy from.
    * @param target The target path to copy to.
    * @param options Options specifying how the copy should be done.
    * @return The path to the target file.
    * @throws IOException If an I/O error has occurred.
-   * @throws UnsupportedOperationException If the array contains a copy option
-   *           that is not supported.
-   * @throws FileAlreadyExistsException If the target file exists but cannot be
-   *           replaced because the {@link StandardCopyOption#REPLACE_EXISTING}
-   *           option is not specified <i>(optional specific exception)</i>.
-   * @throws DirectoryNotEmptyException The
-   *           {@link StandardCopyOption#REPLACE_EXISTING} option is specified
-   *           but the target path could not be deleted <i>(optional specific
-   *           exception)</i>.
-   * @throws SecurityException In the case of the default provider, and a
-   *           security manager is installed, the
-   *           {@link SecurityManager#checkRead(String) checkRead} method is
-   *           invoked to check read access to the source file, the
-   *           {@link SecurityManager#checkWrite(String) checkWrite} is invoked
-   *           to check write access to the target file. If a symbolic link is
-   *           copied the security manager is invoked to check
-   *           {@link LinkPermission}{@code ("symbolic")}.
-   * @throws IllegalArgumentException If {@code source}, {@code target}, or
-   *           {@code options} is null.
+   * @throws UnsupportedOperationException If the array contains a copy option that is not supported.
+   * @throws FileAlreadyExistsException If the target file exists but cannot be replaced because the
+   *           {@link StandardCopyOption#REPLACE_EXISTING} option is not specified <i>(optional specific exception)</i>.
+   * @throws DirectoryNotEmptyException The {@link StandardCopyOption#REPLACE_EXISTING} option is specified but the target path
+   *           could not be deleted <i>(optional specific exception)</i>.
+   * @throws SecurityException In the case of the default provider, and a security manager is installed, the
+   *           {@link SecurityManager#checkRead(String) checkRead} method is invoked to check read access to the source file, the
+   *           {@link SecurityManager#checkWrite(String) checkWrite} is invoked to check write access to the target file. If a
+   *           symbolic link is copied the security manager is invoked to check {@link LinkPermission}{@code ("symbolic")}.
+   * @throws IllegalArgumentException If {@code source}, {@code target}, or {@code options} is null.
    * @see Files#copy(Path,Path,CopyOption...)
    */
   public static Path copyAll(final Path source, final Path target, final CopyOption ... options) throws IOException {
@@ -281,14 +262,11 @@ public final class FileUtil {
   }
 
   /**
-   * Returns a {@link File} having a path that is common to the argument
-   * {@code files}.
+   * Returns a {@link File} having a path that is common to the argument {@code files}.
    *
    * @param files The files.
-   * @return A {@link File} having a path that is common to the argument
-   *         {@code files}.
-   * @throws IllegalArgumentException If {@code files} is null or
-   *           {@code files.length == 0}.
+   * @return A {@link File} having a path that is common to the argument {@code files}.
+   * @throws IllegalArgumentException If {@code files} is null or {@code files.length == 0}.
    */
   public static File commonality(final File ... files) {
     if (assertNotNull(files).length == 0)
@@ -316,8 +294,8 @@ public final class FileUtil {
   }
 
   /**
-   * Returns the "short name" of {@code file}. The "short name" is the name of a
-   * file not including the last dot and extension, if present.
+   * Returns the "short name" of {@code file}. The "short name" is the name of a file not including the last dot and extension, if
+   * present.
    *
    * @param file The {@link File}.
    * @return The "short name" of {@code file}.
