@@ -30,24 +30,18 @@ import java.nio.charset.CodingErrorAction;
 import java.nio.charset.IllegalCharsetNameException;
 
 /**
- * Implementation of {@link InputStream} that reads a character stream from a
- * {@link Reader}, and transforms it to a byte stream using a specified charset
- * encoding. The characters are transformed via the {@link CharsetEncoder},
- * which guarantees that all charset encodings supported by the JRE are handled
- * correctly. In particular for charsets such as UTF-16, the implementation
+ * Implementation of {@link InputStream} that reads a character stream from a {@link Reader}, and transforms it to a byte stream
+ * using a specified charset encoding. The characters are transformed via the {@link CharsetEncoder}, which guarantees that all
+ * charset encodings supported by the JRE are handled correctly. In particular for charsets such as UTF-16, the implementation
  * ensures that one and only one byte order marker is produced.
  * <p>
- * Reads from the source {@link Reader} are buffered, because it is not possible
- * to predict the number of characters needed to be read from the {@link Reader}
- * to satisfy a read request on the {@link ReaderInputStream}. Therefore, in
- * general, there is no need to wrap the underlying {@link Reader} with a
- * {@link java.io.BufferedReader}.
+ * Reads from the source {@link Reader} are buffered, because it is not possible to predict the number of characters needed to be
+ * read from the {@link Reader} to satisfy a read request on the {@link ReaderInputStream}. Therefore, in general, there is no need
+ * to wrap the underlying {@link Reader} with a {@link java.io.BufferedReader}.
  * <p>
- * The {@link ReaderInputStream} implements the inverse transformation of
- * {@link java.io.InputStreamReader}. The following example illustrates how
- * reading from {@code in2} would return the same byte sequence as reading from
- * {@code in} (provided that the initial byte sequence is legal with respect to
- * the charset encoding):
+ * The {@link ReaderInputStream} implements the inverse transformation of {@link java.io.InputStreamReader}. The following example
+ * illustrates how reading from {@code in2} would return the same byte sequence as reading from {@code in} (provided that the
+ * initial byte sequence is legal with respect to the charset encoding):
  *
  * <pre>
  * {@code
@@ -58,18 +52,13 @@ import java.nio.charset.IllegalCharsetNameException;
  * }
  * </pre>
  *
- * The {@link ReaderInputStream} implements the same transformation as
- * {@link java.io.OutputStreamWriter}, except that the control flow is reversed
- * -- both classes transform a character stream into a byte stream, but
- * {@link java.io.OutputStreamWriter} pushes data <i>to</i> the underlying
- * stream, while {@link ReaderInputStream} pulls data <i>from</i> the underlying
- * stream.
+ * The {@link ReaderInputStream} implements the same transformation as {@link java.io.OutputStreamWriter}, except that the control
+ * flow is reversed -- both classes transform a character stream into a byte stream, but {@link java.io.OutputStreamWriter} pushes
+ * data <i>to</i> the underlying stream, while {@link ReaderInputStream} pulls data <i>from</i> the underlying stream.
  * <p>
- * Given the fact that the {@link Reader} class doesn't provide any way to
- * predict whether the next read operation will block or not, it is not possible
- * to provide a meaningful implementation of the {@link InputStream#available()}
- * method. A call to this method will always return 0. Also, this class does not
- * support {@link InputStream#mark(int)}.
+ * Given the fact that the {@link Reader} class doesn't provide any way to predict whether the next read operation will block or
+ * not, it is not possible to provide a meaningful implementation of the {@link InputStream#available()} method. A call to this
+ * method will always return 0. Also, this class does not support {@link InputStream#mark(int)}.
  *
  * @implSpec {@link ReaderInputStream} is not thread safe.
  */
@@ -80,15 +69,14 @@ public class ReaderInputStream extends InputStream {
   private final CharsetEncoder encoder;
 
   /**
-   * CharBuffer used as input for the decoder. It should be reasonably large as
-   * we read data from the underlying Reader into this buffer.
+   * CharBuffer used as input for the decoder. It should be reasonably large as we read data from the underlying Reader into this
+   * buffer.
    */
   private final CharBuffer encoderIn;
 
   /**
-   * ByteBuffer used as output for the decoder. This buffer can be small as it
-   * is only used to transfer data from the decoder to the buffer provided by
-   * the caller.
+   * ByteBuffer used as output for the decoder. This buffer can be small as it is only used to transfer data from the decoder to the
+   * buffer provided by the caller.
    */
   private final ByteBuffer encoderOut;
 
@@ -96,14 +84,12 @@ public class ReaderInputStream extends InputStream {
   private boolean endOfInput;
 
   /**
-   * Construct a new {@link ReaderInputStream} with the specified
-   * {@link Reader}, {@link CharsetEncoder}, and buffer size.
+   * Construct a new {@link ReaderInputStream} with the specified {@link Reader}, {@link CharsetEncoder}, and buffer size.
    *
    * @param reader The target {@link Reader}.
    * @param encoder The charset encoder.
    * @param bufferSize The size of the input buffer in number of characters.
-   * @throws IllegalArgumentException If {@code reader} or {@code encoder} is
-   *           null, or if {@code bufferSize} is negative.
+   * @throws IllegalArgumentException If {@code reader} or {@code encoder} is null, or if {@code bufferSize} is negative.
    */
   public ReaderInputStream(final Reader reader, final CharsetEncoder encoder, final int bufferSize) {
     this.reader = assertNotNull(reader);
@@ -115,8 +101,7 @@ public class ReaderInputStream extends InputStream {
   }
 
   /**
-   * Construct a new {@link ReaderInputStream} with the specified {@link Reader}
-   * and {@link CharsetEncoder}.
+   * Construct a new {@link ReaderInputStream} with the specified {@link Reader} and {@link CharsetEncoder}.
    *
    * @param reader The target {@link Reader}.
    * @param encoder The charset encoder.
@@ -127,26 +112,22 @@ public class ReaderInputStream extends InputStream {
   }
 
   /**
-   * Construct a new {@link ReaderInputStream} with the specified
-   * {@link Reader}, {@link Charset}, and buffer size. Characters from the
-   * specified reader that do not map or are invalid to the provided encoder
-   * will be replaced.
+   * Construct a new {@link ReaderInputStream} with the specified {@link Reader}, {@link Charset}, and buffer size. Characters from
+   * the specified reader that do not map or are invalid to the provided encoder will be replaced.
    *
    * @param reader The target {@link Reader}.
    * @param charset The charset encoding.
    * @param bufferSize The size of the input buffer in number of characters.
-   * @throws IllegalArgumentException If {@code reader} or {@code charset} is
-   *           null, or if {@code bufferSize} is negative.
+   * @throws IllegalArgumentException If {@code reader} or {@code charset} is null, or if {@code bufferSize} is negative.
    */
   public ReaderInputStream(final Reader reader, final Charset charset, final int bufferSize) {
     this(reader, charset.newEncoder().onMalformedInput(CodingErrorAction.REPLACE).onUnmappableCharacter(CodingErrorAction.REPLACE), bufferSize);
   }
 
   /**
-   * Construct a new {@link ReaderInputStream} with the specified
-   * {@link Reader}, {@link Charset}, and a default input buffer size of 1024
-   * characters. Characters from the specified reader that do not map or are
-   * invalid to the provided encoder will be replaced.
+   * Construct a new {@link ReaderInputStream} with the specified {@link Reader}, {@link Charset}, and a default input buffer size
+   * of 1024 characters. Characters from the specified reader that do not map or are invalid to the provided encoder will be
+   * replaced.
    *
    * @param reader The target {@link Reader}.
    * @param charset The charset encoding.
@@ -157,16 +138,13 @@ public class ReaderInputStream extends InputStream {
   }
 
   /**
-   * Construct a new {@link ReaderInputStream} with the specified
-   * {@link Reader}, {@link Charset}, and buffer size. Characters from the
-   * specified reader that do not map or are invalid to the provided encoder
-   * will be replaced.
+   * Construct a new {@link ReaderInputStream} with the specified {@link Reader}, {@link Charset}, and buffer size. Characters from
+   * the specified reader that do not map or are invalid to the provided encoder will be replaced.
    *
    * @param reader The target {@link Reader}.
    * @param charsetName The name of the charset encoding.
    * @param bufferSize The size of the input buffer in number of characters.
-   * @throws IllegalArgumentException If {@code reader} is null, or if
-   *           {@code bufferSize} is negative.
+   * @throws IllegalArgumentException If {@code reader} is null, or if {@code bufferSize} is negative.
    * @throws IllegalCharsetNameException If the given charset name is illegal.
    */
   public ReaderInputStream(final Reader reader, final String charsetName, final int bufferSize) {
@@ -174,10 +152,9 @@ public class ReaderInputStream extends InputStream {
   }
 
   /**
-   * Construct a new {@link ReaderInputStream} with the specified
-   * {@link Reader}, {@link Charset}, and a default input buffer size of 1024
-   * characters. Characters from the specified reader that do not map or are
-   * invalid to the provided encoder will be replaced.
+   * Construct a new {@link ReaderInputStream} with the specified {@link Reader}, {@link Charset}, and a default input buffer size
+   * of 1024 characters. Characters from the specified reader that do not map or are invalid to the provided encoder will be
+   * replaced.
    *
    * @param reader The target {@link Reader}.
    * @param charsetName The name of the charset encoding.
@@ -215,16 +192,13 @@ public class ReaderInputStream extends InputStream {
    * Read the specified number of bytes into an array.
    *
    * @param b The buffer into which the data is read.
-   * @param off The start offset in array {@code b} at which the data is
-   *          written.
+   * @param off The start offset in array {@code b} at which the data is written.
    * @param len The maximum number of bytes to read.
-   * @return The total number of bytes read into the buffer, or {@code -1} if
-   *         there is no more data because the end of the stream has been
-   *         reached.
+   * @return The total number of bytes read into the buffer, or {@code -1} if there is no more data because the end of the stream
+   *         has been reached.
    * @throws IOException If an I/O error has occurred.
    * @throws IllegalArgumentException If the specified array is null.
-   * @throws IndexOutOfBoundsException If {@code off} is negative, {@code len}
-   *           is negative, or {@code len} is greater than
+   * @throws IndexOutOfBoundsException If {@code off} is negative, {@code len} is negative, or {@code len} is greater than
    *           {@code b.length - off}.
    */
   @Override
@@ -256,9 +230,8 @@ public class ReaderInputStream extends InputStream {
    * Read the specified number of bytes into an array.
    *
    * @param b The buffer into which the data is read.
-   * @return The total number of bytes read into the buffer, or {@code -1} if
-   *         there is no more data because the end of the stream has been
-   *         reached.
+   * @return The total number of bytes read into the buffer, or {@code -1} if there is no more data because the end of the stream
+   *         has been reached.
    * @throws IOException If an I/O error has occurred.
    * @throws IllegalArgumentException If the specified array is null.
    */
@@ -270,8 +243,7 @@ public class ReaderInputStream extends InputStream {
   /**
    * Read a single byte.
    *
-   * @return Either the byte read or {@code -1} if the end of the stream has
-   *         been reached.
+   * @return Either the byte read or {@code -1} if the end of the stream has been reached.
    * @throws IOException If an I/O error has occurred.
    */
   @Override

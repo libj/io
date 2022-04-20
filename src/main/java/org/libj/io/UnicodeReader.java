@@ -23,13 +23,11 @@ import java.io.InputStream;
 import java.io.Reader;
 
 /**
- * A {@link Reader} for decoding streams of escaped unicode encoded strings
- * (i.e. {@code "\\u48\\u65\\u6C\\u6C\\u6F"} -&gt; {@code "Hello"}). The
- * {@link UnicodeReader} supports:
+ * A {@link Reader} for decoding streams of escaped unicode encoded strings (i.e. {@code "\\u48\\u65\\u6C\\u6C\\u6F"} -&gt;
+ * {@code "Hello"}). The {@link UnicodeReader} supports:
  * <ul>
- * <li>{@code UTF-8}, {@code UTF-16be}, {@code UTF-16le}, {@code UTF-32be} and
- * {@code UTF-32le} encoded strings, and detects BOM (Byte Order Mark)
- * characters to identify the encoding.</li>
+ * <li>{@code UTF-8}, {@code UTF-16be}, {@code UTF-16le}, {@code UTF-32be} and {@code UTF-32le} encoded strings, and detects BOM
+ * (Byte Order Mark) characters to identify the encoding.</li>
  * <li>Streams can contain mixed unicode encodings:
  *
  * <pre>
@@ -37,19 +35,16 @@ import java.io.Reader;
  * </pre>
  *
  * </li>
- * <li>Streams can contain mixed {@code UTF} multibyte characters, as well as
- * escaped unicode sequences of Latin1 {@code ISO 8859-1} bytes (i.e. intermixed
- * {@code UTF} multibyte characters are preserved).</li>
- * <li>Malformed unicode sequences are returned in their original unicode
- * encoded form:
+ * <li>Streams can contain mixed {@code UTF} multibyte characters, as well as escaped unicode sequences of Latin1 {@code ISO 8859-1}
+ * bytes (i.e. intermixed {@code UTF} multibyte characters are preserved).</li>
+ * <li>Malformed unicode sequences are returned in their original unicode encoded form:
  *
  * <pre>
  * {@code "\\u48\\u6\\u48" -> "H\\u6H"}
  * </pre>
  *
  * </li>
- * <li>If no BOM is detected, streams are assumed to be in big-endian
- * encoding.</li>
+ * <li>If no BOM is detected, streams are assumed to be in big-endian encoding.</li>
  * </ul>
  */
 public class UnicodeReader extends Reader {
@@ -116,11 +111,9 @@ public class UnicodeReader extends Reader {
   }
 
   /**
-   * Returns the next character from the underlying {@link InputStream} or
-   * {@link Reader}.
+   * Returns the next character from the underlying {@link InputStream} or {@link Reader}.
    *
-   * @return The next character from the underlying {@link InputStream} or
-   *         {@link Reader}.
+   * @return The next character from the underlying {@link InputStream} or {@link Reader}.
    * @throws IOException If an I/O error has occurred.
    */
   private int _read() throws IOException {
@@ -130,11 +123,9 @@ public class UnicodeReader extends Reader {
   /**
    * {@inheritDoc}
    * <p>
-   * This method automatically detects and replaces escaped sequences into their
-   * corresponding UTF character. The BOM (Byte Order Mark) is used to signify
-   * the encoding format of the characters that follow. BOM characters are
-   * consumed (i.e. the following character is returned, if it is also not a
-   * BOM).
+   * This method automatically detects and replaces escaped sequences into their corresponding UTF character. The BOM (Byte Order
+   * Mark) is used to signify the encoding format of the characters that follow. BOM characters are consumed (i.e. the following
+   * character is returned, if it is also not a BOM).
    */
   @Override
   public int read() throws IOException {
@@ -228,11 +219,9 @@ public class UnicodeReader extends Reader {
   /**
    * {@inheritDoc}
    * <p>
-   * This method automatically detects and replaces escaped sequences into their
-   * corresponding UTF character. The BOM (Byte Order Mark) is used to signify
-   * the encoding format of the characters that follow. BOM characters are
-   * consumed (i.e. the following character is returned, if it is also not a
-   * BOM).
+   * This method automatically detects and replaces escaped sequences into their corresponding UTF character. The BOM (Byte Order
+   * Mark) is used to signify the encoding format of the characters that follow. BOM characters are consumed (i.e. the following
+   * character is returned, if it is also not a BOM).
    */
   @Override
   public int read(final char[] cbuf, final int off, final int len) throws IOException {

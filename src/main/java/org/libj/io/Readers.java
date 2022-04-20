@@ -26,12 +26,10 @@ import java.io.Reader;
  */
 public final class Readers {
   /**
-   * Returns a string of the remaining contents from the specified
-   * {@link Reader}.
+   * Returns a string of the remaining contents from the specified {@link Reader}.
    *
    * @param reader The {@link Reader}.
-   * @return A string of the remaining contents from the specified
-   *         {@link Reader}.
+   * @return A string of the remaining contents from the specified {@link Reader}.
    * @throws IOException If an I/O error has occurred.
    * @throws IllegalArgumentException If {@code reader} is null.
    */
@@ -40,16 +38,13 @@ public final class Readers {
   }
 
   /**
-   * Reads the remaining contents from the specified {@link Reader} into the
-   * provided {@link StringBuilder}.
+   * Reads the remaining contents from the specified {@link Reader} into the provided {@link StringBuilder}.
    *
    * @param reader The {@link Reader}.
-   * @param builder The {@link StringBuilder} into which the specified
-   *          {@link Reader} is to be read.
+   * @param builder The {@link StringBuilder} into which the specified {@link Reader} is to be read.
    * @return The provided {@link StringBuilder}.
    * @throws IOException If an I/O error has occurred.
-   * @throws IllegalArgumentException If {@code reader} or {@code builder} is
-   *           null.
+   * @throws IllegalArgumentException If {@code reader} or {@code builder} is null.
    */
   public static StringBuilder readFully(final Reader reader, final StringBuilder builder) throws IOException {
     for (int ch; (ch = assertNotNull(reader).read()) != -1; builder.append((char)ch));
@@ -57,33 +52,27 @@ public final class Readers {
   }
 
   /**
-   * Returns a string of the remaining contents from the specified
-   * {@link Reader}.
+   * Returns a string of the remaining contents from the specified {@link Reader}.
    *
    * @param reader The {@link Reader}.
    * @param bufferSize The size of the read buffer to use when reading.
-   * @return A string of the remaining contents from the specified
-   *         {@link Reader}.
+   * @return A string of the remaining contents from the specified {@link Reader}.
    * @throws IOException If an I/O error has occurred.
-   * @throws IllegalArgumentException If {@code reader} is null, or if
-   *           {@code bufferSize} is negative.
+   * @throws IllegalArgumentException If {@code reader} is null, or if {@code bufferSize} is negative.
    */
   public static String readFully(final Reader reader, final int bufferSize) throws IOException {
     return readFully(reader, new StringBuilder(), bufferSize).toString();
   }
 
   /**
-   * Reads the remaining contents from the specified {@link Reader} into the
-   * provided {@link StringBuilder}.
+   * Reads the remaining contents from the specified {@link Reader} into the provided {@link StringBuilder}.
    *
    * @param reader The {@link Reader}.
-   * @param builder The {@link StringBuilder} into which the specified
-   *          {@link Reader} is to be read.
+   * @param builder The {@link StringBuilder} into which the specified {@link Reader} is to be read.
    * @param bufferSize The size of the read buffer to use when reading.
    * @return The provided {@link StringBuilder}.
    * @throws IOException If an I/O error has occurred.
-   * @throws IllegalArgumentException If {@code reader} or {@code builder} is
-   *           null, or if {@code bufferSize} is negative.
+   * @throws IllegalArgumentException If {@code reader} or {@code builder} is null, or if {@code bufferSize} is negative.
    */
   public static StringBuilder readFully(final Reader reader, final StringBuilder builder, final int bufferSize) throws IOException {
     if (bufferSize <= 0)

@@ -29,8 +29,7 @@ public class CountingBufferedOutputStream extends BufferedOutputStream {
   protected long count;
 
   /**
-   * Creates a new {@link CountingBufferedOutputStream} wrapping the specified
-   * {@link OutputStream}.
+   * Creates a new {@link CountingBufferedOutputStream} wrapping the specified {@link OutputStream}.
    *
    * @param out The output stream to be wrapped.
    * @throws IllegalArgumentException If {@code out} is null.
@@ -40,8 +39,7 @@ public class CountingBufferedOutputStream extends BufferedOutputStream {
   }
 
   /**
-   * Creates a new {@link CountingBufferedOutputStream} wrapping the specified
-   * {@link OutputStream}.
+   * Creates a new {@link CountingBufferedOutputStream} wrapping the specified {@link OutputStream}.
    *
    * @param out The output stream to be wrapped.
    * @param size The buffer size.

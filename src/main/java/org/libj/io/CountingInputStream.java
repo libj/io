@@ -30,8 +30,7 @@ public class CountingInputStream extends FilterInputStream {
   private long mark = -1;
 
   /**
-   * Creates a new {@link CountingInputStream} wrapping the specified
-   * {@link InputStream}.
+   * Creates a new {@link CountingInputStream} wrapping the specified {@link InputStream}.
    *
    * @param in The output stream to be wrapped.
    * @throws IllegalArgumentException If {@code in} is null.

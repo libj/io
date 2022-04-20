@@ -29,8 +29,7 @@ public class CountingOutputStream extends FilterOutputStream {
   protected long count;
 
   /**
-   * Creates a new {@link CountingOutputStream} wrapping the specified
-   * {@link OutputStream}.
+   * Creates a new {@link CountingOutputStream} wrapping the specified {@link OutputStream}.
    *
    * @param out The output stream to be wrapped.
    * @throws IllegalArgumentException If {@code out} is null.

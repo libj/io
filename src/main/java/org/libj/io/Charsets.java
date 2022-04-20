@@ -25,17 +25,13 @@ import java.nio.charset.UnsupportedCharsetException;
  */
 public final class Charsets {
   /**
-   * Look up a {@link Charset} by the specified name. This method is the
-   * equivalent of {@link Charset#forName(String) Charset.forName(String)}, but
-   * returns {@code null} in case of {@link IllegalCharsetNameException} or
+   * Look up a {@link Charset} by the specified name. This method is the equivalent of {@link Charset#forName(String)
+   * Charset.forName(String)}, but returns {@code null} in case of {@link IllegalCharsetNameException} or
    * {@link UnsupportedCharsetException}.
    *
-   * @param charsetName The name of the requested charset; may be either a
-   *          canonical name or an alias
-   * @return A charset object for the named charset, or {@code null} if the
-   *         specified name is null or in case of
-   *         {@link IllegalCharsetNameException} or
-   *         {@link UnsupportedCharsetException}.
+   * @param charsetName The name of the requested charset; may be either a canonical name or an alias
+   * @return A charset object for the named charset, or {@code null} if the specified name is null or in case of
+   *         {@link IllegalCharsetNameException} or {@link UnsupportedCharsetException}.
    */
   public static Charset lookup(final String charsetName) {
     if (charsetName == null)

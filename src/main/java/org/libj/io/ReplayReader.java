@@ -24,10 +24,9 @@ import java.io.IOException;
 import java.io.Reader;
 
 /**
- * This class implements a FilterReader that allows its content to be re-read.
- * With each call to its read methods, content is written to an underlying
- * buffer that automatically grows. This implementation supports a maximum
- * re-readable buffer length of {@link Integer#MAX_VALUE}.
+ * This class implements a FilterReader that allows its content to be re-read. With each call to its read methods, content is
+ * written to an underlying buffer that automatically grows. This implementation supports a maximum re-readable buffer length of
+ * {@link Integer#MAX_VALUE}.
  */
 public class ReplayReader extends FilterReader {
   /**
@@ -144,9 +143,8 @@ public class ReplayReader extends FilterReader {
     /**
      * Reads a single character from the buffer.
      *
-     * @return The character read, as an integer in the range 0 to 65535
-     *         ({@code 0x00-0xffff}), or -1 if the end of the buffer has been
-     *         reached.
+     * @return The character read, as an integer in the range 0 to 65535 ({@code 0x00-0xffff}), or -1 if the end of the buffer has
+     *         been reached.
      */
     public int read() {
       return closed || count >= total ? -1 : buf[count++];
@@ -156,8 +154,7 @@ public class ReplayReader extends FilterReader {
      * Reads characters into an array.
      *
      * @param cbuf Destination buffer.
-     * @return The number of characters read, or -1 if the end of the stream has
-     *         been reached.
+     * @return The number of characters read, or -1 if the end of the stream has been reached.
      * @throws IllegalArgumentException If {@code cbuf} is null.
      */
     public int read(final char[] cbuf) {
@@ -170,10 +167,8 @@ public class ReplayReader extends FilterReader {
      * @param cbuf Destination buffer.
      * @param off Offset at which to start storing characters.
      * @param len Maximum number of characters to read.
-     * @return The number of characters read, or -1 if the end of the stream has
-     *         been reached.
-     * @throws IndexOutOfBoundsException If {@code off} is negative, or
-     *           {@code len} is negative, or {@code len} is greater than
+     * @return The number of characters read, or -1 if the end of the stream has been reached.
+     * @throws IndexOutOfBoundsException If {@code off} is negative, or {@code len} is negative, or {@code len} is greater than
      *           {@code cbuf.length - off}.
      * @throws IllegalArgumentException If {@code cbuf} is null.
      */
@@ -229,8 +224,8 @@ public class ReplayReader extends FilterReader {
     }
 
     /**
-     * Marks the present position in the reader. Subsequent calls to
-     * {@link #reset()} will attempt to reposition the stream to this point.
+     * Marks the present position in the reader. Subsequent calls to {@link #reset()} will attempt to reposition the stream to this
+     * point.
      */
     public void mark() {
       mark = count;
@@ -252,8 +247,7 @@ public class ReplayReader extends FilterReader {
      * Resets the buffer to the position value of the argument.
      *
      * @param p The position to reset to.
-     * @throws IllegalArgumentException If {@code p} is negative, or if
-     *           {@code p} exceeds the buffer length.
+     * @throws IllegalArgumentException If {@code p} is negative, or if {@code p} exceeds the buffer length.
      */
     public void reset(final int p) {
       if (p < 0)
@@ -287,14 +281,12 @@ public class ReplayReader extends FilterReader {
   protected volatile boolean closed;
 
   /**
-   * Creates a new {@link ReplayReader} using the specified {@link Reader} as
-   * its source, and the provided initial size for the re-readable buffer.
+   * Creates a new {@link ReplayReader} using the specified {@link Reader} as its source, and the provided initial size for the
+   * re-readable buffer.
    *
    * @param in A Reader object providing the underlying stream.
-   * @param initialSize An int specifying the initial buffer size of the
-   *          re-readable buffer.
-   * @throws IllegalArgumentException If {@code in} is null, or if
-   *           {@code initialSize} is negative.
+   * @param initialSize An int specifying the initial buffer size of the re-readable buffer.
+   * @throws IllegalArgumentException If {@code in} is null, or if {@code initialSize} is negative.
    */
   public ReplayReader(final Reader in, final int initialSize) {
     super(assertNotNull(in));
@@ -302,8 +294,8 @@ public class ReplayReader extends FilterReader {
   }
 
   /**
-   * Creates a new {@link ReplayReader} using the specified {@link Reader} as
-   * its source, and default initial size of 32 for the re-readable buffer.
+   * Creates a new {@link ReplayReader} using the specified {@link Reader} as its source, and default initial size of 32 for the
+   * re-readable buffer.
    *
    * @param in A Reader object providing the underlying stream.
    * @throws IllegalArgumentException If {@code in} is null.
@@ -314,14 +306,12 @@ public class ReplayReader extends FilterReader {
   }
 
   /**
-   * Tells whether this stream is ready to be read. If the reader's position was
-   * previously reset resulting in the buffer having a character available to be
-   * re-read, this method returns {@code true}. Otherwise, this method is
-   * delegated to the underlying reader.
+   * Tells whether this stream is ready to be read. If the reader's position was previously reset resulting in the buffer having a
+   * character available to be re-read, this method returns {@code true}. Otherwise, this method is delegated to the underlying
+   * reader.
    *
-   * @return {@code true} if the reader's position was previously reset
-   *         resulting in the buffer having a character available to be re-read.
-   *         Otherwise, this method is delegated to the underlying reader.
+   * @return {@code true} if the reader's position was previously reset resulting in the buffer having a character available to be
+   *         re-read. Otherwise, this method is delegated to the underlying reader.
    * @throws IOException If an I/O error has occurred.
    */
   @Override
@@ -330,17 +320,14 @@ public class ReplayReader extends FilterReader {
   }
 
   /**
-   * Reads a single character. If the reader's position was previously reset
-   * resulting in the buffer having a character available to be re-read, the character
-   * will be re-read from the underlying buffer. Otherwise, a character will be
-   * read from the underlying stream, in which case this method will block until
-   * a character is available, an I/O error occurs, or the end of the stream is
+   * Reads a single character. If the reader's position was previously reset resulting in the buffer having a character available to
+   * be re-read, the character will be re-read from the underlying buffer. Otherwise, a character will be read from the underlying
+   * stream, in which case this method will block until a character is available, an I/O error occurs, or the end of the stream is
    * reached.
    *
    * @throws IOException If an I/O error has occurred.
-   * @return The character read, as an integer in the range 0 to 65535
-   *         ({@code 0x00-0xffff}), or -1 if the end of the stream has been
-   *         reached.
+   * @return The character read, as an integer in the range 0 to 65535 ({@code 0x00-0xffff}), or -1 if the end of the stream has
+   *         been reached.
    */
   @Override
   public int read() throws IOException {
@@ -358,16 +345,13 @@ public class ReplayReader extends FilterReader {
   }
 
   /**
-   * Reads characters into an array. If the reader's position was previously
-   * reset resulting in the buffer having characters available to be re-read, the
-   * available characters will be re-read from the underlying buffer. The
-   * remaining characters will be read from the underlying stream, in which case
-   * this method will block characters are available, an I/O error occurs, or
-   * the end of the stream is reached.
+   * Reads characters into an array. If the reader's position was previously reset resulting in the buffer having characters
+   * available to be re-read, the available characters will be re-read from the underlying buffer. The remaining characters will be
+   * read from the underlying stream, in which case this method will block characters are available, an I/O error occurs, or the end
+   * of the stream is reached.
    *
    * @param cbuf Destination buffer.
-   * @return The number of characters read, or -1 if the end of the stream has
-   *         been reached.
+   * @return The number of characters read, or -1 if the end of the stream has been reached.
    * @throws IOException If an I/O error has occurred.
    * @throws IllegalArgumentException If {@code cbuf} is null.
    */
@@ -377,21 +361,17 @@ public class ReplayReader extends FilterReader {
   }
 
   /**
-   * Reads characters into a portion of an array. If the reader's position was
-   * previously reset resulting in the buffer having characters available to be
-   * re-read, the available characters will be re-read from the underlying
-   * buffer. The remaining characters will be read from the underlying stream,
-   * in which case this method will block characters are available, an I/O error
+   * Reads characters into a portion of an array. If the reader's position was previously reset resulting in the buffer having
+   * characters available to be re-read, the available characters will be re-read from the underlying buffer. The remaining
+   * characters will be read from the underlying stream, in which case this method will block characters are available, an I/O error
    * occurs, or the end of the stream is reached.
    *
    * @param cbuf Destination buffer.
    * @param off Offset at which to start storing characters.
    * @param len Maximum number of characters to read.
-   * @return The number of characters read, or -1 if the end of the stream has
-   *         been reached.
+   * @return The number of characters read, or -1 if the end of the stream has been reached.
    * @throws IOException If an I/O error has occurred.
-   * @throws IndexOutOfBoundsException If {@code off} is negative, or
-   *           {@code len} is negative, or {@code len} is greater than
+   * @throws IndexOutOfBoundsException If {@code off} is negative, or {@code len} is negative, or {@code len} is greater than
    *           {@code cbuf.length - off}.
    * @throws IllegalArgumentException If {@code cbuf} is null.
    */
@@ -404,7 +384,8 @@ public class ReplayReader extends FilterReader {
 
     if (avail > 0) {
       buffer.read(cbuf, off, avail);
-      for (int ch; avail < cbuf.length - off && (ch = read()) != -1; cbuf[off + avail++] = (char)ch);
+      for (int ch; avail < cbuf.length - off && (ch = read()) != -1; cbuf[off + avail++] = (char)ch)
+        ;
       return avail;
     }
 
@@ -419,12 +400,10 @@ public class ReplayReader extends FilterReader {
   }
 
   /**
-   * Skips characters. If the reader's position was previously reset resulting
-   * in the buffer having characters available to be re-read, the available
-   * characters will first be skipped in the underlying buffer. The remaining
-   * characters will be read from the underlying stream, written to the buffer,
-   * and skipped, in which case this method will block characters are available,
-   * an I/O error occurs, or the end of the stream is reached.
+   * Skips characters. If the reader's position was previously reset resulting in the buffer having characters available to be
+   * re-read, the available characters will first be skipped in the underlying buffer. The remaining characters will be read from
+   * the underlying stream, written to the buffer, and skipped, in which case this method will block characters are available, an
+   * I/O error occurs, or the end of the stream is reached.
    *
    * @param n The number of characters to skip
    * @return The number of characters actually skipped.
@@ -442,17 +421,19 @@ public class ReplayReader extends FilterReader {
 
     if (avail > 0) {
       buffer.skip(avail);
-      while (avail++ < n && read() != -1);
+      while (avail++ < n && read() != -1)
+        ;
       return avail;
     }
 
-    while (read() != -1 && ++avail < n);
+    while (read() != -1 && ++avail < n)
+      ;
     return avail;
   }
 
   /**
-   * Marks the present position in the stream. Subsequent calls to
-   * {@link #reset()} will attempt to reposition the stream to this point.
+   * Marks the present position in the stream. Subsequent calls to {@link #reset()} will attempt to reposition the stream to this
+   * point.
    *
    * @param readlimit This argument is ignored.
    */
@@ -462,8 +443,7 @@ public class ReplayReader extends FilterReader {
   }
 
   /**
-   * Tells whether this stream supports the {@link #mark(int)} operation, which
-   * is always {@code true}.
+   * Tells whether this stream supports the {@link #mark(int)} operation, which is always {@code true}.
    *
    * @return {@code true}.
    */
@@ -473,8 +453,7 @@ public class ReplayReader extends FilterReader {
   }
 
   /**
-   * Resets the stream to a location previously marked with the
-   * {@link #mark(int)} method.
+   * Resets the stream to a location previously marked with the {@link #mark(int)} method.
    */
   @Override
   public void reset() {
@@ -482,11 +461,9 @@ public class ReplayReader extends FilterReader {
   }
 
   /**
-   * Closes the stream and releases any system resources associated with it.
-   * Once the stream has been closed, further {@link #read()}, {@link #ready()},
-   * {@link #mark(int)}, {@link #reset()}, or {@link #skip(long)} invocations
-   * will throw an {@link IOException}. Closing a previously closed stream has
-   * no effect.
+   * Closes the stream and releases any system resources associated with it. Once the stream has been closed, further
+   * {@link #read()}, {@link #ready()}, {@link #mark(int)}, {@link #reset()}, or {@link #skip(long)} invocations will throw an
+   * {@link IOException}. Closing a previously closed stream has no effect.
    *
    * @throws IOException If an I/O error has occurred.
    */

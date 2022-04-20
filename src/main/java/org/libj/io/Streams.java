@@ -32,16 +32,14 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 /**
- * Utility functions for operations pertaining to {@link InputStream} and
- * {@link OutputStream}.
+ * Utility functions for operations pertaining to {@link InputStream} and {@link OutputStream}.
  */
 public final class Streams {
   private static final Logger logger = LoggerFactory.getLogger(Streams.class);
   static final int DEFAULT_SOCKET_BUFFER_SIZE = 65536;
 
   /**
-   * Write a 2-byte {@code short} value to the specified {@link OutputStream} in
-   * big-endian encoding.
+   * Write a 2-byte {@code short} value to the specified {@link OutputStream} in big-endian encoding.
    *
    * @param out The {@link OutputStream}.
    * @param s The {@code short} value to write.
@@ -57,8 +55,7 @@ public final class Streams {
    *
    * @param out The {@link OutputStream}.
    * @param s The {@code short} value to write.
-   * @param isBigEndian If {@code true}, bytes will be written in big-endian
-   *          encoding. If {@code false}, in little-endian.
+   * @param isBigEndian If {@code true}, bytes will be written in big-endian encoding. If {@code false}, in little-endian.
    * @throws IOException If an I/O error has occurred.
    * @throws IllegalArgumentException If the {@code out} is null.
    */
@@ -75,8 +72,7 @@ public final class Streams {
   }
 
   /**
-   * Write a 2-byte {@code short} value to the specified {@link OutputStream} in
-   * big-endian encoding.
+   * Write a 2-byte {@code short} value to the specified {@link OutputStream} in big-endian encoding.
    *
    * @param out The {@link OutputStream}.
    * @param s The {@code short} value to write.
@@ -92,8 +88,7 @@ public final class Streams {
    *
    * @param out The {@link OutputStream}.
    * @param s The {@code short} value to write.
-   * @param isBigEndian If {@code true}, bytes will be written in big-endian
-   *          encoding. If {@code false}, in little-endian.
+   * @param isBigEndian If {@code true}, bytes will be written in big-endian encoding. If {@code false}, in little-endian.
    * @throws IOException If an I/O error has occurred.
    * @throws IllegalArgumentException If the {@code out} is null.
    */
@@ -110,8 +105,7 @@ public final class Streams {
   }
 
   /**
-   * Write a 2-byte {@code char} value to the specified {@link OutputStream} in
-   * big-endian encoding.
+   * Write a 2-byte {@code char} value to the specified {@link OutputStream} in big-endian encoding.
    *
    * @param out The {@link OutputStream}.
    * @param c The {@code char} value to write.
@@ -127,8 +121,7 @@ public final class Streams {
    *
    * @param out The {@link OutputStream}.
    * @param c The {@code char} value to write.
-   * @param isBigEndian If {@code true}, bytes will be written in big-endian
-   *          encoding. If {@code false}, in little-endian.
+   * @param isBigEndian If {@code true}, bytes will be written in big-endian encoding. If {@code false}, in little-endian.
    * @throws IOException If an I/O error has occurred.
    * @throws IllegalArgumentException If the {@code out} is null.
    */
@@ -145,8 +138,7 @@ public final class Streams {
   }
 
   /**
-   * Write a 2-byte {@code char} value to the {@code out} is null in
-   * big-endian encoding.
+   * Write a 2-byte {@code char} value to the {@code out} is null in big-endian encoding.
    *
    * @param out The {@link DataOutput}.
    * @param c The {@code char} value to write.
@@ -162,8 +154,7 @@ public final class Streams {
    *
    * @param out The {@link DataOutput}.
    * @param c The {@code char} value to write.
-   * @param isBigEndian If {@code true}, bytes will be written in big-endian
-   *          encoding. If {@code false}, in little-endian.
+   * @param isBigEndian If {@code true}, bytes will be written in big-endian encoding. If {@code false}, in little-endian.
    * @throws IOException If an I/O error has occurred.
    * @throws IllegalArgumentException If the {@code out} is null.
    */
@@ -180,8 +171,7 @@ public final class Streams {
   }
 
   /**
-   * Write a 4-byte {@code int} value to the specified {@link OutputStream} in
-   * big-endian encoding.
+   * Write a 4-byte {@code int} value to the specified {@link OutputStream} in big-endian encoding.
    *
    * @param out The {@link OutputStream}.
    * @param i The {@code int} value to write.
@@ -197,8 +187,7 @@ public final class Streams {
    *
    * @param out The {@link OutputStream}.
    * @param i The {@code int} value to write.
-   * @param isBigEndian If {@code true}, bytes will be written in big-endian
-   *          encoding. If {@code false}, in little-endian.
+   * @param isBigEndian If {@code true}, bytes will be written in big-endian encoding. If {@code false}, in little-endian.
    * @throws IOException If an I/O error has occurred.
    * @throws IllegalArgumentException If the {@code out} is null.
    */
@@ -219,8 +208,7 @@ public final class Streams {
   }
 
   /**
-   * Write a 4-byte {@code int} value to the {@code out} is null in
-   * big-endian encoding.
+   * Write a 4-byte {@code int} value to the {@code out} is null in big-endian encoding.
    *
    * @param out The {@link DataOutput}.
    * @param i The {@code int} value to write.
@@ -236,8 +224,7 @@ public final class Streams {
    *
    * @param out The {@link DataOutput}.
    * @param i The {@code int} value to write.
-   * @param isBigEndian If {@code true}, bytes will be written in big-endian
-   *          encoding. If {@code false}, in little-endian.
+   * @param isBigEndian If {@code true}, bytes will be written in big-endian encoding. If {@code false}, in little-endian.
    * @throws IOException If an I/O error has occurred.
    * @throws IllegalArgumentException If the {@code out} is null.
    */
@@ -258,8 +245,7 @@ public final class Streams {
   }
 
   /**
-   * Write a 8-byte {@code long} value to the specified {@link OutputStream} in
-   * big-endian encoding.
+   * Write a 8-byte {@code long} value to the specified {@link OutputStream} in big-endian encoding.
    *
    * @param out The {@link OutputStream}.
    * @param l The {@code long} value to write.
@@ -275,8 +261,7 @@ public final class Streams {
    *
    * @param out The {@link OutputStream}.
    * @param l The {@code long} value to write.
-   * @param isBigEndian If {@code true}, bytes will be written in big-endian
-   *          encoding. If {@code false}, in little-endian.
+   * @param isBigEndian If {@code true}, bytes will be written in big-endian encoding. If {@code false}, in little-endian.
    * @throws IOException If an I/O error has occurred.
    * @throws IllegalArgumentException If the {@code out} is null.
    */
@@ -305,8 +290,7 @@ public final class Streams {
   }
 
   /**
-   * Write a 8-byte {@code long} value to the {@code out} is null in
-   * big-endian encoding.
+   * Write a 8-byte {@code long} value to the {@code out} is null in big-endian encoding.
    *
    * @param out The {@link DataOutput}.
    * @param l The {@code long} value to write.
@@ -322,8 +306,7 @@ public final class Streams {
    *
    * @param out The {@link DataOutput}.
    * @param l The {@code long} value to write.
-   * @param isBigEndian If {@code true}, bytes will be written in big-endian
-   *          encoding. If {@code false}, in little-endian.
+   * @param isBigEndian If {@code true}, bytes will be written in big-endian encoding. If {@code false}, in little-endian.
    * @throws IOException If an I/O error has occurred.
    * @throws IllegalArgumentException If the {@code out} is null.
    */
@@ -352,10 +335,8 @@ public final class Streams {
   }
 
   /**
-   * Write a 4-byte {@code float} value to the specified {@link OutputStream},
-   * in the representation of the specified floating-point value according to
-   * the <a href="https://en.wikipedia.org/wiki/IEEE_754">IEEE 754</a>
-   * floating-point "single format" bit layout.
+   * Write a 4-byte {@code float} value to the specified {@link OutputStream}, in the representation of the specified floating-point
+   * value according to the <a href="https://en.wikipedia.org/wiki/IEEE_754">IEEE 754</a> floating-point "single format" bit layout.
    *
    * @param out The {@link OutputStream}.
    * @param f The {@code float} value to write.
@@ -367,10 +348,9 @@ public final class Streams {
   }
 
   /**
-   * Write a 8-byte {@code double} value to the specified {@link OutputStream},
-   * in the representation of the specified floating-point value according to
-   * the <a href="https://en.wikipedia.org/wiki/IEEE_754">IEEE 754</a>
-   * floating-point "double format" bit layout.
+   * Write a 8-byte {@code double} value to the specified {@link OutputStream}, in the representation of the specified
+   * floating-point value according to the <a href="https://en.wikipedia.org/wiki/IEEE_754">IEEE 754</a> floating-point "double
+   * format" bit layout.
    *
    * @param out The {@link OutputStream}.
    * @param d The {@code double} value to write.
@@ -382,12 +362,30 @@ public final class Streams {
   }
 
   /**
-   * Returns a {@code short} value constructed from the 2-byte big-endian
-   * representation read from {@code in}.
+   * Returns the bytes read from the provided {@link InputStream} until the next occurrence of the provided {@code char}, or the end
+   * of the stream is encountered.
+   *
+   * @param in The {@link InputStream} to be read.
+   * @param ch The {@code char} until which to read.
+   * @return The bytes read from the provided {@link InputStream} until the next occurrence of the provided {@code char}, or the end
+   *         of the stream is encountered.
+   * @throws IOException If an I/O error has occurred.
+   * @throws IllegalArgumentException If {@code in} is null.
+   */
+  public static byte[] readUntil(final InputStream in, final char ch) throws IOException {
+    assertNotNull(in);
+    final ByteArrayOutputStream out = new ByteArrayOutputStream();
+    for (int c; (c = in.read()) != ch && c != -1;)
+      out.write(c);
+
+    return out.toByteArray();
+  }
+
+  /**
+   * Returns a {@code short} value constructed from the 2-byte big-endian representation read from {@code in}.
    *
    * @param in The {@link InputStream}.
-   * @return A {@code short} value constructed from the 2-byte big-endian
-   *         representation read from {@code in}.
+   * @return A {@code short} value constructed from the 2-byte big-endian representation read from {@code in}.
    * @throws IOException If an I/O error has occurred.
    * @throws IllegalArgumentException If {@code in} is null.
    */
@@ -396,14 +394,11 @@ public final class Streams {
   }
 
   /**
-   * Returns a {@code short} value constructed from the 2-byte
-   * {@code isBigEndian} representation read from {@code in}.
+   * Returns a {@code short} value constructed from the 2-byte {@code isBigEndian} representation read from {@code in}.
    *
    * @param in The {@link InputStream}.
-   * @return A {@code short} value constructed from the 2-byte
-   *         {@code isBigEndian} representation read from {@code in}.
-   * @param isBigEndian If {@code true}, bytes will be read in big-endian
-   *          encoding. If {@code false}, in little-endian.
+   * @return A {@code short} value constructed from the 2-byte {@code isBigEndian} representation read from {@code in}.
+   * @param isBigEndian If {@code true}, bytes will be read in big-endian encoding. If {@code false}, in little-endian.
    * @throws IOException If an I/O error has occurred.
    * @throws IllegalArgumentException If {@code in} is null.
    */
@@ -416,12 +411,10 @@ public final class Streams {
   }
 
   /**
-   * Returns a {@code char} value constructed from the 2-byte unsigned
-   * big-endian representation read from {@code in}.
+   * Returns a {@code char} value constructed from the 2-byte unsigned big-endian representation read from {@code in}.
    *
    * @param in The {@link InputStream}.
-   * @return A {@code short} value constructed from the 2-byte unsigned
-   *         big-endian representation read from {@code in}.
+   * @return A {@code short} value constructed from the 2-byte unsigned big-endian representation read from {@code in}.
    * @throws IOException If an I/O error has occurred.
    * @throws IllegalArgumentException If {@code in} is null.
    */
@@ -430,14 +423,11 @@ public final class Streams {
   }
 
   /**
-   * Returns a {@code char} value constructed from the 2-byte unsigned
-   * {@code isBigEndian} representation read from {@code in}.
+   * Returns a {@code char} value constructed from the 2-byte unsigned {@code isBigEndian} representation read from {@code in}.
    *
    * @param in The {@link InputStream}.
-   * @return A {@code short} value constructed from the 2-byte unsigned
-   *         {@code isBigEndian} representation read from {@code in}.
-   * @param isBigEndian If {@code true}, bytes will be read in big-endian
-   *          encoding. If {@code false}, in little-endian.
+   * @return A {@code short} value constructed from the 2-byte unsigned {@code isBigEndian} representation read from {@code in}.
+   * @param isBigEndian If {@code true}, bytes will be read in big-endian encoding. If {@code false}, in little-endian.
    * @throws IOException If an I/O error has occurred.
    * @throws IllegalArgumentException If {@code in} is null.
    */
@@ -450,12 +440,10 @@ public final class Streams {
   }
 
   /**
-   * Returns an {@code int} value constructed from the 4-byte big-endian
-   * representation read from {@code in}.
+   * Returns an {@code int} value constructed from the 4-byte big-endian representation read from {@code in}.
    *
    * @param in The {@link InputStream}.
-   * @return An {@code int} value constructed from the 4-byte big-endian
-   *         representation read from {@code in}.
+   * @return An {@code int} value constructed from the 4-byte big-endian representation read from {@code in}.
    * @throws IOException If an I/O error has occurred.
    * @throws IllegalArgumentException If {@code in} is null.
    */
@@ -464,14 +452,11 @@ public final class Streams {
   }
 
   /**
-   * Returns an {@code int} value constructed from the 4-byte
-   * {@code isBigEndian} representation read from {@code in}.
+   * Returns an {@code int} value constructed from the 4-byte {@code isBigEndian} representation read from {@code in}.
    *
    * @param in The {@link InputStream}.
-   * @return An {@code int} value constructed from the 4-byte
-   *         {@code isBigEndian} representation read from {@code in}.
-   * @param isBigEndian If {@code true}, bytes will be read in big-endian
-   *          encoding. If {@code false}, in little-endian.
+   * @return An {@code int} value constructed from the 4-byte {@code isBigEndian} representation read from {@code in}.
+   * @param isBigEndian If {@code true}, bytes will be read in big-endian encoding. If {@code false}, in little-endian.
    * @throws IOException If an I/O error has occurred.
    * @throws IllegalArgumentException If {@code in} is null.
    */
@@ -484,12 +469,10 @@ public final class Streams {
   }
 
   /**
-   * Returns a {@code long} value constructed from the 8-byte big-endian
-   * representation read from {@code in}.
+   * Returns a {@code long} value constructed from the 8-byte big-endian representation read from {@code in}.
    *
    * @param in The {@link InputStream}.
-   * @return A {@code long} value constructed from the 8-byte big-endian
-   *         representation read from {@code in}.
+   * @return A {@code long} value constructed from the 8-byte big-endian representation read from {@code in}.
    * @throws IOException If an I/O error has occurred.
    * @throws IllegalArgumentException If {@code in} is null.
    */
@@ -498,14 +481,11 @@ public final class Streams {
   }
 
   /**
-   * Returns a {@code long} value constructed from the 8-byte
-   * {@code isBigEndian} representation read from {@code in}.
+   * Returns a {@code long} value constructed from the 8-byte {@code isBigEndian} representation read from {@code in}.
    *
    * @param in The {@link InputStream}.
-   * @return A {@code long} value constructed from the 8-byte
-   *         {@code isBigEndian} representation read from {@code in}.
-   * @param isBigEndian If {@code true}, bytes will be read in big-endian
-   *          encoding. If {@code false}, in little-endian.
+   * @return A {@code long} value constructed from the 8-byte {@code isBigEndian} representation read from {@code in}.
+   * @param isBigEndian If {@code true}, bytes will be read in big-endian encoding. If {@code false}, in little-endian.
    * @throws IOException If an I/O error has occurred.
    * @throws IllegalArgumentException If {@code in} is null.
    */
@@ -518,17 +498,14 @@ public final class Streams {
   }
 
   /**
-   * Reads all bytes from the provided {@link InputStream} and returns the
-   * resulting buffer array. This method blocks until all contents have been
-   * read, end of file is detected, or an exception is thrown.
+   * Reads all bytes from the provided {@link InputStream} and returns the resulting buffer array. This method blocks until all
+   * contents have been read, end of file is detected, or an exception is thrown.
    *
    * @param in The {@link InputStream} from which to read.
-   * @return The {@code byte[]} containing all bytes that were read from the
-   *         provided {@link InputStream} {@code in} until an end of file is
-   *         detected.
-   * @throws IOException If the first byte cannot be read for any reason other
-   *           than the end of the file, if the input stream has been closed, or
-   *           if some other I/O error occurs.
+   * @return The {@code byte[]} containing all bytes that were read from the provided {@link InputStream} {@code in} until an end of
+   *         file is detected.
+   * @throws IOException If the first byte cannot be read for any reason other than the end of the file, if the input stream has
+   *           been closed, or if some other I/O error occurs.
    * @throws IllegalArgumentException If {@code in} is null.
    * @see InputStream#read(byte[])
    */
@@ -541,33 +518,27 @@ public final class Streams {
   }
 
   /**
-   * Returns a synchronous merged {@link InputStream} receiving its input from
-   * the array of {@code streams} input streams. Data is received from each
-   * input stream in sequential order -- i.e. the first stream is read first,
-   * advancing to the second only once the first has been read fully. The order
-   * the input streams are read is the order in which they are provided in the
+   * Returns a synchronous merged {@link InputStream} receiving its input from the array of {@code streams} input streams. Data is
+   * received from each input stream in sequential order -- i.e. the first stream is read first, advancing to the second only once
+   * the first has been read fully. The order the input streams are read is the order in which they are provided in the
    * {@code streams} argument.
    *
    * @param streams The streams to merge.
-   * @return A merged {@link InputStream} receiving its input from the array of
-   *         {@code streams} input streams.
+   * @return A merged {@link InputStream} receiving its input from the array of {@code streams} input streams.
    * @throws IOException If an I/O error has occurred.
-   * @throws IllegalArgumentException If {@code streams} is null, or if
-   *           {@code streams.length == 0}.
+   * @throws IllegalArgumentException If {@code streams} is null, or if {@code streams.length == 0}.
    */
   public static InputStream merge(final InputStream ... streams) throws IOException {
     return merge(true, streams);
   }
 
   /**
-   * Returns an asynchronously merged {@link InputStream} receiving its input
-   * from the array of {@code streams} input streams. Data is received from each
-   * input stream asynchronously, and is written to the merged stream in the
-   * order data becomes available to read.
+   * Returns an asynchronously merged {@link InputStream} receiving its input from the array of {@code streams} input streams. Data
+   * is received from each input stream asynchronously, and is written to the merged stream in the order data becomes available to
+   * read.
    *
    * @param streams The streams to merge.
-   * @return A merged {@link InputStream} receiving its input from the array of
-   *         {@code streams} input streams.
+   * @return A merged {@link InputStream} receiving its input from the array of {@code streams} input streams.
    * @throws IOException If an I/O error has occurred.
    * @throws IllegalArgumentException If {@code streams.length == 0}.
    */
@@ -610,8 +581,7 @@ public final class Streams {
   }
 
   /**
-   * Pipe the {@code src} input stream to the {@code snk} output stream in the
-   * current thread.
+   * Pipe the {@code src} input stream to the {@code snk} output stream in the current thread.
    *
    * @param src The source {@link InputStream}.
    * @param snk The sink {@link OutputStream}.
@@ -623,8 +593,8 @@ public final class Streams {
   }
 
   /**
-   * Asynchronously pipe the {@code src} input stream to the {@code snk} output
-   * stream. This method will spawn a dedicated thread to pipe the data.
+   * Asynchronously pipe the {@code src} input stream to the {@code snk} output stream. This method will spawn a dedicated thread to
+   * pipe the data.
    *
    * @param src The source {@link InputStream}.
    * @param snk The sink {@link OutputStream}.
@@ -636,16 +606,14 @@ public final class Streams {
   }
 
   /**
-   * Asynchronously pipe the {@code src} input stream to the {@code snk} output
-   * stream. This method will spawn a dedicated thread to pipe the data.
+   * Asynchronously pipe the {@code src} input stream to the {@code snk} output stream. This method will spawn a dedicated thread to
+   * pipe the data.
    *
    * @param src The source {@link InputStream}.
    * @param snk The sink {@link OutputStream}.
-   * @param onThreadExit Consumer function that will be called when the thread
-   *          exits, either (1) due to IOException (in which case the exception
-   *          will be passed to the consumer instance), or (2) due to regular
-   *          completion (in which case null will be passed to the consumer
-   *          instance).
+   * @param onThreadExit Consumer function that will be called when the thread exits, either (1) due to IOException (in which case
+   *          the exception will be passed to the consumer instance), or (2) due to regular completion (in which case null will be
+   *          passed to the consumer instance).
    * @throws IOException If an I/O error has occurred.
    * @throws IllegalArgumentException If {@code src} or {@code snk} is null.
    */
@@ -654,8 +622,7 @@ public final class Streams {
   }
 
   /**
-   * Tee the {@code src} input stream to the {@code snk} output stream and the
-   * returned input stream in the current thread.
+   * Tee the {@code src} input stream to the {@code snk} output stream and the returned input stream in the current thread.
    *
    * @param src The source {@link InputStream}.
    * @param snk The sink {@link OutputStream}.
@@ -668,9 +635,8 @@ public final class Streams {
   }
 
   /**
-   * Asynchronously tee the {@code src} input stream to the {@code snk} output
-   * stream and the returned input stream. This method will spawn a dedicated
-   * thread to tee the data.
+   * Asynchronously tee the {@code src} input stream to the {@code snk} output stream and the returned input stream. This method
+   * will spawn a dedicated thread to tee the data.
    *
    * @param src The source {@link InputStream}.
    * @param snk The sink {@link OutputStream}.
@@ -683,17 +649,14 @@ public final class Streams {
   }
 
   /**
-   * Asynchronously tee the {@code src} input stream to the {@code snk} output
-   * stream and the returned input stream. This method will spawn a dedicated
-   * thread to tee the data.
+   * Asynchronously tee the {@code src} input stream to the {@code snk} output stream and the returned input stream. This method
+   * will spawn a dedicated thread to tee the data.
    *
    * @param src The source {@link InputStream}.
    * @param snk The sink {@link OutputStream}.
-   * @param onThreadExit Consumer function that will be called when the thread
-   *          exits, either (1) due to IOException (in which case the exception
-   *          will be passed to the consumer instance), or (2) due to regular
-   *          completion (in which case {@code null} will be passed to the
-   *          consumer instance).
+   * @param onThreadExit Consumer function that will be called when the thread exits, either (1) due to IOException (in which case
+   *          the exception will be passed to the consumer instance), or (2) due to regular completion (in which case {@code null}
+   *          will be passed to the consumer instance).
    * @return The {@link InputStream} teed from {@code src}.
    * @throws IOException If an I/O error has occurred.
    * @throws IllegalArgumentException If {@code src} or {@code snk} is null.

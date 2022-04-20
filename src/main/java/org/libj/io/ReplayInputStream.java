@@ -24,10 +24,9 @@ import java.io.IOException;
 import java.io.InputStream;
 
 /**
- * This class implements a FilterInputStream that allows its content to be
- * re-read. With each call to its read methods, content is written to an
- * underlying buffer that automatically grows. This implementation supports a
- * maximum re-readable buffer length of {@link Integer#MAX_VALUE}.
+ * This class implements a FilterInputStream that allows its content to be re-read. With each call to its read methods, content is
+ * written to an underlying buffer that automatically grows. This implementation supports a maximum re-readable buffer length of
+ * {@link Integer#MAX_VALUE}.
  */
 public class ReplayInputStream extends FilterInputStream {
   /**
@@ -38,8 +37,7 @@ public class ReplayInputStream extends FilterInputStream {
     private int mark;
 
     /**
-     * Creates a new {@link ReadbackByteArrayOutputStream} with the specified
-     * initial size.
+     * Creates a new {@link ReadbackByteArrayOutputStream} with the specified initial size.
      *
      * @param initialSize An int specifying the initial buffer size.
      * @throws IllegalArgumentException If initialSize is negative.
@@ -85,8 +83,7 @@ public class ReplayInputStream extends FilterInputStream {
     /**
      * Reads a single byte from the buffer.
      *
-     * @return The byte read, as an integer in the range 0 to 255, or -1 if the
-     *         end of the buffer has been reached.
+     * @return The byte read, as an integer in the range 0 to 255, or -1 if the end of the buffer has been reached.
      */
     public int read() {
       return closed || count >= total ? -1 : buf[count++];
@@ -96,8 +93,7 @@ public class ReplayInputStream extends FilterInputStream {
      * Reads bytes into an array.
      *
      * @param b Destination buffer.
-     * @return The number of bytes read, or -1 if the end of the stream has been
-     *         reached.
+     * @return The number of bytes read, or -1 if the end of the stream has been reached.
      * @throws IllegalArgumentException If {@code b} is null.
      */
     public int read(final byte[] b) {
@@ -110,10 +106,8 @@ public class ReplayInputStream extends FilterInputStream {
      * @param b Destination buffer.
      * @param off Offset at which to start storing bytes.
      * @param len Maximum number of bytes to read.
-     * @return The number of bytes read, or -1 if the end of the stream has been
-     *         reached.
-     * @throws IndexOutOfBoundsException If {@code off} is negative, or
-     *           {@code len} is negative, or {@code len} is greater than
+     * @return The number of bytes read, or -1 if the end of the stream has been reached.
+     * @throws IndexOutOfBoundsException If {@code off} is negative, or {@code len} is negative, or {@code len} is greater than
      *           {@code b.length - off}.
      * @throws IllegalArgumentException If {@code b} is null.
      */
@@ -169,8 +163,8 @@ public class ReplayInputStream extends FilterInputStream {
     }
 
     /**
-     * Marks the present position in the stream. Subsequent calls to
-     * {@link #reset()} will attempt to reposition the stream to this point.
+     * Marks the present position in the stream. Subsequent calls to {@link #reset()} will attempt to reposition the stream to this
+     * point.
      */
     public void mark() {
       mark = count;
@@ -192,8 +186,7 @@ public class ReplayInputStream extends FilterInputStream {
      * Resets the buffer to the position value of the argument.
      *
      * @param p The position to reset to.
-     * @throws IllegalArgumentException If {@code p} is negative, or if
-     *           {@code p} exceeds the buffer length.
+     * @throws IllegalArgumentException If {@code p} is negative, or if {@code p} exceeds the buffer length.
      */
     public void reset(final int p) {
       if (p < 0)
@@ -227,15 +220,12 @@ public class ReplayInputStream extends FilterInputStream {
   private volatile boolean closed;
 
   /**
-   * Creates a new {@link ReplayInputStream} using the specified
-   * {@link InputStream} as its source, and the provided initial size for the
-   * re-readable buffer.
+   * Creates a new {@link ReplayInputStream} using the specified {@link InputStream} as its source, and the provided initial size
+   * for the re-readable buffer.
    *
    * @param in An InputStream object providing the underlying stream.
-   * @param initialSize An int specifying the initial buffer size of the
-   *          re-readable buffer.
-   * @throws IllegalArgumentException If {@code in} is null, or if
-   *           {@code initialSize} is negative.
+   * @param initialSize An int specifying the initial buffer size of the re-readable buffer.
+   * @throws IllegalArgumentException If {@code in} is null, or if {@code initialSize} is negative.
    */
   public ReplayInputStream(final InputStream in, final int initialSize) {
     super(assertNotNull(in));
@@ -243,9 +233,8 @@ public class ReplayInputStream extends FilterInputStream {
   }
 
   /**
-   * Creates a new {@link ReplayInputStream} using the specified
-   * {@link InputStream} as its source, and default initial size of 32 for the
-   * re-readable buffer.
+   * Creates a new {@link ReplayInputStream} using the specified {@link InputStream} as its source, and default initial size of 32
+   * for the re-readable buffer.
    *
    * @param in A Reader object providing the underlying stream.
    * @throws IllegalArgumentException If {@code in} is null.
@@ -256,16 +245,12 @@ public class ReplayInputStream extends FilterInputStream {
   }
 
   /**
-   * Reads a single byte. If the stream's position was previously reset
-   * resulting in the buffer having a byte available to be re-read, the byte
-   * will be re-read from the underlying buffer. Otherwise, a byte will be read
-   * from the underlying stream, in which case this method will block until a
-   * byte is available, an I/O error occurs, or the end of the stream is
-   * reached.
+   * Reads a single byte. If the stream's position was previously reset resulting in the buffer having a byte available to be
+   * re-read, the byte will be re-read from the underlying buffer. Otherwise, a byte will be read from the underlying stream, in
+   * which case this method will block until a byte is available, an I/O error occurs, or the end of the stream is reached.
    *
    * @throws IOException If an I/O error has occurred.
-   * @return The byte read, as an integer in the range 0 to 255, or -1 if the
-   *         end of the stream has been reached.
+   * @return The byte read, as an integer in the range 0 to 255, or -1 if the end of the stream has been reached.
    */
   @Override
   public int read() throws IOException {
@@ -283,16 +268,12 @@ public class ReplayInputStream extends FilterInputStream {
   }
 
   /**
-   * Reads bytes into an array. If the stream's position was previously reset
-   * resulting in the buffer having bytes available to be re-read, the available
-   * bytes will be re-read from the underlying buffer. The remaining bytes will
-   * be read from the underlying stream, in which case this method will block
-   * bytes are available, an I/O error occurs, or the end of the stream is
-   * reached.
+   * Reads bytes into an array. If the stream's position was previously reset resulting in the buffer having bytes available to be
+   * re-read, the available bytes will be re-read from the underlying buffer. The remaining bytes will be read from the underlying
+   * stream, in which case this method will block bytes are available, an I/O error occurs, or the end of the stream is reached.
    *
    * @param b Destination buffer.
-   * @return The number of bytes read, or -1 if the end of the stream has been
-   *         reached.
+   * @return The number of bytes read, or -1 if the end of the stream has been reached.
    * @throws IOException If an I/O error has occurred.
    * @throws IllegalArgumentException If {@code b} is null.
    */
@@ -302,21 +283,17 @@ public class ReplayInputStream extends FilterInputStream {
   }
 
   /**
-   * Reads bytes into a portion of an array. If the stream's position was
-   * previously reset resulting in the buffer having bytes available to be
-   * re-read, the available bytes will be re-read from the underlying buffer.
-   * The remaining bytes will be read from the underlying stream, in which case
-   * this method will block bytes are available, an I/O error occurs, or the end
-   * of the stream is reached.
+   * Reads bytes into a portion of an array. If the stream's position was previously reset resulting in the buffer having bytes
+   * available to be re-read, the available bytes will be re-read from the underlying buffer. The remaining bytes will be read from
+   * the underlying stream, in which case this method will block bytes are available, an I/O error occurs, or the end of the stream
+   * is reached.
    *
    * @param b Destination buffer.
    * @param off Offset at which to start storing bytes.
    * @param len Maximum number of bytes to read.
-   * @return The number of bytes read, or -1 if the end of the stream has been
-   *         reached.
+   * @return The number of bytes read, or -1 if the end of the stream has been reached.
    * @throws IOException If an I/O error has occurred.
-   * @throws IndexOutOfBoundsException If {@code off} is negative, or
-   *           {@code len} is negative, or {@code len} is greater than
+   * @throws IndexOutOfBoundsException If {@code off} is negative, or {@code len} is negative, or {@code len} is greater than
    *           {@code b.length - off}.
    * @throws IllegalArgumentException If {@code b} is null.
    */
@@ -329,7 +306,8 @@ public class ReplayInputStream extends FilterInputStream {
 
     if (avail > 0) {
       buffer.read(b, off, avail);
-      for (int ch; avail < b.length && (ch = read()) != -1; b[off + avail++] = (byte)ch);
+      for (int ch; avail < b.length && (ch = read()) != -1; b[off + avail++] = (byte)ch)
+        ;
       return avail;
     }
 
@@ -344,11 +322,9 @@ public class ReplayInputStream extends FilterInputStream {
   }
 
   /**
-   * Skips bytes. If the stream's position was previously reset resulting in the
-   * buffer having bytes available to be re-read, the available bytes will first
-   * be skipped in the underlying buffer. The remaining bytes will be read from
-   * the underlying stream, written to the buffer, and skipped, in which case
-   * this method will block bytes are available, an I/O error occurs, or the end
+   * Skips bytes. If the stream's position was previously reset resulting in the buffer having bytes available to be re-read, the
+   * available bytes will first be skipped in the underlying buffer. The remaining bytes will be read from the underlying stream,
+   * written to the buffer, and skipped, in which case this method will block bytes are available, an I/O error occurs, or the end
    * of the stream is reached.
    *
    * @param n The number of bytes to skip.
@@ -367,24 +343,23 @@ public class ReplayInputStream extends FilterInputStream {
 
     if (avail > 0) {
       buffer.skip(avail);
-      while (avail++ < n && read() != -1);
+      while (avail++ < n && read() != -1)
+        ;
       return avail;
     }
 
-    while (read() != -1 && ++avail < n);
+    while (read() != -1 && ++avail < n)
+      ;
     return avail;
   }
 
   /**
-   * Returns an estimate of the number of bytes that can be read (or skipped
-   * over) from this input stream without blocking by the next caller of a
-   * method for this input stream. If the stream's position was previously reset
-   * resulting in the buffer having bytes available to be re-read, the available
-   * bytes will contribute to the total returned by this method. The remaining
-   * estimate is delegated to the available() method of the underlying stream.
+   * Returns an estimate of the number of bytes that can be read (or skipped over) from this input stream without blocking by the
+   * next caller of a method for this input stream. If the stream's position was previously reset resulting in the buffer having
+   * bytes available to be re-read, the available bytes will contribute to the total returned by this method. The remaining estimate
+   * is delegated to the available() method of the underlying stream.
    *
-   * @return An estimate of the number of bytes that can be read (or skipped
-   *         over) from this input stream without blocking.
+   * @return An estimate of the number of bytes that can be read (or skipped over) from this input stream without blocking.
    * @throws IOException If an I/O error has occurred.
    */
   @Override
@@ -393,8 +368,8 @@ public class ReplayInputStream extends FilterInputStream {
   }
 
   /**
-   * Marks the present position in the stream. Subsequent calls to
-   * {@link #reset()} will attempt to reposition the stream to this point.
+   * Marks the present position in the stream. Subsequent calls to {@link #reset()} will attempt to reposition the stream to this
+   * point.
    *
    * @param readlimit This argument is ignored.
    */
@@ -408,8 +383,7 @@ public class ReplayInputStream extends FilterInputStream {
   }
 
   /**
-   * Tells whether this stream supports the {@link #mark(int)} operation, which
-   * is always {@code true}.
+   * Tells whether this stream supports the {@link #mark(int)} operation, which is always {@code true}.
    *
    * @return {@code true}.
    */
@@ -419,8 +393,7 @@ public class ReplayInputStream extends FilterInputStream {
   }
 
   /**
-   * Resets the stream to a location previously marked with the
-   * {@link #mark(int)} method.
+   * Resets the stream to a location previously marked with the {@link #mark(int)} method.
    */
   @Override
   @SuppressWarnings("sync-override")
@@ -429,11 +402,9 @@ public class ReplayInputStream extends FilterInputStream {
   }
 
   /**
-   * Closes the stream and releases any system resources associated with it.
-   * Once the stream has been closed, further {@link #read()},
-   * {@link #available()}, {@link #mark(int)}, {@link #reset()}, or
-   * {@link #skip(long)} invocations will throw an {@link IOException}. Closing
-   * a previously closed stream has no effect.
+   * Closes the stream and releases any system resources associated with it. Once the stream has been closed, further
+   * {@link #read()}, {@link #available()}, {@link #mark(int)}, {@link #reset()}, or {@link #skip(long)} invocations will throw an
+   * {@link IOException}. Closing a previously closed stream has no effect.
    *
    * @throws IOException If an I/O error has occurred.
    */
