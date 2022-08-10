@@ -32,10 +32,10 @@ public class CountingOutputStreamTest {
   }
 
   private static void testWriteByte(final Supplier<OutputStream> supplier) throws IOException {
-    for (int i = 0; i < numTests; ++i) {
+    for (int i = 0; i < numTests; ++i) { // [N]
       final int expectedCount = (int)(Math.random() * Short.MAX_VALUE);
       try (final OutputStream cbos = supplier.get()) {
-        for (int j = 0; j < expectedCount; ++j)
+        for (int j = 0; j < expectedCount; ++j) // [N]
           cbos.write((int)(Math.random() * Integer.MAX_VALUE));
 
         assertEquals(expectedCount, cbos);
@@ -50,7 +50,7 @@ public class CountingOutputStreamTest {
   }
 
   private static void testWriteBytes(final Supplier<OutputStream> supplier) throws IOException {
-    for (int i = 0; i < numTests; ++i) {
+    for (int i = 0; i < numTests; ++i) { // [N]
       final int expectedCount = (int)(Math.random() * Short.MAX_VALUE);
       try (final OutputStream cbos = supplier.get()) {
         cbos.write(new byte[expectedCount]);
@@ -66,7 +66,7 @@ public class CountingOutputStreamTest {
   }
 
   private static void testWriteBytesOffLen(final Supplier<OutputStream> supplier) throws IOException {
-    for (int i = 0; i < numTests; ++i) {
+    for (int i = 0; i < numTests; ++i) { // [N]
       final int expectedCount = (int)(Math.random() * Short.MAX_VALUE);
       try (final OutputStream cbos = supplier.get()) {
         cbos.write(new byte[expectedCount], 0, expectedCount);

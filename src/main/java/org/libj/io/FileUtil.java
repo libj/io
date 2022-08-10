@@ -56,9 +56,9 @@ public final class FileUtil {
           Runtime.getRuntime().addShutdownHook(new Thread() {
             @Override
             public void run() {
-              for (final Map.Entry<Path,List<DirectoryStream.Filter<? super Path>>> entry : deleteOnExit.entrySet()) {
+              for (final Map.Entry<Path,List<DirectoryStream.Filter<? super Path>>> entry : deleteOnExit.entrySet()) { // [S]
                 final Path path = entry.getKey();
-                for (final DirectoryStream.Filter<? super Path> filter : entry.getValue()) {
+                for (final DirectoryStream.Filter<? super Path> filter : entry.getValue()) { // [L]
                   try {
                     deleteAll0(path, filter);
                   }
@@ -118,7 +118,7 @@ public final class FileUtil {
   private static void deleteAll0(final Path path, final DirectoryStream.Filter<? super Path> filter) throws IOException {
     if (Files.isDirectory(path)) {
       try (final DirectoryStream<Path> stream = Files.newDirectoryStream(path, filter)) {
-        for (final Path entry : stream) {
+        for (final Path entry : stream) { // [I]
           if (Files.isDirectory(entry))
             deleteAll0(entry, filter);
           else
@@ -238,6 +238,7 @@ public final class FileUtil {
    * @throws IllegalArgumentException If {@code source}, {@code target}, or {@code options} is null.
    * @see Files#copy(Path,Path,CopyOption...)
    */
+  @SuppressWarnings("javadoc")
   public static Path copyAll(final Path source, final Path target, final CopyOption ... options) throws IOException {
     assertNotNull(source);
     assertNotNull(target);
@@ -246,7 +247,7 @@ public final class FileUtil {
       return Files.copy(source, target, options);
 
     if (Files.exists(target) && options != null)
-      for (int i = 0; i < options.length; ++i)
+      for (int i = 0; i < options.length; ++i) // [A]
         if (options[i] == StandardCopyOption.REPLACE_EXISTING && !deleteAll(target))
           throw new DirectoryNotEmptyException(target.toString());
 
@@ -276,15 +277,15 @@ public final class FileUtil {
       final String[] canons = new String[files.length];
       canons[0] = StringPaths.canonicalize(files[0].getPath());
       int length = canons[0].length();
-      for (int i = 1; i < files.length; ++i) {
+      for (int i = 1; i < files.length; ++i) { // [A]
         canons[i] = StringPaths.canonicalize(files[i].getPath());
         if (canons[i].length() < length)
           length = canons[i].length();
       }
 
-      for (int i = 0; i < length; ++i) {
+      for (int i = 0; i < length; ++i) { // [N]
         final char ch = canons[0].charAt(i);
-        for (int j = 1; j < files.length; ++j)
+        for (int j = 1; j < files.length; ++j) // [A]
           if (ch != canons[j].charAt(i))
             return new File(canons[0].substring(0, i));
       }

@@ -226,7 +226,7 @@ public class UnicodeReader extends Reader {
   @Override
   public int read(final char[] cbuf, final int off, final int len) throws IOException {
     int i = 0;
-    for (int ch; i < len && (ch = read()) != -1; ++i)
+    for (int ch; i < len && (ch = read()) != -1; ++i) // [ZA]
       cbuf[off + i] = (char)ch;
 
     return i;

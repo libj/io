@@ -27,7 +27,7 @@ public class ReplayInputStreamTest {
   @Test
   public void test() throws IOException {
     final byte[] array = new byte[26];
-    for (int i = 0; i < array.length; ++i)
+    for (int i = 0; i < array.length; ++i) // [A]
       array[i] = (byte)('a' + i);
 
     final ReplayInputStream in = new ReplayInputStream(new ByteArrayInputStream(array));

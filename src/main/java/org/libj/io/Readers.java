@@ -47,7 +47,7 @@ public final class Readers {
    * @throws IllegalArgumentException If {@code reader} or {@code builder} is null.
    */
   public static StringBuilder readFully(final Reader reader, final StringBuilder builder) throws IOException {
-    for (int ch; (ch = assertNotNull(reader).read()) != -1; builder.append((char)ch));
+    for (int ch; (ch = assertNotNull(reader).read()) != -1; builder.append((char)ch)); // [X]
     return builder;
   }
 
@@ -79,7 +79,7 @@ public final class Readers {
       throw new IllegalArgumentException("Buffer size (" + bufferSize + ") must be greater than 0");
 
     final char[] cbuf = new char[bufferSize];
-    for (int size; (size = assertNotNull(reader).read(cbuf)) > 0; builder.append(cbuf, 0, size));
+    for (int size; (size = assertNotNull(reader).read(cbuf)) > 0; builder.append(cbuf, 0, size)); // [X]
     return builder;
   }
 

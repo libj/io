@@ -34,7 +34,7 @@ public class ReaderInputStreamTest {
 
   static {
     final StringBuilder builder = new StringBuilder();
-    for (int i = 0; i < 100; ++i)
+    for (int i = 0; i < 100; ++i) // [N]
       builder.append(TEST_STRING);
 
     LARGE_TEST_STRING = builder.toString();
@@ -43,7 +43,7 @@ public class ReaderInputStreamTest {
   private static void testWithSingleByteRead(final String testString, final Charset charset) throws IOException {
     final byte[] bytes = testString.getBytes(charset);
     try (final ReaderInputStream in = new ReaderInputStream(new StringReader(testString), charset)) {
-      for (int i = 0; i < bytes.length; ++i) {
+      for (int i = 0; i < bytes.length; ++i) { // [A]
         final int ch = in.read();
         assertTrue(ch >= 0);
         assertTrue(ch <= 255);
@@ -58,7 +58,7 @@ public class ReaderInputStreamTest {
     final byte[] expected = testString.getBytes(charset);
     try (final ReaderInputStream in = new ReaderInputStream(new StringReader(testString), charset)) {
       final byte[] buffer = new byte[128];
-      for (int offset = 0;;) {
+      for (int offset = 0;;) { // [N]
         int bufferOffset = random.nextInt(64);
         final int bufferLength = random.nextInt(64);
         int read = in.read(buffer, bufferOffset, bufferLength);
@@ -68,7 +68,7 @@ public class ReaderInputStreamTest {
         }
 
         assertTrue(read <= bufferLength);
-        for (; read > 0; ++offset, ++bufferOffset, --read) {
+        for (; read > 0; ++offset, ++bufferOffset, --read) { // [N]
           assertTrue(offset < expected.length);
           assertEquals(expected[offset], buffer[bufferOffset]);
         }

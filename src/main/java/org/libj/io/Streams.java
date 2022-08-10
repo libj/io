@@ -375,7 +375,7 @@ public final class Streams {
   public static byte[] readUntil(final InputStream in, final char ch) throws IOException {
     assertNotNull(in);
     final ByteArrayOutputStream out = new ByteArrayOutputStream();
-    for (int c; (c = in.read()) != ch && c != -1;)
+    for (int c; (c = in.read()) != ch && c != -1;) // [X]
       out.write(c);
 
     return out.toByteArray();
@@ -513,7 +513,7 @@ public final class Streams {
     assertNotNull(in);
     final ByteArrayOutputStream buf = new ByteArrayOutputStream(DEFAULT_SOCKET_BUFFER_SIZE);
     final byte[] data = new byte[DEFAULT_SOCKET_BUFFER_SIZE];
-    for (int length; (length = in.read(data)) != -1; buf.write(data, 0, length));
+    for (int length; (length = in.read(data)) != -1; buf.write(data, 0, length)); // [X]
     return buf.toByteArray();
   }
 
@@ -564,7 +564,7 @@ public final class Streams {
       }
     }) {
       final InputStream pipedIn = new PipedInputStream(pipedOut, DEFAULT_SOCKET_BUFFER_SIZE);
-      for (int i = 0; i < streams.length; ++i) {
+      for (int i = 0; i < streams.length; ++i) { // [A]
         pipe(streams[i], pipedOut, false, sync, p -> {
           try {
             pipedOut.close();

@@ -29,7 +29,7 @@ import org.junit.Test;
 public class StreamsTest {
   @Test
   public void testWriteReadChar() throws IOException {
-    for (int i = 0; i < 100; ++i) {
+    for (int i = 0; i < 100; ++i) { // [N]
       final boolean isBigEndian = Math.random() < .5;
       final ByteArrayOutputStream out = new ByteArrayOutputStream();
       final char value = (char)new Random().nextInt();
@@ -40,7 +40,7 @@ public class StreamsTest {
 
   @Test
   public void testWriteReadShort() throws IOException {
-    for (int i = 0; i < 100; ++i) {
+    for (int i = 0; i < 100; ++i) { // [N]
       final boolean isBigEndian = Math.random() < .5;
       final ByteArrayOutputStream out = new ByteArrayOutputStream();
       final short value = (short)new Random().nextInt();
@@ -51,7 +51,7 @@ public class StreamsTest {
 
   @Test
   public void testWriteReadInt() throws IOException {
-    for (int i = 0; i < 100; ++i) {
+    for (int i = 0; i < 100; ++i) { // [N]
       final boolean isBigEndian = Math.random() < .5;
       final ByteArrayOutputStream out = new ByteArrayOutputStream();
       final int value = new Random().nextInt();
@@ -62,7 +62,7 @@ public class StreamsTest {
 
   @Test
   public void testWriteReadLong() throws IOException {
-    for (int i = 0; i < 100; ++i) {
+    for (int i = 0; i < 100; ++i) { // [N]
       final boolean isBigEndian = Math.random() < .5;
       final ByteArrayOutputStream out = new ByteArrayOutputStream();
       final long value = new Random().nextLong();
@@ -74,7 +74,7 @@ public class StreamsTest {
   private static byte[] createRandomBytes(final int length) {
     final byte[] bytes = new byte[length];
     final Random random = new Random();
-    for (int i = 0; i < bytes.length; ++i)
+    for (int i = 0; i < bytes.length; ++i) // [A]
       bytes[i] = (byte)random.nextInt();
 
     return bytes;
