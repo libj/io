@@ -27,7 +27,7 @@ public class ReplayReaderTest {
   @Test
   public void test() throws IOException {
     final char[] array = new char[26];
-    for (int i = 0; i < array.length; ++i) // [A]
+    for (int i = 0, i$ = array.length; i < i$; ++i) // [A]
       array[i] = (char)('a' + i);
 
     final ReplayReader reader = new ReplayReader(new CharArrayReader(array));

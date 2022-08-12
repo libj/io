@@ -247,7 +247,7 @@ public final class FileUtil {
       return Files.copy(source, target, options);
 
     if (Files.exists(target) && options != null)
-      for (int i = 0; i < options.length; ++i) // [A]
+      for (int i = 0, i$ = options.length; i < i$; ++i) // [A]
         if (options[i] == StandardCopyOption.REPLACE_EXISTING && !deleteAll(target))
           throw new DirectoryNotEmptyException(target.toString());
 
@@ -277,7 +277,7 @@ public final class FileUtil {
       final String[] canons = new String[files.length];
       canons[0] = StringPaths.canonicalize(files[0].getPath());
       int length = canons[0].length();
-      for (int i = 1; i < files.length; ++i) { // [A]
+      for (int i = 1, i$ = files.length; i < i$; ++i) { // [A]
         canons[i] = StringPaths.canonicalize(files[i].getPath());
         if (canons[i].length() < length)
           length = canons[i].length();
@@ -285,7 +285,7 @@ public final class FileUtil {
 
       for (int i = 0; i < length; ++i) { // [N]
         final char ch = canons[0].charAt(i);
-        for (int j = 1; j < files.length; ++j) // [A]
+        for (int j = 1, j$ = files.length; j < j$; ++j) // [A]
           if (ch != canons[j].charAt(i))
             return new File(canons[0].substring(0, i));
       }

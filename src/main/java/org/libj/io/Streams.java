@@ -564,7 +564,7 @@ public final class Streams {
       }
     }) {
       final InputStream pipedIn = new PipedInputStream(pipedOut, DEFAULT_SOCKET_BUFFER_SIZE);
-      for (int i = 0; i < streams.length; ++i) { // [A]
+      for (int i = 0, i$ = streams.length; i < i$; ++i) { // [A]
         pipe(streams[i], pipedOut, false, sync, p -> {
           try {
             pipedOut.close();

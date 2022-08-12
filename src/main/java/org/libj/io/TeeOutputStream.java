@@ -39,7 +39,7 @@ public class TeeOutputStream extends OutputStream {
     if (assertNotNull(streams).length == 0)
       throw new IllegalArgumentException("Empty array");
 
-    for (int i = 0; i < streams.length; ++i) // [A]
+    for (int i = 0, i$ = streams.length; i < i$; ++i) // [A]
       assertNotNull(streams[i], "member at index " + i + " is null");
 
     this.streams = streams;
@@ -48,7 +48,7 @@ public class TeeOutputStream extends OutputStream {
   @Override
   public void write(final int b) throws IOException {
     IOException exception = null;
-    for (int i = 0; i < streams.length; ++i) { // [A]
+    for (int i = 0, i$ = streams.length; i < i$; ++i) { // [A]
       try {
         streams[i].write(b);
       }
@@ -67,7 +67,7 @@ public class TeeOutputStream extends OutputStream {
   @Override
   public void write(final byte[] b) throws IOException {
     IOException exception = null;
-    for (int i = 0; i < streams.length; ++i) { // [A]
+    for (int i = 0, i$ = streams.length; i < i$; ++i) { // [A]
       try {
         streams[i].write(b);
       }
@@ -86,7 +86,7 @@ public class TeeOutputStream extends OutputStream {
   @Override
   public void write(final byte[] b, final int off, final int len) throws IOException {
     IOException exception = null;
-    for (int i = 0; i < streams.length; ++i) { // [A]
+    for (int i = 0, i$ = streams.length; i < i$; ++i) { // [A]
       try {
         streams[i].write(b, off, len);
       }
@@ -105,7 +105,7 @@ public class TeeOutputStream extends OutputStream {
   @Override
   public void flush() throws IOException {
     IOException exception = null;
-    for (int i = 0; i < streams.length; ++i) { // [A]
+    for (int i = 0, i$ = streams.length; i < i$; ++i) { // [A]
       try {
         streams[i].flush();
       }
@@ -124,7 +124,7 @@ public class TeeOutputStream extends OutputStream {
   @Override
   public void close() throws IOException {
     IOException exception = null;
-    for (int i = 0; i < streams.length; ++i) { // [A]
+    for (int i = 0, i$ = streams.length; i < i$; ++i) { // [A]
       try {
         streams[i].close();
       }

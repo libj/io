@@ -43,7 +43,7 @@ public class ReaderInputStreamTest {
   private static void testWithSingleByteRead(final String testString, final Charset charset) throws IOException {
     final byte[] bytes = testString.getBytes(charset);
     try (final ReaderInputStream in = new ReaderInputStream(new StringReader(testString), charset)) {
-      for (int i = 0; i < bytes.length; ++i) { // [A]
+      for (int i = 0, i$ = bytes.length; i < i$; ++i) { // [A]
         final int ch = in.read();
         assertTrue(ch >= 0);
         assertTrue(ch <= 255);

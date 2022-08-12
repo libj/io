@@ -74,7 +74,7 @@ public class StreamsTest {
   private static byte[] createRandomBytes(final int length) {
     final byte[] bytes = new byte[length];
     final Random random = new Random();
-    for (int i = 0; i < bytes.length; ++i) // [A]
+    for (int i = 0, i$ = bytes.length; i < i$; ++i) // [A]
       bytes[i] = (byte)random.nextInt();
 
     return bytes;
