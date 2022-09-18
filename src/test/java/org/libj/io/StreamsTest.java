@@ -22,6 +22,7 @@ import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
+import java.util.Arrays;
 import java.util.Random;
 
 import org.junit.Test;
@@ -85,6 +86,18 @@ public class StreamsTest {
     final byte[] bytes = createRandomBytes(65536);
     try (final InputStream in = new ByteArrayInputStream(bytes)) {
       assertArrayEquals(bytes, Streams.readBytes(in));
+    }
+  }
+
+  @Test
+  public void testReadBytesMaxLength() throws IOException {
+    for (int i = 1; i < 17; ++i) { // [N]
+      final byte[] bytes = createRandomBytes(i * i * i * i * i);
+      for (int j = 1; j < Short.MAX_VALUE * Short.MAX_VALUE; j *= 2) { // [N]
+        try (final InputStream in = new ByteArrayInputStream(bytes)) {
+          assertArrayEquals(bytes.length < j ? bytes : Arrays.copyOf(bytes, j), Streams.readBytes(in, j));
+        }
+      }
     }
   }
 
