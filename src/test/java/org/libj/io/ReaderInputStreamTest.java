@@ -104,7 +104,7 @@ public class ReaderInputStreamTest {
   @Test
   public void testCharsetMismatchInfiniteLoop() throws IOException {
     final char[] inputChars = {(char)0xE0, (char)0xB2, (char)0xA0};
-    // final Charset charset = Charset.forName("UTF-8"); // works
+    // final Charset charset = StandardCharsets.UTF_8; // works
     final Charset charset = StandardCharsets.US_ASCII; // infinite loop
     try (final ReaderInputStream in = new ReaderInputStream(new CharArrayReader(inputChars), charset)) {
       while (in.read() != -1);
