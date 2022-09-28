@@ -21,21 +21,22 @@ import static org.libj.util.function.Throwing.*;
 
 import java.io.File;
 import java.io.IOException;
+import java.io.UncheckedIOException;
 import java.nio.file.CopyOption;
 import java.nio.file.DirectoryNotEmptyException;
 import java.nio.file.DirectoryStream;
+import java.nio.file.DirectoryStream.Filter;
 import java.nio.file.FileAlreadyExistsException;
 import java.nio.file.Files;
 import java.nio.file.LinkPermission;
-import java.nio.file.NoSuchFileException;
 import java.nio.file.Path;
 import java.nio.file.StandardCopyOption;
 import java.util.ArrayList;
-import java.util.List;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.ConcurrentMap;
 import java.util.concurrent.atomic.AtomicBoolean;
+import java.util.function.Consumer;
 
 import org.libj.util.StringPaths;
 
@@ -45,10 +46,10 @@ import org.libj.util.StringPaths;
 public final class FileUtil {
   private static File CWD;
   private static File TEMP_DIR;
-  private static volatile ConcurrentMap<Path,List<DirectoryStream.Filter<? super Path>>> deleteOnExit;
+  private static volatile ConcurrentMap<Path,ArrayList<Filter<? super Path>>> deleteOnExit;
   private static final AtomicBoolean deleteOnExitMutex = new AtomicBoolean();
 
-  private static void deleteOnExit(final Path path, final DirectoryStream.Filter<? super Path> filter) {
+  private static void deleteOnExit(final Path path, final Filter<? super Path> filter, final Consumer<Throwable> onThrow) {
     if (!deleteOnExitMutex.get()) {
       synchronized (deleteOnExitMutex) {
         if (!deleteOnExitMutex.get()) {
@@ -56,16 +57,19 @@ public final class FileUtil {
           Runtime.getRuntime().addShutdownHook(new Thread() {
             @Override
             public void run() {
-              for (final Map.Entry<Path,List<DirectoryStream.Filter<? super Path>>> entry : deleteOnExit.entrySet()) { // [S]
-                final Path path = entry.getKey();
-                for (final DirectoryStream.Filter<? super Path> filter : entry.getValue()) { // [L]
-                  try {
-                    deleteAll0(path, filter);
-                  }
-                  catch (final NoSuchFileException e) {
-                  }
-                  catch (final IOException e) {
-                    e.printStackTrace();
+              if (deleteOnExit.size() > 0) {
+                for (final Map.Entry<Path,ArrayList<Filter<? super Path>>> entry : deleteOnExit.entrySet()) { // [S]
+                  final Path path = entry.getKey();
+                  final ArrayList<Filter<? super Path>> value = entry.getValue();
+                  for (int i = 0, i$ = value.size(); i < i$; ++i) { // [RA]
+                    final Filter<? super Path> filter = value.get(i);
+                    try {
+                      deleteAll0(path, filter);
+                    }
+                    catch (final Throwable t) {
+                      if (onThrow != null)
+                        onThrow.accept(t);
+                    }
                   }
                 }
               }
@@ -77,7 +81,7 @@ public final class FileUtil {
       }
     }
 
-    List<DirectoryStream.Filter<? super Path>> filters = deleteOnExit.get(path);
+    ArrayList<Filter<? super Path>> filters = deleteOnExit.get(path);
     if (filters == null)
       deleteOnExit.put(path, filters = new ArrayList<>(1));
 
@@ -113,9 +117,9 @@ public final class FileUtil {
     return TEMP_DIR == null ? TEMP_DIR = new File(System.getProperty("java.io.tmpdir")) : TEMP_DIR;
   }
 
-  private static final DirectoryStream.Filter<Path> anyStreamFilter = p -> true;
+  private static final Filter<Path> anyStreamFilter = p -> true;
 
-  private static void deleteAll0(final Path path, final DirectoryStream.Filter<? super Path> filter) throws IOException {
+  private static void deleteAll0(final Path path, final Filter<? super Path> filter) throws IOException {
     if (Files.isDirectory(path)) {
       try (final DirectoryStream<Path> stream = Files.newDirectoryStream(path, filter)) {
         for (final Path entry : stream) { // [I]
@@ -137,13 +141,29 @@ public final class FileUtil {
    * @implNote Filtering will be performed at the time the JVM exists (not at the time when this method is called).
    * @param path The path to delete recursively.
    * @param filter The filter of paths to delete, or {@code null} to match all paths.
-   * @throws IOException If an I/O error has occurred.
+   * @throws IOException If an I/O error has occurred during {@link Filter#accept(Object)}.
    * @throws IllegalArgumentException If {@code path} is null.
    */
-  public static void deleteAllOnExit(final Path path, final DirectoryStream.Filter<? super Path> filter) throws IOException {
+  public static void deleteAllOnExit(final Path path, final Filter<? super Path> filter) throws IOException {
+    deleteOnExit(path, filter, null);
+  }
+
+  /**
+   * Register a path to be recursively deleted when the JVM exits. When executed on exit, only the paths that pass the
+   * {@code filter} will be deleted.
+   *
+   * @implNote Filtering will be performed at the time the JVM exists (not at the time when this method is called).
+   * @param path The path to delete recursively.
+   * @param filter The filter of paths to delete, or {@code null} to match all paths.
+   * @param onThrow {@link Consumer} to be called upon occurrence of thrown {@link Throwable} when a file is attempted to be
+   *          deleted.
+   * @throws IOException If an I/O error has occurred during {@link Filter#accept(Object)}.
+   * @throws IllegalArgumentException If {@code path} is null.
+   */
+  public static void deleteAllOnExit(final Path path, final Filter<? super Path> filter, final Consumer<Throwable> onThrow) throws IOException {
     final File file = assertNotNull(path).toFile();
     if (file.isDirectory())
-      deleteOnExit(path, filter);
+      deleteOnExit(path, filter, onThrow);
     else if (filter != null && filter.accept(path))
       file.deleteOnExit();
   }
@@ -155,13 +175,29 @@ public final class FileUtil {
    * @implNote Filtering will be performed at the time the JVM exists (not at the time when this method is called).
    * @param file The file to delete recursively.
    * @param filter The filter of paths to delete, or {@code null} to match all paths.
-   * @throws IOException If an I/O error has occurred.
+   * @throws IOException If an I/O error has occurred during {@link Filter#accept(Object)}.
    * @throws IllegalArgumentException If {@code file} is null.
    */
-  public static void deleteAllOnExit(final File file, final DirectoryStream.Filter<? super Path> filter) throws IOException {
+  public static void deleteAllOnExit(final File file, final Filter<? super Path> filter) throws IOException {
+    deleteAllOnExit(file, filter, null);
+  }
+
+  /**
+   * Register a path to be recursively deleted when the JVM exits. When executed on exit, only the paths that pass the
+   * {@code filter} will be deleted.
+   *
+   * @implNote Filtering will be performed at the time the JVM exists (not at the time when this method is called).
+   * @param file The file to delete recursively.
+   * @param filter The filter of paths to delete, or {@code null} to match all paths.
+   * @param onThrow {@link Consumer} to be called upon occurrence of thrown {@link Throwable} when a file is attempted to be
+   *          deleted.
+   * @throws IOException If an I/O error has occurred during {@link Filter#accept(Object)}.
+   * @throws IllegalArgumentException If {@code file} is null.
+   */
+  public static void deleteAllOnExit(final File file, final Filter<? super Path> filter, final Consumer<Throwable> onThrow) throws IOException {
     final Path path = assertNotNull(file).toPath();
     if (file.isDirectory())
-      deleteOnExit(path, filter);
+      deleteOnExit(path, filter, onThrow);
     else if (filter != null && filter.accept(path))
       file.deleteOnExit();
   }
@@ -170,22 +206,30 @@ public final class FileUtil {
    * Register a path to be recursively deleted when the JVM exits.
    *
    * @param path The path to delete recursively.
-   * @throws IOException If an I/O error has occurred.
    * @throws IllegalArgumentException If the {@code path} is null.
    */
-  public static void deleteAllOnExit(final Path path) throws IOException {
-    deleteAllOnExit(path, anyStreamFilter);
+  public static void deleteAllOnExit(final Path path) {
+    try {
+      deleteAllOnExit(path, anyStreamFilter);
+    }
+    catch (final IOException e) {
+      throw new UncheckedIOException(e);
+    }
   }
 
   /**
    * Register a path to be recursively deleted when the JVM exits.
    *
    * @param file The file to delete recursively.
-   * @throws IOException If an I/O error has occurred.
    * @throws IllegalArgumentException If the {@code file} is null.
    */
-  public static void deleteAllOnExit(final File file) throws IOException {
-    deleteAllOnExit(file, anyStreamFilter);
+  public static void deleteAllOnExit(final File file) {
+    try {
+      deleteAllOnExit(file, anyStreamFilter);
+    }
+    catch (final IOException e) {
+      throw new UncheckedIOException(e);
+    }
   }
 
   /**
@@ -194,10 +238,10 @@ public final class FileUtil {
    * @param path The path to delete recursively.
    * @param filter The filter of paths to delete, or {@code null} to match all paths.
    * @return {@code true} if and only if the file or directory was successfully deleted; {@code false} otherwise.
-   * @throws IOException If an I/O error has occurred.
+   * @throws IOException If an I/O error has occurred during {@link Filter#accept(Object)}.
    * @throws IllegalArgumentException If the {@code path} is null.
    */
-  public static boolean deleteAll(final Path path, final DirectoryStream.Filter<? super Path> filter) throws IOException {
+  public static boolean deleteAll(final Path path, final Filter<? super Path> filter) throws IOException {
     deleteAll0(path, filter != null ? filter : anyStreamFilter);
     return !Files.exists(path);
   }
