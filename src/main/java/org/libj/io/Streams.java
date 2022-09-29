@@ -375,7 +375,7 @@ public final class Streams {
   public static byte[] readUntil(final InputStream in, final char ch) throws IOException {
     assertNotNull(in);
     final ByteArrayOutputStream out = new ByteArrayOutputStream();
-    for (int c; (c = in.read()) != ch && c != -1;) // [X]
+    for (int c; (c = in.read()) != ch && c != -1;) // [ST]
       out.write(c);
 
     return out.toByteArray();
@@ -513,7 +513,7 @@ public final class Streams {
     assertNotNull(in);
     final ByteArrayOutputStream buf = new ByteArrayOutputStream(DEFAULT_SOCKET_BUFFER_SIZE);
     final byte[] data = new byte[DEFAULT_SOCKET_BUFFER_SIZE];
-    for (int length; (length = in.read(data)) != -1; buf.write(data, 0, length)); // [X]
+    for (int length; (length = in.read(data)) != -1; buf.write(data, 0, length)); // [ST]
     return buf.toByteArray();
   }
 
@@ -536,7 +536,7 @@ public final class Streams {
 
     final ByteArrayOutputStream buf = new ByteArrayOutputStream(DEFAULT_SOCKET_BUFFER_SIZE);
     final byte[] data = new byte[DEFAULT_SOCKET_BUFFER_SIZE];
-    for (int length, total = 0; (length = in.read(data, 0, Math.min(DEFAULT_SOCKET_BUFFER_SIZE, maxLength - total))) != -1;) { // [X]
+    for (int length, total = 0; (length = in.read(data, 0, Math.min(DEFAULT_SOCKET_BUFFER_SIZE, maxLength - total))) != -1;) { // [ST]
       buf.write(data, 0, length);
       if ((total += length) == maxLength)
         break;
