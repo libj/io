@@ -25,9 +25,14 @@ import java.io.InputStream;
 import java.io.OutputStream;
 import java.io.PipedInputStream;
 import java.io.PipedOutputStream;
+import java.nio.ByteBuffer;
+import java.nio.channels.Channels;
+import java.nio.channels.ReadableByteChannel;
+import java.util.Arrays;
 import java.util.concurrent.CountDownLatch;
 import java.util.function.Consumer;
 
+import org.libj.util.ArrayUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -36,7 +41,7 @@ import org.slf4j.LoggerFactory;
  */
 public final class Streams {
   private static final Logger logger = LoggerFactory.getLogger(Streams.class);
-  static final int DEFAULT_SOCKET_BUFFER_SIZE = 65536;
+  public static final int DEFAULT_SOCKET_BUFFER_SIZE = 8192;
 
   /**
    * Write a 2-byte {@code short} value to the specified {@link OutputStream} in big-endian encoding.
@@ -504,17 +509,13 @@ public final class Streams {
    * @param in The {@link InputStream} from which to read.
    * @return The {@code byte[]} containing all bytes that were read from the provided {@link InputStream} {@code in} until an end of
    *         file is detected.
-   * @throws IOException If the first byte cannot be read for any reason other than the end of the file, if the input stream has
-   *           been closed, or if some other I/O error occurs.
+   * @throws IOException If the first byte cannot be read for any reason other than the end of the file, if the {@link InputStream}
+   *           has been closed, or if some other I/O error occurs.
    * @throws IllegalArgumentException If {@code in} is null.
    * @see InputStream#read(byte[])
    */
   public static byte[] readBytes(final InputStream in) throws IOException {
-    assertNotNull(in);
-    final ByteArrayOutputStream buf = new ByteArrayOutputStream(DEFAULT_SOCKET_BUFFER_SIZE);
-    final byte[] data = new byte[DEFAULT_SOCKET_BUFFER_SIZE];
-    for (int length; (length = in.read(data)) != -1; buf.write(data, 0, length)); // [ST]
-    return buf.toByteArray();
+    return readBytes(in, Integer.MAX_VALUE);
   }
 
   /**
@@ -525,20 +526,36 @@ public final class Streams {
    * @param maxLength The maximum number of bytes to read.
    * @return The {@code byte[]} containing all bytes that were read from the provided {@link InputStream} {@code in} until an end of
    *         file is detected.
-   * @throws IOException If the first byte cannot be read for any reason other than the end of the file, if the input stream has
-   *           been closed, or if some other I/O error occurs.
+   * @throws IOException If the first byte cannot be read for any reason other than the end of the file, if the {@link InputStream}
+   *           has been closed, or if some other I/O error occurs.
    * @throws IllegalArgumentException If {@code in} is null, or if {@code maxLength} is not a positive value.
    * @see InputStream#read(byte[])
    */
   public static byte[] readBytes(final InputStream in, final int maxLength) throws IOException {
     assertNotNull(in);
-    assertPositive(maxLength);
+    final int bufferSize = Math.min(DEFAULT_SOCKET_BUFFER_SIZE, maxLength);
+    final byte[] data = new byte[bufferSize];
+    int len = 0;
+    int pos = 0;
+    for (; (len = bufferSize - pos) > 0 && (len = in.read(data, pos, len)) != -1; pos += len);
 
-    final ByteArrayOutputStream buf = new ByteArrayOutputStream(DEFAULT_SOCKET_BUFFER_SIZE);
-    final byte[] data = new byte[DEFAULT_SOCKET_BUFFER_SIZE];
-    for (int length, total = 0; (length = in.read(data, 0, Math.min(DEFAULT_SOCKET_BUFFER_SIZE, maxLength - total))) != -1;) { // [ST]
-      buf.write(data, 0, length);
-      if ((total += length) == maxLength)
+    if (pos == 0)
+      return ArrayUtil.EMPTY_ARRAY_BYTE;
+
+    if (len == -1)
+      return Arrays.copyOf(data, pos);
+
+    if (pos == maxLength || (len = in.read()) == -1)
+      return data;
+
+    final ByteArrayOutputStream buf = new ByteArrayOutputStream(Math.min(DEFAULT_SOCKET_BUFFER_SIZE * 4, maxLength));
+    buf.write(data);
+    buf.write(len);
+    ++pos;
+
+    while ((len = Math.min(DEFAULT_SOCKET_BUFFER_SIZE, maxLength - pos)) > 0 && (len = in.read(data, 0, len)) != -1) { // [ST]
+      buf.write(data, 0, Math.min(len, maxLength - pos));
+      if ((pos += len) == maxLength)
         break;
     }
 
@@ -546,13 +563,13 @@ public final class Streams {
   }
 
   /**
-   * Returns a synchronous merged {@link InputStream} receiving its input from the array of {@code streams} input streams. Data is
-   * received from each input stream in sequential order -- i.e. the first stream is read first, advancing to the second only once
-   * the first has been read fully. The order the input streams are read is the order in which they are provided in the
-   * {@code streams} argument.
+   * Returns a synchronous merged {@link InputStream} receiving its input from the array of {@code streams} {@link InputStream}s.
+   * Data is received from each {@link InputStream} in sequential order -- i.e. the first stream is read first, advancing to the
+   * second only once the first has been read fully. The order the {@link InputStream}s are read is the order in which they are
+   * provided in the {@code streams} argument.
    *
    * @param streams The streams to merge.
-   * @return A merged {@link InputStream} receiving its input from the array of {@code streams} input streams.
+   * @return A merged {@link InputStream} receiving its input from the array of {@code streams} {@link InputStream}s.
    * @throws IOException If an I/O error has occurred.
    * @throws IllegalArgumentException If {@code streams} is null, or if {@code streams.length == 0}.
    */
@@ -561,12 +578,12 @@ public final class Streams {
   }
 
   /**
-   * Returns an asynchronously merged {@link InputStream} receiving its input from the array of {@code streams} input streams. Data
-   * is received from each input stream asynchronously, and is written to the merged stream in the order data becomes available to
-   * read.
+   * Returns an asynchronously merged {@link InputStream} receiving its input from the array of {@code streams}
+   * {@link InputStream}s. Data is received from each {@link InputStream} asynchronously, and is written to the merged stream in the
+   * order data becomes available to read.
    *
    * @param streams The streams to merge.
-   * @return A merged {@link InputStream} receiving its input from the array of {@code streams} input streams.
+   * @return A merged {@link InputStream} receiving its input from the array of {@code streams} {@link InputStream}s.
    * @throws IOException If an I/O error has occurred.
    * @throws IllegalArgumentException If {@code streams.length == 0}.
    */
@@ -609,7 +626,7 @@ public final class Streams {
   }
 
   /**
-   * Pipe the {@code src} input stream to the {@code snk} output stream in the current thread.
+   * Pipe the {@code src} {@link InputStream} to the {@code snk} {@link OutputStream} in the current thread.
    *
    * @param src The source {@link InputStream}.
    * @param snk The sink {@link OutputStream}.
@@ -621,8 +638,8 @@ public final class Streams {
   }
 
   /**
-   * Asynchronously pipe the {@code src} input stream to the {@code snk} output stream. This method will spawn a dedicated thread to
-   * pipe the data.
+   * Asynchronously pipe the {@code src} {@link InputStream} to the {@code snk} {@link OutputStream}. This method will spawn a
+   * dedicated thread to pipe the data.
    *
    * @param src The source {@link InputStream}.
    * @param snk The sink {@link OutputStream}.
@@ -634,8 +651,8 @@ public final class Streams {
   }
 
   /**
-   * Asynchronously pipe the {@code src} input stream to the {@code snk} output stream. This method will spawn a dedicated thread to
-   * pipe the data.
+   * Asynchronously pipe the {@code src} {@link InputStream} to the {@code snk} {@link OutputStream}. This method will spawn a
+   * dedicated thread to pipe the data.
    *
    * @param src The source {@link InputStream}.
    * @param snk The sink {@link OutputStream}.
@@ -650,7 +667,8 @@ public final class Streams {
   }
 
   /**
-   * Tee the {@code src} input stream to the {@code snk} output stream and the returned input stream in the current thread.
+   * Tee the {@code src} {@link InputStream} to the {@code snk} {@link OutputStream} and the returned {@link InputStream} in the
+   * current thread.
    *
    * @param src The source {@link InputStream}.
    * @param snk The sink {@link OutputStream}.
@@ -663,8 +681,8 @@ public final class Streams {
   }
 
   /**
-   * Asynchronously tee the {@code src} input stream to the {@code snk} output stream and the returned input stream. This method
-   * will spawn a dedicated thread to tee the data.
+   * Asynchronously tee the {@code src} {@link InputStream} to the {@code snk} {@link OutputStream} and the returned
+   * {@link InputStream}. This method will spawn a dedicated thread to tee the data.
    *
    * @param src The source {@link InputStream}.
    * @param snk The sink {@link OutputStream}.
@@ -677,8 +695,8 @@ public final class Streams {
   }
 
   /**
-   * Asynchronously tee the {@code src} input stream to the {@code snk} output stream and the returned input stream. This method
-   * will spawn a dedicated thread to tee the data.
+   * Asynchronously tee the {@code src} {@link InputStream} to the {@code snk} {@link OutputStream} and the returned
+   * {@link InputStream}. This method will spawn a dedicated thread to tee the data.
    *
    * @param src The source {@link InputStream}.
    * @param snk The sink {@link OutputStream}.
@@ -766,6 +784,97 @@ public final class Streams {
     catch (final IOException e) {
       if (onExit != null)
         onExit.accept(e);
+    }
+  }
+
+  /**
+   * Reads all bytes from the {@code src} {@link InputStream} and writes the bytes to the {@code snk} {@link OutputStream} in the
+   * order that they are read. On return, the {@code src} {@link InputStream} will be at end of stream. This method does not close
+   * either stream.
+   * <p>
+   * This method may block indefinitely reading from the {@link InputStream}, or writing to the {@link OutputStream}. The behavior
+   * for the case where the {@link InputStream} and/or {@link OutputStream} is <i>asynchronously closed</i>, or the thread
+   * interrupted during the transfer, is highly {@link InputStream} and {@link OutputStream} specific, and therefore not specified.
+   * <p>
+   * If an I/O error occurs reading from the {@link InputStream} or writing to the {@link OutputStream}, then it may do so after
+   * some bytes have been read or written. Consequently the {@link InputStream} may not be at end of stream and one, or both,
+   * streams may be in an inconsistent state. It is strongly recommended that both streams be promptly closed if an I/O error
+   * occurs.
+   *
+   * @param src The source {@link InputStream}.
+   * @param snk The sink {@link OutputStream}.
+   * @return The number of bytes transferred.
+   * @throws IOException If an I/O error occurs.
+   * @throws IllegalArgumentException If {@code src} or {@code snk} is null.
+   */
+  public static long transferTo(final InputStream src, final OutputStream snk) throws IOException {
+    assertNotNull(src);
+    assertNotNull(snk);
+    long total = 0;
+    final byte[] buffer = new byte[DEFAULT_SOCKET_BUFFER_SIZE];
+    for (int read; (read = src.read(buffer, 0, DEFAULT_SOCKET_BUFFER_SIZE)) >= 0; total += read)
+      snk.write(buffer, 0, read);
+
+    return total;
+  }
+
+  /**
+   * Returns {@code true} if the {@link InputStream}s contain equal data (by reading from the streams) and {@code false} otherwise.
+   * Consequently, if both {@link InputStream}s are {@code null}, {@code true} is returned. Otherwise, if the first argument is not
+   * {@code
+   * null}, equality is determined by calling the {@link Object#equals equals} method of the first argument with the second argument
+   * of this method. Otherwise, {@code false} is returned.
+   *
+   * @param a An {@link InputStream} to compare with {@code b} for equality.
+   * @param b An {@link InputStream} to compare with {@code a} for equality.
+   * @return {@code true} if the {@link InputStream}s contain equal data (by reading from the streams) and {@code false} otherwise.
+   * @throws IOException If an I/O error has occurred.
+   */
+  public static Integer equal(final InputStream a, final InputStream b) throws IOException {
+    if (a == null) {
+      if (b == null)
+        return -1;
+
+      return null;
+    }
+    else if (b == null) {
+      return null;
+    }
+
+    final ReadableByteChannel ch1 = Channels.newChannel(a);
+    final ReadableByteChannel ch2 = Channels.newChannel(b);
+
+    final ByteBuffer buf1 = ByteBuffer.allocateDirect(1024);
+    final ByteBuffer buf2 = ByteBuffer.allocateDirect(1024);
+
+    int total = 0;
+    try {
+      while (true) {
+        final int n1 = ch1.read(buf1);
+        final int n2 = ch2.read(buf2);
+
+        if (n1 == -1 || n2 == -1)
+          return n1 == n2 ? total : null;
+
+        buf1.flip();
+        buf2.flip();
+
+        for (int i = 0; i < Math.min(n1, n2); i++)
+          if (buf1.get() != buf2.get())
+            return null;
+
+        total += n1;
+        buf1.compact();
+        buf2.compact();
+      }
+
+    }
+    finally {
+      if (a != null)
+        a.close();
+
+      if (b != null)
+        b.close();
     }
   }
 
