@@ -89,7 +89,7 @@ public class StreamsTest {
     if (len == 0)
       assertSame(ArrayUtil.EMPTY_ARRAY_BYTE, actual);
     else
-      for (int i = 0; i < Math.min(expected.length, len); ++i)
+      for (int i = 0; i < Math.min(expected.length, len); ++i) // [N]
         assertEquals(expected[i], actual[i]);
   }
 

@@ -537,7 +537,7 @@ public final class Streams {
     final byte[] data = new byte[bufferSize];
     int len = 0;
     int pos = 0;
-    for (; (len = bufferSize - pos) > 0 && (len = in.read(data, pos, len)) != -1; pos += len);
+    for (; (len = bufferSize - pos) > 0 && (len = in.read(data, pos, len)) != -1; pos += len); // [X]
 
     if (pos == 0)
       return ArrayUtil.EMPTY_ARRAY_BYTE;
@@ -812,7 +812,7 @@ public final class Streams {
     assertNotNull(snk);
     long total = 0;
     final byte[] buffer = new byte[DEFAULT_SOCKET_BUFFER_SIZE];
-    for (int read; (read = src.read(buffer, 0, DEFAULT_SOCKET_BUFFER_SIZE)) >= 0; total += read)
+    for (int read; (read = src.read(buffer, 0, DEFAULT_SOCKET_BUFFER_SIZE)) >= 0; total += read) // [X]
       snk.write(buffer, 0, read);
 
     return total;
@@ -859,7 +859,7 @@ public final class Streams {
         buf1.flip();
         buf2.flip();
 
-        for (int i = 0; i < Math.min(n1, n2); i++)
+        for (int i = 0; i < Math.min(n1, n2); i++) // [N]
           if (buf1.get() != buf2.get())
             return null;
 

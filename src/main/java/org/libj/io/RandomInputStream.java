@@ -53,8 +53,8 @@ public class RandomInputStream extends InputStream {
   }
 
   private void nextBytes(final byte[] b, final int off, final int len) {
-    for (int i = off; i < len;)
-      for (int rnd = random.nextInt(), n = Math.min(len - i, Integer.SIZE / Byte.SIZE); n-- > 0; rnd >>= Byte.SIZE)
+    for (int i = off; i < len;) // [N]
+      for (int rnd = random.nextInt(), n = Math.min(len - i, Integer.SIZE / Byte.SIZE); n-- > 0; rnd >>= Byte.SIZE) // [N]
         b[i++] = (byte)rnd;
   }
 
