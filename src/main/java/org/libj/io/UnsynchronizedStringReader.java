@@ -51,8 +51,8 @@ public class UnsynchronizedStringReader extends Reader {
   /**
    * Reads a single character.
    *
-   * @return The character read, or -1 if the end of the stream has been reached
-   * @throws IOException If an I/O error occurs
+   * @return The character read, or -1 if the end of the stream has been reached.
+   * @throws IOException If an I/O error has occurred.
    */
   @Override
   public int read() throws IOException {
@@ -71,7 +71,7 @@ public class UnsynchronizedStringReader extends Reader {
    * @param off {@inheritDoc}
    * @param len {@inheritDoc}
    * @return {@inheritDoc}
-   * @throws IOException {@inheritDoc}
+   * @throws IOException If an I/O error has occurred.
    */
   @Override
   public int read(final char[] cbuf, final int off, final int len) throws IOException {
@@ -92,7 +92,7 @@ public class UnsynchronizedStringReader extends Reader {
    * Skips characters. If the stream is already at its end before this method is invoked, then no characters are skipped and zero is
    * returned.
    * <p>
-   * The {@code n} parameter may be negative, even though the {@code skip} method of the {@link Reader} superclass throws an
+   * The {@code n} parameter may be negative, even though the {@link #skip(long)} method of the {@link Reader} superclass throws an
    * exception in this case. Negative values of {@code n} cause the stream to skip backwards. Negative return values indicate a skip
    * backwards. It is not possible to skip backwards past the beginning of the string.
    * <p>
@@ -117,8 +117,8 @@ public class UnsynchronizedStringReader extends Reader {
   /**
    * Tells whether this stream is ready to be read.
    *
-   * @return True if the next read() is guaranteed not to block for input
-   * @throws IOException If the stream is closed
+   * @return {@code true} if the next {@link #read()} is guaranteed not to block for input.
+   * @throws IOException If the stream is closed.
    */
   @Override
   public boolean ready() throws IOException {
@@ -139,8 +139,8 @@ public class UnsynchronizedStringReader extends Reader {
    *
    * @param readAheadLimit Limit on the number of characters that may be read while still preserving the mark. Because the stream's
    *          input comes from a string, there is no actual limit, so this argument must not be negative, but is otherwise ignored.
-   * @throws IllegalArgumentException If {@code readAheadLimit < 0}
-   * @throws IOException If an I/O error occurs
+   * @throws IllegalArgumentException If {@code readAheadLimit < 0}.
+   * @throws IOException If an I/O error has occurred.
    */
   @Override
   public void mark(final int readAheadLimit) throws IOException {
@@ -154,7 +154,7 @@ public class UnsynchronizedStringReader extends Reader {
   /**
    * Resets the stream to the most recent mark, or to the beginning of the string if it has never been marked.
    *
-   * @throws IOException If an I/O error occurs
+   * @throws IOException If an I/O error has occurred.
    */
   @Override
   public void reset() throws IOException {
@@ -163,9 +163,9 @@ public class UnsynchronizedStringReader extends Reader {
   }
 
   /**
-   * Closes the stream and releases any system resources associated with it. Once the stream has been closed, further read(),
-   * ready(), mark(), or reset() invocations will throw an IOException. Closing a previously closed stream has no effect. This
-   * method will block while there is another thread blocking on the reader.
+   * Closes the stream and releases any system resources associated with it. Once the stream has been closed, further
+   * {@link #read()}, {@link #ready()}, {@link #mark(int)}, or {@link #reset()} invocations will throw an {@link IOException}.
+   * Closing a previously closed stream has no effect. This method will block while there is another thread blocking on the reader.
    */
   @Override
   public void close() {
