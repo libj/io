@@ -16,8 +16,6 @@
 
 package org.libj.io;
 
-import static org.libj.lang.Assertions.*;
-
 import java.io.FilterReader;
 import java.io.IOException;
 import java.io.Reader;
@@ -33,10 +31,10 @@ public class CountingReader extends FilterReader {
    * Creates a new {@link CountingReader} wrapping the specified {@link Reader}.
    *
    * @param in The output stream to be wrapped.
-   * @throws IllegalArgumentException If {@code in} is null.
+   * @throws NullPointerException If {@code in} is null.
    */
   public CountingReader(final Reader in) {
-    super(assertNotNull(in));
+    super(in);
   }
 
   /**

@@ -20,7 +20,6 @@ import static org.junit.Assert.*;
 
 import java.io.CharArrayReader;
 import java.io.IOException;
-import java.io.StringReader;
 import java.nio.charset.Charset;
 import java.nio.charset.StandardCharsets;
 import java.util.Random;
@@ -42,7 +41,7 @@ public class ReaderInputStreamTest {
 
   private static void testWithSingleByteRead(final String testString, final Charset charset) throws IOException {
     final byte[] bytes = testString.getBytes(charset);
-    try (final ReaderInputStream in = new ReaderInputStream(new StringReader(testString), charset)) {
+    try (final ReaderInputStream in = new ReaderInputStream(new UnsynchronizedStringReader(testString), charset)) {
       for (int i = 0, i$ = bytes.length; i < i$; ++i) { // [A]
         final int ch = in.read();
         assertTrue(ch >= 0);
@@ -56,7 +55,7 @@ public class ReaderInputStreamTest {
 
   private static void testWithBufferedRead(final String testString, final Charset charset) throws IOException {
     final byte[] expected = testString.getBytes(charset);
-    try (final ReaderInputStream in = new ReaderInputStream(new StringReader(testString), charset)) {
+    try (final ReaderInputStream in = new ReaderInputStream(new UnsynchronizedStringReader(testString), charset)) {
       final byte[] buffer = new byte[128];
       for (int offset = 0;;) { // [N]
         int bufferOffset = random.nextInt(64);

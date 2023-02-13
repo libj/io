@@ -22,6 +22,7 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.util.Random;
 
+// FIXME: Provide javadocs.
 public class RandomInputStream extends InputStream {
   private final Random random = new Random();
   private volatile boolean closed;

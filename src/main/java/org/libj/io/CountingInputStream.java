@@ -16,16 +16,16 @@
 
 package org.libj.io;
 
-import static org.libj.lang.Assertions.*;
-
-import java.io.FilterInputStream;
 import java.io.IOException;
 import java.io.InputStream;
+import java.util.Objects;
 
 /**
  * An {@link InputStream} that counts the number of bytes read.
+ *
+ * @implNote This class is not thread safe.
  */
-public class CountingInputStream extends FilterInputStream {
+public class CountingInputStream extends DelegateInputStream {
   protected long count;
   private long mark = -1;
 
@@ -33,10 +33,10 @@ public class CountingInputStream extends FilterInputStream {
    * Creates a new {@link CountingInputStream} wrapping the specified {@link InputStream}.
    *
    * @param in The output stream to be wrapped.
-   * @throws IllegalArgumentException If {@code in} is null.
+   * @throws NullPointerException If {@code in} is null.
    */
   public CountingInputStream(final InputStream in) {
-    super(assertNotNull(in));
+    super(Objects.requireNonNull(in));
   }
 
   /**
@@ -84,27 +84,21 @@ public class CountingInputStream extends FilterInputStream {
   }
 
   @Override
-  @SuppressWarnings("sync-override")
   public void mark(final int readlimit) {
-    synchronized (in) {
-      in.mark(readlimit);
-      mark = count;
-    }
+    in.mark(readlimit);
+    mark = count;
   }
 
   @Override
-  @SuppressWarnings("sync-override")
   public void reset() throws IOException {
-    synchronized (in) {
-      if (!in.markSupported())
-        throw new IOException("Mark not supported");
+    if (!in.markSupported())
+      throw new IOException("Mark not supported");
 
-      if (mark == -1)
-        throw new IOException("Mark not set");
+    if (mark == -1)
+      throw new IOException("Mark not set");
 
-      in.reset();
-      count = mark;
-    }
+    in.reset();
+    count = mark;
   }
 
   @Override

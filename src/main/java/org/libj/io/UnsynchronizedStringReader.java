@@ -36,6 +36,7 @@ public class UnsynchronizedStringReader extends Reader {
    * Creates a new {@link UnsynchronizedStringReader}.
    *
    * @param s String providing the character stream.
+   * @throws NullPointerException If {@code s} is null.
    */
   public UnsynchronizedStringReader(final String s) {
     this.str = s;

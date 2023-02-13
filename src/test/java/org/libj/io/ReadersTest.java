@@ -19,7 +19,6 @@ package org.libj.io;
 import static org.junit.Assert.*;
 
 import java.io.IOException;
-import java.io.StringReader;
 
 import org.junit.Test;
 import org.libj.lang.Strings;
@@ -28,8 +27,8 @@ public class ReadersTest {
   @Test
   public void testReadBytes() throws IOException {
     final String string = Strings.getRandomAlphaNumeric(64);
-    assertEquals(string, Readers.readFully(new StringReader(string)));
+    assertEquals(string, Readers.readFully(new UnsynchronizedStringReader(string)));
     for (int i = 1; i < 100; ++i) // [N]
-      assertEquals(string, Readers.readFully(new StringReader(string), i));
+      assertEquals(string, Readers.readFully(new UnsynchronizedStringReader(string), i));
   }
 }

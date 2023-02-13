@@ -22,7 +22,6 @@ import java.io.ByteArrayInputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.Reader;
-import java.io.StringReader;
 
 import org.junit.Test;
 
@@ -35,7 +34,7 @@ public class UnicodeReaderTest {
   }
 
   private static void testReader(final String expected, final String test) throws IOException {
-    try (final Reader reader = new UnicodeReader(new StringReader(test))) {
+    try (final Reader reader = new UnicodeReader(new UnsynchronizedStringReader(test))) {
       final String actual = Math.random() < 0.5 ? Readers.readFully(reader) : Readers.readFully(reader, 1 + (int)(Math.random() * 50));
       assertEquals(expected, actual);
     }
@@ -51,16 +50,16 @@ public class UnicodeReaderTest {
   public void testExceptions() {
     try {
       new UnicodeReader((InputStream)null);
-      fail("Expected IllegalArgumentException");
+      fail("Expected NullPointerException");
     }
-    catch (final IllegalArgumentException e) {
+    catch (final NullPointerException e) {
     }
 
     try {
       new UnicodeReader((Reader)null);
-      fail("Expected IllegalArgumentException");
+      fail("Expected NullPointerException");
     }
-    catch (final IllegalArgumentException e) {
+    catch (final NullPointerException e) {
     }
   }
 

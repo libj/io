@@ -16,14 +16,15 @@
 
 package org.libj.io;
 
-import static org.libj.lang.Assertions.*;
-
 import java.io.BufferedOutputStream;
 import java.io.IOException;
 import java.io.OutputStream;
+import java.util.Objects;
 
 /**
  * A {@link BufferedOutputStream} that counts the number of bytes written.
+ *
+ * @implNote This class is not thread safe.
  */
 public class CountingBufferedOutputStream extends BufferedOutputStream {
   protected long count;
@@ -32,10 +33,10 @@ public class CountingBufferedOutputStream extends BufferedOutputStream {
    * Creates a new {@link CountingBufferedOutputStream} wrapping the specified {@link OutputStream}.
    *
    * @param out The output stream to be wrapped.
-   * @throws IllegalArgumentException If {@code out} is null.
+   * @throws NullPointerException If {@code out} is null.
    */
   public CountingBufferedOutputStream(final OutputStream out) {
-    super(assertNotNull(out));
+    super(Objects.requireNonNull(out));
   }
 
   /**
@@ -43,10 +44,10 @@ public class CountingBufferedOutputStream extends BufferedOutputStream {
    *
    * @param out The output stream to be wrapped.
    * @param size The buffer size.
-   * @throws IllegalArgumentException If {@code out} is null.
+   * @throws NullPointerException If {@code out} is null.
    */
   public CountingBufferedOutputStream(final OutputStream out, final int size) {
-    super(assertNotNull(out), size);
+    super(Objects.requireNonNull(out), size);
   }
 
   /**
@@ -59,7 +60,8 @@ public class CountingBufferedOutputStream extends BufferedOutputStream {
   }
 
   @Override
-  public synchronized void write(final byte[] b, final int off, final int len) throws IOException {
+  @SuppressWarnings("sync-override")
+  public void write(final byte[] b, final int off, final int len) throws IOException {
     out.write(b, off, len);
     count += len;
   }
@@ -71,7 +73,8 @@ public class CountingBufferedOutputStream extends BufferedOutputStream {
   }
 
   @Override
-  public synchronized void write(final int b) throws IOException {
+  @SuppressWarnings("sync-override")
+  public void write(final int b) throws IOException {
     out.write(b);
     ++count;
   }

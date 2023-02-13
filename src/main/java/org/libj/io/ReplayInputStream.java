@@ -16,19 +16,17 @@
 
 package org.libj.io;
 
-import static org.libj.lang.Assertions.*;
-
 import java.io.ByteArrayOutputStream;
-import java.io.FilterInputStream;
 import java.io.IOException;
 import java.io.InputStream;
+import java.util.Objects;
 
 /**
  * This class implements a FilterInputStream that allows its content to be re-read. With each call to its read methods, content is
  * written to an underlying buffer that automatically grows. This implementation supports a maximum re-readable buffer length of
  * {@link Integer#MAX_VALUE}.
  */
-public class ReplayInputStream extends FilterInputStream {
+public class ReplayInputStream extends DelegateInputStream {
   /**
    * A byte array output stream with readback APIs.
    */
@@ -40,7 +38,7 @@ public class ReplayInputStream extends FilterInputStream {
      * Creates a new {@link ReadbackByteArrayOutputStream} with the specified initial size.
      *
      * @param initialSize An int specifying the initial buffer size.
-     * @throws IllegalArgumentException If initialSize is negative.
+     * @throws IllegalArgumentException If {@code initialSize} is negative.
      */
     public ReadbackByteArrayOutputStream(final int initialSize) {
       super(initialSize);
@@ -63,7 +61,8 @@ public class ReplayInputStream extends FilterInputStream {
     }
 
     @Override
-    public synchronized void write(final int c) {
+    @SuppressWarnings("sync-override")
+    public void write(final int c) {
       if (closed)
         return;
 
@@ -72,7 +71,8 @@ public class ReplayInputStream extends FilterInputStream {
     }
 
     @Override
-    public synchronized void write(final byte[] c, final int off, final int len) {
+    @SuppressWarnings("sync-override")
+    public void write(final byte[] c, final int off, final int len) {
       if (closed)
         return;
 
@@ -94,7 +94,7 @@ public class ReplayInputStream extends FilterInputStream {
      *
      * @param b Destination buffer.
      * @return The number of bytes read, or -1 if the end of the stream has been reached.
-     * @throws IllegalArgumentException If {@code b} is null.
+     * @throws NullPointerException If {@code b} is null.
      */
     public int read(final byte[] b) {
       return read(b, 0, b.length);
@@ -109,10 +109,9 @@ public class ReplayInputStream extends FilterInputStream {
      * @return The number of bytes read, or -1 if the end of the stream has been reached.
      * @throws IndexOutOfBoundsException If {@code off} is negative, or {@code len} is negative, or {@code len} is greater than
      *           {@code b.length - off}.
-     * @throws IllegalArgumentException If {@code b} is null.
+     * @throws NullPointerException If {@code b} is null.
      */
     public int read(final byte[] b, final int off, final int len) {
-      assertNotNull(b);
       if (closed || count >= total)
         return -1;
 
@@ -225,10 +224,11 @@ public class ReplayInputStream extends FilterInputStream {
    *
    * @param in An InputStream object providing the underlying stream.
    * @param initialSize An int specifying the initial buffer size of the re-readable buffer.
-   * @throws IllegalArgumentException If {@code in} is null, or if {@code initialSize} is negative.
+   * @throws NullPointerException If {@code in} is null.
+   * @throws IllegalArgumentException If {@code initialSize} is negative.
    */
   public ReplayInputStream(final InputStream in, final int initialSize) {
-    super(assertNotNull(in));
+    super(Objects.requireNonNull(in));
     this.buffer = new ReadbackByteArrayOutputStream(initialSize);
   }
 
@@ -237,10 +237,10 @@ public class ReplayInputStream extends FilterInputStream {
    * for the re-readable buffer.
    *
    * @param in A Reader object providing the underlying stream.
-   * @throws IllegalArgumentException If {@code in} is null.
+   * @throws NullPointerException If {@code in} is null.
    */
   public ReplayInputStream(final InputStream in) {
-    super(assertNotNull(in));
+    super(Objects.requireNonNull(in));
     this.buffer = new ReadbackByteArrayOutputStream();
   }
 
@@ -275,11 +275,11 @@ public class ReplayInputStream extends FilterInputStream {
    * @param b Destination buffer.
    * @return The number of bytes read, or -1 if the end of the stream has been reached.
    * @throws IOException If an I/O error has occurred.
-   * @throws IllegalArgumentException If {@code b} is null.
+   * @throws NullPointerException If {@code b} is null.
    */
   @Override
   public int read(final byte[] b) throws IOException {
-    return read(b, 0, assertNotNull(b).length);
+    return read(b, 0, b.length);
   }
 
   /**
@@ -295,11 +295,10 @@ public class ReplayInputStream extends FilterInputStream {
    * @throws IOException If an I/O error has occurred.
    * @throws IndexOutOfBoundsException If {@code off} is negative, or {@code len} is negative, or {@code len} is greater than
    *           {@code b.length - off}.
-   * @throws IllegalArgumentException If {@code b} is null.
+   * @throws NullPointerException If {@code b} is null.
    */
   @Override
   public int read(final byte[] b, final int off, final int len) throws IOException {
-    assertNotNull(b);
     int avail = buffer.available();
     if (avail >= len)
       return buffer.read(b, off, len);
@@ -374,12 +373,9 @@ public class ReplayInputStream extends FilterInputStream {
    * @param readlimit This argument is ignored.
    */
   @Override
-  @SuppressWarnings("sync-override")
   public void mark(final int readlimit) {
-    synchronized (in) {
-      in.mark(readlimit);
-      buffer.mark();
-    }
+    in.mark(readlimit);
+    buffer.mark();
   }
 
   /**
@@ -396,7 +392,6 @@ public class ReplayInputStream extends FilterInputStream {
    * Resets the stream to a location previously marked with the {@link #mark(int)} method.
    */
   @Override
-  @SuppressWarnings("sync-override")
   public void reset() {
     buffer.reset();
   }

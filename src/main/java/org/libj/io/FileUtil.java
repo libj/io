@@ -16,7 +16,6 @@
 
 package org.libj.io;
 
-import static org.libj.lang.Assertions.*;
 import static org.libj.util.function.Throwing.*;
 
 import java.io.File;
@@ -158,10 +157,10 @@ public final class FileUtil {
    * @param onThrow {@link Consumer} to be called upon occurrence of thrown {@link Throwable} when a file is attempted to be
    *          deleted.
    * @throws IOException If an I/O error has occurred during {@link Filter#accept(Object)}.
-   * @throws IllegalArgumentException If {@code path} is null.
+   * @throws NullPointerException If {@code path} is null.
    */
   public static void deleteAllOnExit(final Path path, final Filter<? super Path> filter, final Consumer<Throwable> onThrow) throws IOException {
-    final File file = assertNotNull(path).toFile();
+    final File file = path.toFile();
     if (file.isDirectory())
       deleteOnExit(path, filter, onThrow);
     else if (filter != null && filter.accept(path))
@@ -192,10 +191,10 @@ public final class FileUtil {
    * @param onThrow {@link Consumer} to be called upon occurrence of thrown {@link Throwable} when a file is attempted to be
    *          deleted.
    * @throws IOException If an I/O error has occurred during {@link Filter#accept(Object)}.
-   * @throws IllegalArgumentException If {@code file} is null.
+   * @throws NullPointerException If {@code file} is null.
    */
   public static void deleteAllOnExit(final File file, final Filter<? super Path> filter, final Consumer<Throwable> onThrow) throws IOException {
-    final Path path = assertNotNull(file).toPath();
+    final Path path = file.toPath();
     if (file.isDirectory())
       deleteOnExit(path, filter, onThrow);
     else if (filter != null && filter.accept(path))
@@ -279,14 +278,10 @@ public final class FileUtil {
    *           {@link SecurityManager#checkRead(String) checkRead} method is invoked to check read access to the source file, the
    *           {@link SecurityManager#checkWrite(String) checkWrite} is invoked to check write access to the target file. If a
    *           symbolic link is copied the security manager is invoked to check {@link LinkPermission}{@code ("symbolic")}.
-   * @throws IllegalArgumentException If {@code source}, {@code target}, or {@code options} is null.
+   * @throws NullPointerException If {@code source}, {@code target}, or {@code options} is null.
    * @see Files#copy(Path,Path,CopyOption...)
    */
-  @SuppressWarnings("javadoc")
   public static Path copyAll(final Path source, final Path target, final CopyOption ... options) throws IOException {
-    assertNotNull(source);
-    assertNotNull(target);
-    assertNotNull(options);
     if (Files.isRegularFile(source))
       return Files.copy(source, target, options);
 
@@ -311,10 +306,11 @@ public final class FileUtil {
    *
    * @param files The files.
    * @return A {@link File} having a path that is common to the argument {@code files}.
-   * @throws IllegalArgumentException If {@code files} is null or {@code files.length == 0}.
+   * @throws NullPointerException If {@code files} is null.
+   * @throws IllegalArgumentException If {@code files.length == 0}.
    */
   public static File commonality(final File ... files) {
-    if (assertNotNull(files).length == 0)
+    if (files.length == 0)
       throw new IllegalArgumentException("files.length == 0");
 
     if (files.length > 1) {
@@ -344,10 +340,10 @@ public final class FileUtil {
    *
    * @param file The {@link File}.
    * @return The "short name" of {@code file}.
-   * @throws IllegalArgumentException If {@code file} is null.
+   * @throws NullPointerException If {@code file} is null.
    */
   public static String getShortName(final File file) {
-    final String name = assertNotNull(file).getName();
+    final String name = file.getName();
     final int index = name.lastIndexOf('.');
     return index == -1 ? name : name.substring(0, index);
   }

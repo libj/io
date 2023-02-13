@@ -16,8 +16,6 @@
 
 package org.libj.io;
 
-import static org.libj.lang.Assertions.*;
-
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.Reader;
@@ -28,6 +26,9 @@ import java.nio.charset.CharsetEncoder;
 import java.nio.charset.CoderResult;
 import java.nio.charset.CodingErrorAction;
 import java.nio.charset.IllegalCharsetNameException;
+import java.util.Objects;
+
+import org.libj.lang.Assertions;
 
 /**
  * Implementation of {@link InputStream} that reads a character stream from a {@link Reader}, and transforms it to a byte stream
@@ -89,11 +90,12 @@ public class ReaderInputStream extends InputStream {
    * @param reader The target {@link Reader}.
    * @param encoder The charset encoder.
    * @param bufferSize The size of the input buffer in number of characters.
-   * @throws IllegalArgumentException If {@code reader} or {@code encoder} is null, or if {@code bufferSize} is negative.
+   * @throws NullPointerException If {@code reader} or {@code encoder} is null.
+   * @throws IllegalArgumentException If {@code bufferSize} is negative.
    */
   public ReaderInputStream(final Reader reader, final CharsetEncoder encoder, final int bufferSize) {
-    this.reader = assertNotNull(reader);
-    this.encoder = assertNotNull(encoder);
+    this.reader = Objects.requireNonNull(reader);
+    this.encoder = Objects.requireNonNull(encoder);
     this.encoderIn = CharBuffer.allocate(bufferSize);
     this.encoderIn.flip();
     this.encoderOut = ByteBuffer.allocate(128);
@@ -158,7 +160,7 @@ public class ReaderInputStream extends InputStream {
    *
    * @param reader The target {@link Reader}.
    * @param charsetName The name of the charset encoding.
-   * @throws IllegalArgumentException If {@code reader} is null.
+   * @throws NullPointerException If {@code reader} is null.
    * @throws IllegalCharsetNameException If the given charset name is illegal.
    */
   public ReaderInputStream(final Reader reader, final String charsetName) {
@@ -197,13 +199,13 @@ public class ReaderInputStream extends InputStream {
    * @return The total number of bytes read into the buffer, or {@code -1} if there is no more data because the end of the stream
    *         has been reached.
    * @throws IOException If an I/O error has occurred.
-   * @throws IllegalArgumentException If the specified array is null.
+   * @throws NullPointerException If {@code b} is null.
    * @throws IndexOutOfBoundsException If {@code off} is negative, {@code len} is negative, or {@code len} is greater than
    *           {@code b.length - off}.
    */
   @Override
   public int read(final byte[] b, int off, int len) throws IOException {
-    assertBoundsOffsetCount("b.length", b.length, "off", off, "len", len);
+    Assertions.assertBoundsOffsetCount("b.length", b.length, "off", off, "len", len);
     if (len == 0)
       return 0;
 
@@ -233,7 +235,7 @@ public class ReaderInputStream extends InputStream {
    * @return The total number of bytes read into the buffer, or {@code -1} if there is no more data because the end of the stream
    *         has been reached.
    * @throws IOException If an I/O error has occurred.
-   * @throws IllegalArgumentException If the specified array is null.
+   * @throws NullPointerException If {@code b} is null.
    */
   @Override
   public int read(final byte[] b) throws IOException {

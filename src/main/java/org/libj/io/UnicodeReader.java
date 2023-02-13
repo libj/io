@@ -16,11 +16,10 @@
 
 package org.libj.io;
 
-import static org.libj.lang.Assertions.*;
-
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.Reader;
+import java.util.Objects;
 
 /**
  * A {@link Reader} for decoding streams of escaped unicode encoded strings (i.e. {@code "\\u48\\u65\\u6C\\u6C\\u6F"} -&gt;
@@ -80,10 +79,10 @@ public class UnicodeReader extends Reader {
    * Creates a new {@link UnicodeReader} with the specified {@link InputStream}.
    *
    * @param in The {@link InputStream}.
-   * @throws IllegalArgumentException If {@code in} is null.
+   * @throws NullPointerException If {@code in} is null.
    */
   public UnicodeReader(final InputStream in) {
-    this.in = assertNotNull(in);
+    this.in = Objects.requireNonNull(in);
     this.reader = null;
   }
 
@@ -91,11 +90,11 @@ public class UnicodeReader extends Reader {
    * Creates a new {@link UnicodeReader} with the specified {@link Reader}.
    *
    * @param reader The {@link Reader}.
-   * @throws IllegalArgumentException If {@code reader} is null.
+   * @throws NullPointerException If {@code reader} is null.
    */
   public UnicodeReader(final Reader reader) {
     this.in = null;
-    this.reader = assertNotNull(reader);
+    this.reader = Objects.requireNonNull(reader);
   }
 
   /**
@@ -117,6 +116,7 @@ public class UnicodeReader extends Reader {
    * @throws IOException If an I/O error has occurred.
    */
   private int _read() throws IOException {
+    // FIXME: Can create abstraction to remove this check.
     return in != null ? in.read() : reader.read();
   }
 
