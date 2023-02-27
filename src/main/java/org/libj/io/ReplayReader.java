@@ -275,7 +275,7 @@ public class ReplayReader extends FilterReader {
   }
 
   protected final ReadbackCharArrayWriter buffer;
-  protected volatile boolean closed;
+  protected boolean closed;
 
   /**
    * Creates a new {@link ReplayReader} using the specified {@link Reader} as its source, and the provided initial size for the
@@ -417,13 +417,11 @@ public class ReplayReader extends FilterReader {
 
     if (avail > 0) {
       buffer.skip(avail);
-      while (avail++ < n && read() != -1)
-        ;
+      while (avail++ < n && read() != -1);
       return avail;
     }
 
-    while (read() != -1 && ++avail < n)
-      ;
+    while (read() != -1 && ++avail < n);
     return avail;
   }
 
