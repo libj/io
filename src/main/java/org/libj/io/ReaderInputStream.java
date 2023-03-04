@@ -107,7 +107,7 @@ public class ReaderInputStream extends InputStream {
    *
    * @param reader The target {@link Reader}.
    * @param encoder The charset encoder.
-   * @throws IllegalArgumentException If {@code reader} or {@code encoder} is null.
+   * @throws NullPointerException If {@code reader} or {@code encoder} is null.
    */
   public ReaderInputStream(final Reader reader, final CharsetEncoder encoder) {
     this(reader, encoder, DEFAULT_BUFFER_SIZE);
@@ -120,7 +120,8 @@ public class ReaderInputStream extends InputStream {
    * @param reader The target {@link Reader}.
    * @param charset The charset encoding.
    * @param bufferSize The size of the input buffer in number of characters.
-   * @throws IllegalArgumentException If {@code reader} or {@code charset} is null, or if {@code bufferSize} is negative.
+   * @throws NullPointerException If {@code reader} or {@code charset} is null.
+   * @throws IllegalArgumentException If {@code bufferSize} is negative.
    */
   public ReaderInputStream(final Reader reader, final Charset charset, final int bufferSize) {
     this(reader, charset.newEncoder().onMalformedInput(CodingErrorAction.REPLACE).onUnmappableCharacter(CodingErrorAction.REPLACE), bufferSize);
@@ -133,7 +134,7 @@ public class ReaderInputStream extends InputStream {
    *
    * @param reader The target {@link Reader}.
    * @param charset The charset encoding.
-   * @throws IllegalArgumentException If {@code reader} or {@code charset} is null.
+   * @throws NullPointerException If {@code reader} or {@code charset} is null.
    */
   public ReaderInputStream(final Reader reader, final Charset charset) {
     this(reader, charset, DEFAULT_BUFFER_SIZE);
@@ -146,8 +147,8 @@ public class ReaderInputStream extends InputStream {
    * @param reader The target {@link Reader}.
    * @param charsetName The name of the charset encoding.
    * @param bufferSize The size of the input buffer in number of characters.
-   * @throws IllegalArgumentException If {@code reader} is null, or if {@code bufferSize} is negative.
-   * @throws IllegalCharsetNameException If the given charset name is illegal.
+   * @throws NullPointerException If {@code reader} is null.
+   * @throws IllegalArgumentException If {@code bufferSize} is negative, or the given charset name is illegal.
    */
   public ReaderInputStream(final Reader reader, final String charsetName, final int bufferSize) {
     this(reader, Charset.forName(charsetName), bufferSize);

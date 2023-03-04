@@ -29,7 +29,7 @@ public final class Readers {
    * @param reader The {@link Reader}.
    * @return A string of the remaining contents from the specified {@link Reader}.
    * @throws IOException If an I/O error has occurred.
-   * @throws IllegalArgumentException If {@code reader} is null.
+   * @throws NullPointerException If {@code reader} is null.
    */
   public static String readFully(final Reader reader) throws IOException {
     return readFully(reader, new StringBuilder()).toString();

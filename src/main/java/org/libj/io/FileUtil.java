@@ -141,7 +141,7 @@ public final class FileUtil {
    * @param path The path to delete recursively.
    * @param filter The filter of paths to delete, or {@code null} to match all paths.
    * @throws IOException If an I/O error has occurred during {@link Filter#accept(Object)}.
-   * @throws IllegalArgumentException If {@code path} is null.
+   * @throws NullPointerException If {@code path} is null.
    */
   public static void deleteAllOnExit(final Path path, final Filter<? super Path> filter) throws IOException {
     deleteOnExit(path, filter, null);
@@ -175,7 +175,7 @@ public final class FileUtil {
    * @param file The file to delete recursively.
    * @param filter The filter of paths to delete, or {@code null} to match all paths.
    * @throws IOException If an I/O error has occurred during {@link Filter#accept(Object)}.
-   * @throws IllegalArgumentException If {@code file} is null.
+   * @throws NullPointerException If {@code file} is null.
    */
   public static void deleteAllOnExit(final File file, final Filter<? super Path> filter) throws IOException {
     deleteAllOnExit(file, filter, null);
@@ -205,7 +205,7 @@ public final class FileUtil {
    * Register a path to be recursively deleted when the JVM exits.
    *
    * @param path The path to delete recursively.
-   * @throws IllegalArgumentException If the {@code path} is null.
+   * @throws NullPointerException If the {@code path} is null.
    */
   public static void deleteAllOnExit(final Path path) {
     try {
@@ -220,7 +220,7 @@ public final class FileUtil {
    * Register a path to be recursively deleted when the JVM exits.
    *
    * @param file The file to delete recursively.
-   * @throws IllegalArgumentException If the {@code file} is null.
+   * @throws NullPointerException If the {@code file} is null.
    */
   public static void deleteAllOnExit(final File file) {
     try {
@@ -238,7 +238,7 @@ public final class FileUtil {
    * @param filter The filter of paths to delete, or {@code null} to match all paths.
    * @return {@code true} if and only if the file or directory was successfully deleted; {@code false} otherwise.
    * @throws IOException If an I/O error has occurred during {@link Filter#accept(Object)}.
-   * @throws IllegalArgumentException If the {@code path} is null.
+   * @throws NullPointerException If the {@code path} is null.
    */
   public static boolean deleteAll(final Path path, final Filter<? super Path> filter) throws IOException {
     deleteAll0(path, filter != null ? filter : anyStreamFilter);
@@ -251,7 +251,7 @@ public final class FileUtil {
    * @param path The path to delete recursively.
    * @return {@code true} if and only if the file or directory was successfully deleted; {@code false} otherwise.
    * @throws IOException If an I/O error has occurred.
-   * @throws IllegalArgumentException If the {@code path} is null.
+   * @throws NullPointerException If the {@code path} is null.
    */
   public static boolean deleteAll(final Path path) throws IOException {
     deleteAll0(path, anyStreamFilter);
