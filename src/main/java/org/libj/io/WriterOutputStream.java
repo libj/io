@@ -185,7 +185,7 @@ public class WriterOutputStream extends OutputStream {
     }
 
     if (flushImmediately)
-      flush();
+      flushBuffer();
   }
 
   @Override
@@ -199,7 +199,7 @@ public class WriterOutputStream extends OutputStream {
     processInput(false);
 
     if (flushImmediately)
-      flush();
+      flushBuffer();
   }
 
   /**
@@ -209,11 +209,7 @@ public class WriterOutputStream extends OutputStream {
    */
   @Override
   public void flush() throws IOException {
-    if (decoderOut.position() <= 0)
-      return;
-
-    writer.write(decoderOut.array(), 0, decoderOut.position());
-    decoderOut.rewind();
+    flushBuffer();
     writer.flush();
   }
 
@@ -226,8 +222,16 @@ public class WriterOutputStream extends OutputStream {
   @Override
   public void close() throws IOException {
     processInput(true);
-    flush();
+    flushBuffer();
     writer.close();
+  }
+
+  protected void flushBuffer() throws IOException {
+    final int pos = decoderOut.position();
+    if (pos > 0) {
+      writer.write(decoderOut.array(), 0, pos);
+      decoderOut.rewind();
+    }
   }
 
   /**
@@ -241,7 +245,7 @@ public class WriterOutputStream extends OutputStream {
     for (CoderResult coderResult;;) {
       coderResult = decoder.decode(decoderIn, decoderOut, endOfInput);
       if (coderResult.isOverflow()) {
-        flush();
+        flushBuffer();
       }
       else if (coderResult.isUnderflow()) {
         break;
