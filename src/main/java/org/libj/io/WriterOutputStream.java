@@ -58,6 +58,7 @@ import java.util.Objects;
  */
 public class WriterOutputStream extends OutputStream {
   private static final int DEFAULT_BUFFER_SIZE = 1024;
+  private static Boolean utf16ok;
 
   private final Writer writer;
   private final CharsetDecoder decoder;
@@ -262,32 +263,36 @@ public class WriterOutputStream extends OutputStream {
   /**
    * Check if the JDK in use properly supports the given charset.
    *
-   * @param charset The charset to check the support for.
+   * @param charset The {@link Charset} which to check is supported.
    */
   private static void checkIbmJdkWithBrokenUTF16(final Charset charset) {
-    if (!"UTF-16".equals(charset.name()))
-      return;
-
-    final String TEST_STRING_2 = "v\u00e9s";
-    final byte[] bytes = TEST_STRING_2.getBytes(charset);
-
-    final CharsetDecoder charsetDecoder2 = charset.newDecoder();
-    final ByteBuffer bb2 = ByteBuffer.allocate(16);
-    final CharBuffer cb2 = CharBuffer.allocate(TEST_STRING_2.length());
-    try {
-      for (int i = 0, len = bytes.length; i < len; ++i) {
-        bb2.put(bytes[i]);
-        bb2.flip();
-        charsetDecoder2.decode(bb2, cb2, i == len - 1);
-
-        bb2.compact();
-      }
-
-      cb2.rewind();
-      if (TEST_STRING_2.equals(cb2.toString()))
+    if (utf16ok == null) {
+      if (!"UTF-16".equals(charset.name()))
         return;
+
+      final String TEST_STRING_2 = "v\u00e9s";
+      final byte[] bytes = TEST_STRING_2.getBytes(charset);
+
+      final CharsetDecoder charsetDecoder2 = charset.newDecoder();
+      final ByteBuffer bb2 = ByteBuffer.allocate(16);
+      final CharBuffer cb2 = CharBuffer.allocate(TEST_STRING_2.length());
+      try {
+        for (int i = 0, len1 = bytes.length - 1; i <= len1; ++i) {
+          bb2.put(bytes[i]);
+          bb2.flip();
+          charsetDecoder2.decode(bb2, cb2, i == len1);
+          bb2.compact();
+        }
+
+        cb2.rewind();
+        if (utf16ok = TEST_STRING_2.equals(cb2.toString()))
+          return;
+      }
+      catch (final IllegalArgumentException e) {
+      }
     }
-    catch (final IllegalArgumentException e) {
+    else if (utf16ok) {
+      return;
     }
 
     throw new UnsupportedOperationException("UTF-16 requested when running on an IBM JDK with broken UTF-16 support. Please find a JDK that supports UTF-16 if you intend to use UTF-16 with WriterOutputStream");
