@@ -16,10 +16,10 @@
 
 package org.libj.io;
 
+import static org.libj.lang.Assertions.*;
+
 import java.io.IOException;
 import java.io.Reader;
-
-import org.libj.lang.Assertions;
 
 /**
  * An <b>unsynchronized</b> character stream whose source is a string.
@@ -72,12 +72,15 @@ public class UnsynchronizedStringReader extends Reader {
    * @param off {@inheritDoc}
    * @param len {@inheritDoc}
    * @return {@inheritDoc}
+   * @throws NullPointerException If {@code cbuf} is null.
+   * @throws IndexOutOfBoundsException If {@code off} is negative, {@code len} is negative, or {@code cbuf.length} is less than
+   *           {@code off + len}.
    * @throws IOException If an I/O error has occurred.
    */
   @Override
   public int read(final char[] cbuf, final int off, final int len) throws IOException {
     ensureOpen();
-    Assertions.assertBoundsOffsetCount("cbuf.length", cbuf.length, "off", off, "len", len);
+    assertBoundsOffsetCount("cbuf.length", cbuf.length, "off", off, "len", len);
     if (len == 0)
       return 0;
 
@@ -128,7 +131,7 @@ public class UnsynchronizedStringReader extends Reader {
   }
 
   /**
-   * Tells whether this stream supports the mark() operation, which it does.
+   * Tells whether this stream supports the {@link #mark(int)} operation, which it does.
    */
   @Override
   public boolean markSupported() {
@@ -136,7 +139,7 @@ public class UnsynchronizedStringReader extends Reader {
   }
 
   /**
-   * Marks the present position in the stream. Subsequent calls to reset() will reposition the stream to this point.
+   * Marks the present position in the stream. Subsequent calls to {@link #reset()} will reposition the stream to this point.
    *
    * @param readAheadLimit Limit on the number of characters that may be read while still preserving the mark. Because the stream's
    *          input comes from a string, there is no actual limit, so this argument must not be negative, but is otherwise ignored.
@@ -145,9 +148,7 @@ public class UnsynchronizedStringReader extends Reader {
    */
   @Override
   public void mark(final int readAheadLimit) throws IOException {
-    if (readAheadLimit < 0)
-      throw new IllegalArgumentException("Read-ahead limit < 0");
-
+    assertNotNegative(readAheadLimit, "Read-ahead limit < 0");
     ensureOpen();
     mark = next;
   }

@@ -95,7 +95,7 @@ public class DelegateInputStream extends InputStream {
    * @param len The maximum number of bytes read.
    * @return The total number of bytes read into the buffer, or {@code -1} if there is no more data because the end of the stream
    *         has been reached.
-   * @throws NullPointerException If {@code b} is {@code null}.
+   * @throws NullPointerException If {@code b} is null.
    * @throws IndexOutOfBoundsException If {@code off} is negative, {@code len} is negative, or {@code len} is greater than
    *           {@code b.length - off}.
    * @throws IOException If an I/O error occurs.

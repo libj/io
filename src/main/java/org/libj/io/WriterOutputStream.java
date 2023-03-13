@@ -60,6 +60,44 @@ public class WriterOutputStream extends OutputStream {
   private static final int DEFAULT_BUFFER_SIZE = 1024;
   private static Boolean utf16ok;
 
+  /**
+   * Check whether the JDK supports the given charset.
+   *
+   * @param charset The {@link Charset} which to check is supported.
+   */
+  private static void checkIbmJdkWithBrokenUTF16(final Charset charset) {
+    if (utf16ok == null) {
+      if (!"UTF-16".equals(charset.name()))
+        return;
+
+      final String TEST_STRING_2 = "v\u00e9s";
+      final byte[] bytes = TEST_STRING_2.getBytes(charset);
+
+      final CharsetDecoder charsetDecoder2 = charset.newDecoder();
+      final ByteBuffer bb2 = ByteBuffer.allocate(16);
+      final CharBuffer cb2 = CharBuffer.allocate(TEST_STRING_2.length());
+      try {
+        for (int i = 0, len1 = bytes.length - 1; i <= len1; ++i) {
+          bb2.put(bytes[i]);
+          bb2.flip();
+          charsetDecoder2.decode(bb2, cb2, i == len1);
+          bb2.compact();
+        }
+
+        cb2.rewind();
+        if (utf16ok = TEST_STRING_2.equals(cb2.toString()))
+          return;
+      }
+      catch (final IllegalArgumentException e) {
+      }
+    }
+    else if (utf16ok) {
+      return;
+    }
+
+    throw new UnsupportedOperationException("UTF-16 requested when running on an IBM JDK with broken UTF-16 support. Please find a JDK that supports UTF-16 if you intend to use UTF-16 with WriterOutputStream");
+  }
+
   private final Writer writer;
   private final CharsetDecoder decoder;
   private final boolean flushImmediately;
@@ -85,7 +123,7 @@ public class WriterOutputStream extends OutputStream {
   public WriterOutputStream(final Writer writer, final CharsetDecoder decoder, final int bufferSize, final boolean flushImmediately) {
     checkIbmJdkWithBrokenUTF16(decoder.charset());
     this.writer = Objects.requireNonNull(writer);
-    this.decoder = decoder;
+    this.decoder = Objects.requireNonNull(decoder);
     this.flushImmediately = flushImmediately;
     this.decoderIn = ByteBuffer.allocate(bufferSize);
     this.decoderOut = CharBuffer.allocate(bufferSize);
@@ -169,7 +207,7 @@ public class WriterOutputStream extends OutputStream {
    * charset}, and a default output buffer size of {@value #DEFAULT_BUFFER_SIZE} characters. The output buffer will only be flushed
    * when it overflows or when {@link #flush()} or {@link #close()} is called.
    *
-   * @param writer the target {@link Writer}
+   * @param writer The target {@link Writer}.
    * @throws NullPointerException If the provided {@link Writer} is null.
    */
   @Deprecated
@@ -243,58 +281,12 @@ public class WriterOutputStream extends OutputStream {
    */
   private void processInput(final boolean endOfInput) throws IOException {
     decoderIn.flip(); // Prepare decoderIn for reading
-    for (CoderResult coderResult;;) {
-      coderResult = decoder.decode(decoderIn, decoderOut, endOfInput);
-      if (coderResult.isOverflow()) {
-        flushBuffer();
-      }
-      else if (coderResult.isUnderflow()) {
-        break;
-      }
-      else {
-        // The decoder is configured to replace malformed input and unmappable characters, so we should not get here.
-        throw new IOException("Unexpected coder result");
-      }
-    }
-
-    decoderIn.compact(); // Discard the bytes that have been read
-  }
-
-  /**
-   * Check if the JDK in use properly supports the given charset.
-   *
-   * @param charset The {@link Charset} which to check is supported.
-   */
-  private static void checkIbmJdkWithBrokenUTF16(final Charset charset) {
-    if (utf16ok == null) {
-      if (!"UTF-16".equals(charset.name()))
-        return;
-
-      final String TEST_STRING_2 = "v\u00e9s";
-      final byte[] bytes = TEST_STRING_2.getBytes(charset);
-
-      final CharsetDecoder charsetDecoder2 = charset.newDecoder();
-      final ByteBuffer bb2 = ByteBuffer.allocate(16);
-      final CharBuffer cb2 = CharBuffer.allocate(TEST_STRING_2.length());
-      try {
-        for (int i = 0, len1 = bytes.length - 1; i <= len1; ++i) {
-          bb2.put(bytes[i]);
-          bb2.flip();
-          charsetDecoder2.decode(bb2, cb2, i == len1);
-          bb2.compact();
-        }
-
-        cb2.rewind();
-        if (utf16ok = TEST_STRING_2.equals(cb2.toString()))
-          return;
-      }
-      catch (final IllegalArgumentException e) {
-      }
-    }
-    else if (utf16ok) {
-      return;
-    }
-
-    throw new UnsupportedOperationException("UTF-16 requested when running on an IBM JDK with broken UTF-16 support. Please find a JDK that supports UTF-16 if you intend to use UTF-16 with WriterOutputStream");
+    final CoderResult coderResult = decoder.decode(decoderIn, decoderOut, endOfInput);
+    if (coderResult.isOverflow())
+      flushBuffer();
+    else if (coderResult.isUnderflow())
+      decoderIn.compact(); // Discard the bytes that have been read
+    else
+      throw new IOException("Unexpected coder result"); // The decoder is configured to replace malformed input and unmappable characters, so we should not get here.
   }
 }
