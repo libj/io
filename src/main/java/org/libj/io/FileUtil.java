@@ -212,7 +212,7 @@ public final class FileUtil {
       deleteAllOnExit(path, anyStreamFilter);
     }
     catch (final IOException e) {
-      throw new UncheckedIOException(e);
+      throw new UncheckedIOException("Should not ever occur", e);
     }
   }
 
@@ -227,7 +227,7 @@ public final class FileUtil {
       deleteAllOnExit(file, anyStreamFilter);
     }
     catch (final IOException e) {
-      throw new UncheckedIOException(e);
+      throw new UncheckedIOException("Should not ever occur", e);
     }
   }
 
@@ -307,31 +307,31 @@ public final class FileUtil {
    * @param files The files.
    * @return A {@link File} having a path that is common to the argument {@code files}.
    * @throws NullPointerException If {@code files} is null.
-   * @throws IllegalArgumentException If {@code files.length == 0}.
+   * @throws IllegalArgumentException If the {@code files} array is empty.
    */
   public static File commonality(final File ... files) {
     if (files.length == 0)
       throw new IllegalArgumentException("files.length == 0");
 
-    if (files.length > 1) {
-      final String[] canons = new String[files.length];
-      canons[0] = StringPaths.canonicalize(files[0].getPath());
-      int length = canons[0].length();
-      for (int i = 1, i$ = files.length; i < i$; ++i) { // [A]
-        canons[i] = StringPaths.canonicalize(files[i].getPath());
-        if (canons[i].length() < length)
-          length = canons[i].length();
-      }
-
-      for (int i = 0; i < length; ++i) { // [N]
-        final char ch = canons[0].charAt(i);
-        for (int j = 1, j$ = files.length; j < j$; ++j) // [A]
-          if (ch != canons[j].charAt(i))
-            return new File(canons[0].substring(0, i));
-      }
+    final File file0 = files[0];
+    final String[] canons = new String[files.length];
+    final String canons0 = canons[0] = StringPaths.canonicalize(file0.getPath());
+    int length = canons0.length();
+    for (int i = 1, i$ = files.length; i < i$; ++i) { // [A]
+      final String canon = canons[i] = StringPaths.canonicalize(files[i].getPath());
+      final int len = canon.length();
+      if (len < length)
+        length = len;
     }
 
-    return files[0];
+    for (int i = 0; i < length; ++i) { // [N]
+      final char ch = canons0.charAt(i);
+      for (int j = 1, j$ = files.length; j < j$; ++j) // [A]
+        if (ch != canons[j].charAt(i))
+          return new File(canons0.substring(0, i));
+    }
+
+    return file0;
   }
 
   /**

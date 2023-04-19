@@ -39,8 +39,9 @@ public class SerializableInputStream extends InputStream implements Serializable
   private transient SerializableStreamStore<InputStream> serializableStreamStore;
 
   /**
-   * Creates a new {@link SerializableInputStream} with the provided {@link InputStream}, which uses {@code 2048} as the chunk size,
-   * and {@link SerializableInputStreamMemoryStore} as the {@linkplain SerializableStreamStore serializable stream store}.
+   * Creates a new {@link SerializableInputStream} with the provided {@link InputStream}, which uses
+   * {@value #DEFAULT_SERIALIZATION_CHUNK_SIZE} as the chunk size, and {@link SerializableInputStreamMemoryStore} as the
+   * {@linkplain SerializableStreamStore serializable stream store}.
    *
    * @param stream The stream to serialize.
    * @throws NullPointerException If {@code stream} is null.
