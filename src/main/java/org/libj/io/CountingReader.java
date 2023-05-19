@@ -16,14 +16,13 @@
 
 package org.libj.io;
 
-import java.io.FilterReader;
 import java.io.IOException;
 import java.io.Reader;
 
 /**
  * An {@link Reader} that counts the number of bytes read.
  */
-public class CountingReader extends FilterReader {
+public class CountingReader extends DelegateReader {
   protected long count;
   private long mark = -1;
 
@@ -35,6 +34,12 @@ public class CountingReader extends FilterReader {
    */
   public CountingReader(final Reader in) {
     super(in);
+  }
+
+  /**
+   * Creates a {@link DelegateReader} with a null {@code in}.
+   */
+  protected CountingReader() {
   }
 
   /**

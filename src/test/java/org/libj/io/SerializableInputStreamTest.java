@@ -42,7 +42,7 @@ public class SerializableInputStreamTest extends SerializableStreamTest<InputStr
       final SerializableInputStream in = (SerializableInputStream)ois.readObject();
     ) {
       final byte[] buf = new byte[2048];
-      for (int read = 0; (read = in.read(buf)) > 0; baos.write(buf, 0, read));
+      for (int read = 0; (read = in.read(buf)) > 0; baos.write(buf, 0, read)); // [X]
       return new String(baos.toByteArray());
     }
   }

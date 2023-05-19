@@ -42,7 +42,7 @@ public class SerializableReaderTest extends SerializableStreamTest<Reader> {
       final SerializableReader in = (SerializableReader)ois.readObject();
     ) {
       final char[] buf = new char[2048];
-      for (int read = 0; (read = in.read(buf)) > 0; writer.write(buf, 0, read));
+      for (int read = 0; (read = in.read(buf)) > 0; writer.write(buf, 0, read)); // [X]
       return writer.toString();
     }
   }

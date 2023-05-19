@@ -17,36 +17,52 @@
 package org.libj.io;
 
 import java.io.IOException;
-import java.io.InputStream;
+import java.io.Reader;
+import java.nio.CharBuffer;
 import java.util.Objects;
 
 /**
- * A {@link DelegateInputStream} contains some other input stream, which it uses as its basic source of data, possibly transforming
- * the data along the way or providing additional functionality. The class {@link DelegateInputStream} itself simply overrides all
- * methods of {@link InputStream} with versions that pass all requests to the contained input stream. Subclasses of
- * {@link DelegateInputStream} may further override some of these methods and may also provide additional methods and fields.
+ * A {@link DelegateReader} contains some other input stream, which it uses as its basic source of data, possibly transforming the
+ * data along the way or providing additional functionality. The class {@link DelegateReader} itself simply overrides all methods of
+ * {@link Reader} with versions that pass all requests to the contained input stream. Subclasses of {@link DelegateReader} may
+ * further override some of these methods and may also provide additional methods and fields.
  * <p>
- * This class differentiates itself from {@link java.io.FilterInputStream} by not synchronizing any of its method calls.
+ * This class differentiates itself from {@link java.io.FilterReader} by not locking any of its method calls.
  */
-public class DelegateInputStream extends InputStream {
-  /** The target input stream to be filtered. */
-  protected InputStream in;
+public class DelegateReader extends Reader {
+  /** The target reader to be filtered. */
+  protected Reader in;
 
   /**
-   * Creates a {@link DelegateInputStream} by assigning the argument {@code in} to the field {@code this.in} so as to remember it
-   * for later use.
+   * Creates a {@link DelegateReader} by assigning the argument {@code in} to the field {@code this.in} so as to remember it for
+   * later use.
    *
    * @param in The underlying input stream, or {@code null} if this instance is to be created without an underlying stream.
    * @throws NullPointerException If {@code in} is null.
    */
-  public DelegateInputStream(final InputStream in) {
+  public DelegateReader(final Reader in) {
     this.in = Objects.requireNonNull(in);
   }
 
   /**
-   * Creates a {@link DelegateInputStream} with a null {@code in}.
+   * Creates a {@link DelegateReader} with a null {@code in}.
    */
-  protected DelegateInputStream() {
+  protected DelegateReader() {
+  }
+
+  /**
+   * Tells whether this stream is ready to be read.
+   * <p>
+   * This method simply performs {@link #ready() in.ready()} and returns the result.
+   *
+   * @return {@code true} if the next {@link #read()} is guaranteed not to block for input, {@code false} otherwise. Note that
+   *         returning false does not guarantee that the next read will block.
+   * @throws IOException If an I/O error occurs.
+   * @see DelegateReader#in
+   */
+  @Override
+  public boolean ready() throws IOException {
+    return super.ready();
   }
 
   /**
@@ -58,7 +74,7 @@ public class DelegateInputStream extends InputStream {
    *
    * @return The next byte of data, or {@code -1} if the end of the stream is reached.
    * @throws IOException If an I/O error occurs.
-   * @see DelegateInputStream#in
+   * @see DelegateReader#in
    */
   @Override
   public int read() throws IOException {
@@ -66,44 +82,59 @@ public class DelegateInputStream extends InputStream {
   }
 
   /**
-   * Reads up to {@code byte.length} bytes of data from this input stream into an array of bytes. This method blocks until some
-   * input is available.
+   * Reads characters into an array. This method will block until some input is available, an I/O error occurs, or the end of the
+   * stream is reached.
    * <p>
-   * This method simply performs the call {@link #read(byte[],int,int) read(b, 0, b.length)} and returns the result. It is important
-   * that it does <i>not</i> do {@link #read(byte[]) in.read(b)} instead; certain subclasses of {@link DelegateInputStream} depend
-   * on the implementation strategy actually used.
+   * This method simply performs the call {@link #read(char[],int,int) read(b, 0, b.length)} and returns the result. It is important
+   * that it does <i>not</i> do {@link #read(char[]) in.read(b)} instead; certain subclasses of {@link DelegateReader} depend on the
+   * implementation strategy actually used.
    *
-   * @param b The buffer into which the data is read.
-   * @return The total number of bytes read into the buffer, or {@code -1} if there is no more data because the end of the stream
-   *         has been reached.
+   * @param cbuf Destination buffer.
+   * @return The number of characters read, or {@code -1} if the end of the stream has been reached.
    * @throws IOException if an I/O error occurs.
-   * @see DelegateInputStream#read(byte[], int, int)
+   * @see DelegateReader#read(char[], int, int)
    */
   @Override
-  public int read(final byte[] b) throws IOException {
-    return read(b, 0, b.length);
+  public int read(final char[] cbuf) throws IOException {
+    return read(cbuf, 0, cbuf.length);
   }
 
   /**
    * Reads up to {@code len} bytes of data from this input stream into an array of bytes. If {@code len} is not zero, the method
    * blocks until some input is available; otherwise, no bytes are read and {@code 0} is returned.
    * <p>
-   * This method simply performs {@link #read(byte[],int,int) in.read(b, off, len)} and returns the result.
+   * This method simply performs {@link #read(char[],int,int) in.read(b, off, len)} and returns the result.
    *
-   * @param b the buffer into which the data is read.
-   * @param off The start offset in the destination array {@code b}.
-   * @param len The maximum number of bytes read.
-   * @return The total number of bytes read into the buffer, or {@code -1} if there is no more data because the end of the stream
-   *         has been reached.
+   * @param cbuf Destination buffer.
+   * @param off Offset at which to start storing characters.
+   * @param len Maximum number of characters to read.
+   * @return The number of characters read, or {@code -1} if the end of the stream has been reached.
    * @throws NullPointerException If {@code b} is null.
    * @throws IndexOutOfBoundsException If {@code off} is negative, {@code len} is negative, or {@code len} is greater than
    *           {@code b.length - off}.
    * @throws IOException If an I/O error occurs.
-   * @see DelegateInputStream#in
+   * @see DelegateReader#in
    */
   @Override
-  public int read(final byte[] b, final int off, final int len) throws IOException {
-    return in.read(b, off, len);
+  public int read(final char[] cbuf, final int off, final int len) throws IOException {
+    return in.read(cbuf, off, len);
+  }
+
+  /**
+   * Attempts to read characters into the specified character buffer. The buffer is used as a repository of characters as-is: the
+   * only changes made are the results of a put operation. No flipping or rewinding of the buffer is performed.
+   * <p>
+   * This method simply performs {@link #read(CharBuffer) in.readCharBuffer)} and returns the result.
+   *
+   * @param target The buffer to read characters into.
+   * @return The number of characters added to the buffer, or {@code -1} if this source of characters is at its end.
+   * @throws IOException If an I/O error occurs.
+   * @throws NullPointerException If target is null.
+   * @throws java.nio.ReadOnlyBufferException If target is a read only buffer.
+   */
+  @Override
+  public int read(final CharBuffer target) throws IOException {
+    return super.read(target);
   }
 
   /**
@@ -122,26 +153,11 @@ public class DelegateInputStream extends InputStream {
   }
 
   /**
-   * Returns an estimate of the number of bytes that can be read (or skipped over) from this input stream without blocking by the
-   * next caller of a method for this input stream. The next caller might be the same thread or another thread. A single read or
-   * skip of this many bytes will not block, but may read or skip fewer bytes.
-   * <p>
-   * This method returns the result of {@link #in}.available().
-   *
-   * @return An estimate of the number of bytes that can be read (or skipped over) from this input stream without blocking.
-   * @throws IOException If an I/O error occurs.
-   */
-  @Override
-  public int available() throws IOException {
-    return in.available();
-  }
-
-  /**
    * Closes this input stream and releases any system resources associated with the stream. This method simply performs
    * {@link #close() in.close()}.
    *
    * @throws IOException If an I/O error occurs.
-   * @see DelegateInputStream#in
+   * @see DelegateReader#in
    */
   @Override
   public void close() throws IOException {
@@ -158,12 +174,12 @@ public class DelegateInputStream extends InputStream {
    * This method simply performs {@link #mark(int) in.mark(readlimit)}.
    *
    * @param readlimit The maximum limit of bytes that can be read before the mark position becomes invalid.
-   * @see DelegateInputStream#in
-   * @see DelegateInputStream#reset()
+   * @throws IOException If the delegated stream does not support mark(), or if some other I/O error occurs.
+   * @see DelegateReader#in
+   * @see DelegateReader#reset()
    */
   @Override
-  @SuppressWarnings("sync-override")
-  public void mark(final int readlimit) {
+  public void mark(final int readlimit) throws IOException {
     in.mark(readlimit);
   }
 
@@ -178,11 +194,10 @@ public class DelegateInputStream extends InputStream {
    * readlimit bytes, it allows the outer code to reset the stream and try another parser.
    *
    * @throws IOException If the stream has not been marked or if the mark has been invalidated.
-   * @see DelegateInputStream#in
-   * @see DelegateInputStream#mark(int)
+   * @see DelegateReader#in
+   * @see DelegateReader#mark(int)
    */
   @Override
-  @SuppressWarnings("sync-override")
   public void reset() throws IOException {
     in.reset();
   }
@@ -192,9 +207,9 @@ public class DelegateInputStream extends InputStream {
    * {@link #markSupported() in.markSupported()}.
    *
    * @return {@code true} if this stream type supports the {@link #mark(int)} and {@link #reset()} methods; {@code false} otherwise.
-   * @see DelegateInputStream#in
-   * @see InputStream#mark(int)
-   * @see InputStream#reset()
+   * @see DelegateReader#in
+   * @see Reader#mark(int)
+   * @see Reader#reset()
    */
   @Override
   public boolean markSupported() {

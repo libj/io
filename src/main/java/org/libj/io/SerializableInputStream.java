@@ -88,7 +88,7 @@ public class SerializableInputStream extends InputStream implements Serializable
     out.writeInt(serializationBufferSize);
     out.writeObject(serializableStreamStoreClass);
     final byte[] buf = new byte[serializationBufferSize];
-    for (int r; (r = stream.read(buf)) > 0; out.writeInt(r), out.write(buf, 0, r));
+    for (int r; (r = stream.read(buf)) > 0; out.writeInt(r), out.write(buf, 0, r)); // [X]
     out.writeInt(0);
     close();
   }

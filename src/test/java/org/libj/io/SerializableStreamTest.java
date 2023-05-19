@@ -31,8 +31,8 @@ abstract class SerializableStreamTest<T extends AutoCloseable> {
 
   @SafeVarargs
   final void test(final Class<? extends SerializableStreamStore<T>> ... serializationTempStores) throws Exception {
-    for (final Class<? extends SerializableStreamStore<T>> tempStore : serializationTempStores)
-      for (int chunkSize = 1; chunkSize < Short.MAX_VALUE; chunkSize *= 2)
+    for (final Class<? extends SerializableStreamStore<T>> tempStore : serializationTempStores) // [A]
+      for (int chunkSize = 1; chunkSize < Short.MAX_VALUE; chunkSize *= 2) // [N]
         test(chunkSize, tempStore);
   }
 
@@ -57,7 +57,7 @@ abstract class SerializableStreamTest<T extends AutoCloseable> {
 
   private static String createPayload() {
     final StringBuilder b = new StringBuilder();
-    for (int i = 0; i < 500; i++)
+    for (int i = 0; i < 500; i++) // [N]
       b.append(UUID.randomUUID().toString()).append('\n');
 
     return b.toString();

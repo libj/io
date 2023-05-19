@@ -91,7 +91,7 @@ public class SerializableReader extends Reader implements Serializable {
     out.writeObject(serializableStreamStoreClass);
     try (final InputStream in = new ReaderInputStream(stream, Charset.defaultCharset())) {
       final byte[] buf = new byte[serializationBufferSize];
-      for (int r; (r = in.read(buf)) > 0; out.writeInt(r), out.write(buf, 0, r));
+      for (int r; (r = in.read(buf)) > 0; out.writeInt(r), out.write(buf, 0, r)); // [X]
       out.writeInt(0);
     }
   }

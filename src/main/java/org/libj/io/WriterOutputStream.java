@@ -77,7 +77,7 @@ public class WriterOutputStream extends OutputStream {
       final ByteBuffer bb2 = ByteBuffer.allocate(16);
       final CharBuffer cb2 = CharBuffer.allocate(TEST_STRING_2.length());
       try {
-        for (int i = 0, len1 = bytes.length - 1; i <= len1; ++i) {
+        for (int i = 0, len1 = bytes.length - 1; i <= len1; ++i) { // [A]
           bb2.put(bytes[i]);
           bb2.flip();
           charsetDecoder2.decode(bb2, cb2, i == len1);
@@ -217,7 +217,7 @@ public class WriterOutputStream extends OutputStream {
 
   @Override
   public void write(final byte[] b, int off, int len) throws IOException {
-    for (int r; len > 0; len -= r, off += r) {
+    for (int r; len > 0; len -= r, off += r) { // [N]
       r = Math.min(len, decoderIn.remaining());
       decoderIn.put(b, off, r);
       processInput(false);
