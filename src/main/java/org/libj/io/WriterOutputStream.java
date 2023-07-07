@@ -277,7 +277,7 @@ public class WriterOutputStream extends OutputStream {
    * Decode the contents of the input ByteBuffer into a CharBuffer.
    *
    * @param endOfInput indicates end of input
-   * @throws IOException if an I/O error occurs.
+   * @throws IOException If an I/O error has occurred.
    */
   private void processInput(final boolean endOfInput) throws IOException {
     decoderIn.flip(); // Prepare decoderIn for reading

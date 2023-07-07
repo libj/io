@@ -30,7 +30,8 @@ public class CountingBufferedOutputStream extends BufferedOutputStream {
   protected long count;
 
   /**
-   * Creates a new {@link CountingBufferedOutputStream} wrapping the specified {@link OutputStream}.
+   * Creates a new {@link CountingBufferedOutputStream} wrapping the specified {@link OutputStream}, with a buffer size of
+   * {@code 8192}.
    *
    * @param out The output stream to be wrapped.
    * @throws NullPointerException If {@code out} is null.
@@ -40,11 +41,13 @@ public class CountingBufferedOutputStream extends BufferedOutputStream {
   }
 
   /**
-   * Creates a new {@link CountingBufferedOutputStream} wrapping the specified {@link OutputStream}.
+   * Creates a new {@link CountingBufferedOutputStream} wrapping the specified {@link OutputStream}, with the provided buffer
+   * {@code size}.
    *
    * @param out The output stream to be wrapped.
    * @param size The buffer size.
    * @throws NullPointerException If {@code out} is null.
+   * @throws IllegalArgumentException if {@code size <= 0}.
    */
   public CountingBufferedOutputStream(final OutputStream out, final int size) {
     super(Objects.requireNonNull(out), size);

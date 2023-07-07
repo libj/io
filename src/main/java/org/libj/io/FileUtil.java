@@ -45,9 +45,10 @@ import org.libj.util.StringPaths;
 public final class FileUtil {
   private static File CWD;
   private static File TEMP_DIR;
-  private static volatile ConcurrentMap<Path,ArrayList<Filter<? super Path>>> deleteOnExit;
+  private static ConcurrentMap<Path,ArrayList<Filter<? super Path>>> deleteOnExit;
   private static final AtomicBoolean deleteOnExitMutex = new AtomicBoolean();
 
+  // FIXME: This synchronization seems so rigid
   private static void deleteOnExit(final Path path, final Filter<? super Path> filter, final Consumer<Throwable> onThrow) {
     if (!deleteOnExitMutex.get()) {
       synchronized (deleteOnExitMutex) {
@@ -56,19 +57,17 @@ public final class FileUtil {
           Runtime.getRuntime().addShutdownHook(new Thread() {
             @Override
             public void run() {
-              if (deleteOnExit.size() > 0) {
-                for (final Map.Entry<Path,ArrayList<Filter<? super Path>>> entry : deleteOnExit.entrySet()) { // [S]
-                  final Path path = entry.getKey();
-                  final ArrayList<Filter<? super Path>> value = entry.getValue();
-                  for (int i = 0, i$ = value.size(); i < i$; ++i) { // [RA]
-                    final Filter<? super Path> filter = value.get(i);
-                    try {
-                      deleteAll0(path, filter);
-                    }
-                    catch (final Throwable t) {
-                      if (onThrow != null)
-                        onThrow.accept(t);
-                    }
+              for (final Map.Entry<Path,ArrayList<Filter<? super Path>>> entry : deleteOnExit.entrySet()) { // [S]
+                final Path path = entry.getKey();
+                final ArrayList<Filter<? super Path>> value = entry.getValue();
+                for (int i = 0, i$ = value.size(); i < i$; ++i) { // [RA]
+                  final Filter<? super Path> filter = value.get(i);
+                  try {
+                    deleteAll0(path, filter);
+                  }
+                  catch (final Throwable t) {
+                    if (onThrow != null)
+                      onThrow.accept(t);
                   }
                 }
               }
@@ -92,6 +91,7 @@ public final class FileUtil {
    *
    * @param pathname The pathname.
    * @return A new {@link File} with the given {@code pathname} if the {@code pathname} exists, otherwise {@code null}.
+   * @throws NullPointerException If {@code pathname} is null.
    */
   public static File existsOrNull(final String pathname) {
     final File file = new File(pathname);
@@ -154,15 +154,15 @@ public final class FileUtil {
    * @implNote Filtering will be performed at the time the JVM exists (not at the time when this method is called).
    * @param path The path to delete recursively.
    * @param filter The filter of paths to delete, or {@code null} to match all paths.
-   * @param onThrow {@link Consumer} to be called upon occurrence of thrown {@link Throwable} when a file is attempted to be
+   * @param onThrowable {@link Consumer} to be called upon occurrence of thrown {@link Throwable} when a file is attempted to be
    *          deleted.
    * @throws IOException If an I/O error has occurred during {@link Filter#accept(Object)}.
    * @throws NullPointerException If {@code path} is null.
    */
-  public static void deleteAllOnExit(final Path path, final Filter<? super Path> filter, final Consumer<Throwable> onThrow) throws IOException {
+  public static void deleteAllOnExit(final Path path, final Filter<? super Path> filter, final Consumer<Throwable> onThrowable) throws IOException {
     final File file = path.toFile();
     if (file.isDirectory())
-      deleteOnExit(path, filter, onThrow);
+      deleteOnExit(path, filter, onThrowable);
     else if (filter != null && filter.accept(path))
       file.deleteOnExit();
   }
@@ -188,15 +188,15 @@ public final class FileUtil {
    * @implNote Filtering will be performed at the time the JVM exists (not at the time when this method is called).
    * @param file The file to delete recursively.
    * @param filter The filter of paths to delete, or {@code null} to match all paths.
-   * @param onThrow {@link Consumer} to be called upon occurrence of thrown {@link Throwable} when a file is attempted to be
+   * @param onThrowable {@link Consumer} to be called upon occurrence of thrown {@link Throwable} when a file is attempted to be
    *          deleted.
    * @throws IOException If an I/O error has occurred during {@link Filter#accept(Object)}.
    * @throws NullPointerException If {@code file} is null.
    */
-  public static void deleteAllOnExit(final File file, final Filter<? super Path> filter, final Consumer<Throwable> onThrow) throws IOException {
+  public static void deleteAllOnExit(final File file, final Filter<? super Path> filter, final Consumer<Throwable> onThrowable) throws IOException {
     final Path path = file.toPath();
     if (file.isDirectory())
-      deleteOnExit(path, filter, onThrow);
+      deleteOnExit(path, filter, onThrowable);
     else if (filter != null && filter.accept(path))
       file.deleteOnExit();
   }

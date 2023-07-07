@@ -20,17 +20,39 @@ import static org.libj.lang.Assertions.*;
 
 import java.io.IOException;
 import java.io.InputStream;
+import java.util.Objects;
 import java.util.Random;
 
-// FIXME: Provide javadocs.
+/**
+ * An {@link InputStream} that generates a stream of random bytes.
+ */
 public class RandomInputStream extends InputStream {
-  private final Random random = new Random();
+  private final Random random;
   private volatile boolean closed;
   private final int length;
   private int pos;
 
-  public RandomInputStream(final int length) {
+  /**
+   * Creates a new {@link RandomInputStream} with the provided {@code length} and {@link Random} instance.
+   *
+   * @param length The length of the stream.
+   * @param random The {@link Random} instance to be used for generation of random bytes.
+   * @throws NullPointerException If {@code random} is null.
+   * @throws IllegalArgumentException If {@code length} is negative.
+   */
+  public RandomInputStream(final int length, final Random random) {
     this.length = assertNotNegative(length);
+    this.random = Objects.requireNonNull(random);
+  }
+
+  /**
+   * Creates a new {@link RandomInputStream} with the provided {@code length}.
+   *
+   * @param length The length of the stream.
+   * @throws IllegalArgumentException If {@code length} is negative.
+   */
+  public RandomInputStream(final int length) {
+    this(length, new Random());
   }
 
   private void assertNotClosed() throws IOException {

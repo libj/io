@@ -44,7 +44,7 @@ public final class Streams {
   /**
    * Write a 2-byte {@code short} value to the specified {@link OutputStream} in big-endian encoding.
    *
-   * @param out The {@link OutputStream}.
+   * @param out The {@link OutputStream} to which to write.
    * @param s The {@code short} value to write.
    * @throws IOException If an I/O error has occurred.
    * @throws NullPointerException If {@code out} is null.
@@ -56,7 +56,7 @@ public final class Streams {
   /**
    * Write a 2-byte {@code short} value to the specified {@link OutputStream}.
    *
-   * @param out The {@link OutputStream}.
+   * @param out The {@link OutputStream} to which to write.
    * @param s The {@code short} value to write.
    * @param isBigEndian If {@code true}, bytes will be written in big-endian encoding. If {@code false}, in little-endian.
    * @throws IOException If an I/O error has occurred.
@@ -76,7 +76,7 @@ public final class Streams {
   /**
    * Write a 2-byte {@code short} value to the specified {@link OutputStream} in big-endian encoding.
    *
-   * @param out The {@link OutputStream}.
+   * @param out The {@link OutputStream} to which to write.
    * @param s The {@code short} value to write.
    * @throws IOException If an I/O error has occurred.
    * @throws NullPointerException If {@code out} is null.
@@ -88,7 +88,7 @@ public final class Streams {
   /**
    * Write a 2-byte {@code short} value to the specified {@link OutputStream}.
    *
-   * @param out The {@link OutputStream}.
+   * @param out The {@link OutputStream} to which to write.
    * @param s The {@code short} value to write.
    * @param isBigEndian If {@code true}, bytes will be written in big-endian encoding. If {@code false}, in little-endian.
    * @throws IOException If an I/O error has occurred.
@@ -108,7 +108,7 @@ public final class Streams {
   /**
    * Write a 2-byte {@code char} value to the specified {@link OutputStream} in big-endian encoding.
    *
-   * @param out The {@link OutputStream}.
+   * @param out The {@link OutputStream} to which to write.
    * @param c The {@code char} value to write.
    * @throws IOException If an I/O error has occurred.
    * @throws NullPointerException If {@code out} is null.
@@ -120,7 +120,7 @@ public final class Streams {
   /**
    * Write a 2-byte {@code char} value to the specified {@link OutputStream}.
    *
-   * @param out The {@link OutputStream}.
+   * @param out The {@link OutputStream} to which to write.
    * @param c The {@code char} value to write.
    * @param isBigEndian If {@code true}, bytes will be written in big-endian encoding. If {@code false}, in little-endian.
    * @throws IOException If an I/O error has occurred.
@@ -140,7 +140,7 @@ public final class Streams {
   /**
    * Write a 2-byte {@code char} value to the {@code out} is null in big-endian encoding.
    *
-   * @param out The {@link DataOutput}.
+   * @param out The {@link DataOutput} to which to write.
    * @param c The {@code char} value to write.
    * @throws IOException If an I/O error has occurred.
    * @throws NullPointerException If {@code out} is null.
@@ -152,7 +152,7 @@ public final class Streams {
   /**
    * Write a 2-byte {@code char} value to the {@code out} is null.
    *
-   * @param out The {@link DataOutput}.
+   * @param out The {@link DataOutput} to which to write.
    * @param c The {@code char} value to write.
    * @param isBigEndian If {@code true}, bytes will be written in big-endian encoding. If {@code false}, in little-endian.
    * @throws IOException If an I/O error has occurred.
@@ -172,7 +172,7 @@ public final class Streams {
   /**
    * Write a 4-byte {@code int} value to the specified {@link OutputStream} in big-endian encoding.
    *
-   * @param out The {@link OutputStream}.
+   * @param out The {@link OutputStream} to which to write.
    * @param i The {@code int} value to write.
    * @throws IOException If an I/O error has occurred.
    * @throws NullPointerException If {@code out} is null.
@@ -184,7 +184,7 @@ public final class Streams {
   /**
    * Write a 4-byte {@code int} value to the specified {@link OutputStream}.
    *
-   * @param out The {@link OutputStream}.
+   * @param out The {@link OutputStream} to which to write.
    * @param i The {@code int} value to write.
    * @param isBigEndian If {@code true}, bytes will be written in big-endian encoding. If {@code false}, in little-endian.
    * @throws IOException If an I/O error has occurred.
@@ -208,7 +208,7 @@ public final class Streams {
   /**
    * Write a 4-byte {@code int} value to the {@code out} is null in big-endian encoding.
    *
-   * @param out The {@link DataOutput}.
+   * @param out The {@link DataOutput} to which to write.
    * @param i The {@code int} value to write.
    * @throws IOException If an I/O error has occurred.
    * @throws NullPointerException If {@code out} is null.
@@ -220,7 +220,7 @@ public final class Streams {
   /**
    * Write a 4-byte {@code int} value to the {@code out} is null.
    *
-   * @param out The {@link DataOutput}.
+   * @param out The {@link DataOutput} to which to write.
    * @param i The {@code int} value to write.
    * @param isBigEndian If {@code true}, bytes will be written in big-endian encoding. If {@code false}, in little-endian.
    * @throws IOException If an I/O error has occurred.
@@ -244,7 +244,7 @@ public final class Streams {
   /**
    * Write a 8-byte {@code long} value to the specified {@link OutputStream} in big-endian encoding.
    *
-   * @param out The {@link OutputStream}.
+   * @param out The {@link OutputStream} to which to write.
    * @param l The {@code long} value to write.
    * @throws IOException If an I/O error has occurred.
    * @throws NullPointerException If {@code out} is null.
@@ -256,7 +256,7 @@ public final class Streams {
   /**
    * Write a 8-byte {@code long} value to the specified {@link OutputStream}.
    *
-   * @param out The {@link OutputStream}.
+   * @param out The {@link OutputStream} to which to write.
    * @param l The {@code long} value to write.
    * @param isBigEndian If {@code true}, bytes will be written in big-endian encoding. If {@code false}, in little-endian.
    * @throws IOException If an I/O error has occurred.
@@ -288,7 +288,7 @@ public final class Streams {
   /**
    * Write a 8-byte {@code long} value to the {@code out} is null in big-endian encoding.
    *
-   * @param out The {@link DataOutput}.
+   * @param out The {@link DataOutput} to which to write.
    * @param l The {@code long} value to write.
    * @throws IOException If an I/O error has occurred.
    * @throws NullPointerException If {@code out} is null.
@@ -300,7 +300,7 @@ public final class Streams {
   /**
    * Write a 8-byte {@code long} value to the {@code out} is null.
    *
-   * @param out The {@link DataOutput}.
+   * @param out The {@link DataOutput} to which to write.
    * @param l The {@code long} value to write.
    * @param isBigEndian If {@code true}, bytes will be written in big-endian encoding. If {@code false}, in little-endian.
    * @throws IOException If an I/O error has occurred.
@@ -333,7 +333,7 @@ public final class Streams {
    * Write a 4-byte {@code float} value to the specified {@link OutputStream}, in the representation of the specified floating-point
    * value according to the <a href="https://en.wikipedia.org/wiki/IEEE_754">IEEE 754</a> floating-point "single format" bit layout.
    *
-   * @param out The {@link OutputStream}.
+   * @param out The {@link OutputStream} to which to write.
    * @param f The {@code float} value to write.
    * @throws IOException If an I/O error has occurred.
    * @throws NullPointerException If {@code out} is null.
@@ -347,7 +347,7 @@ public final class Streams {
    * floating-point value according to the <a href="https://en.wikipedia.org/wiki/IEEE_754">IEEE 754</a> floating-point "double
    * format" bit layout.
    *
-   * @param out The {@link OutputStream}.
+   * @param out The {@link OutputStream} to which to write.
    * @param d The {@code double} value to write.
    * @throws IOException If an I/O error has occurred.
    * @throws NullPointerException If {@code out} is null.
@@ -378,7 +378,7 @@ public final class Streams {
   /**
    * Returns a {@code short} value constructed from the 2-byte big-endian representation read from {@code in}.
    *
-   * @param in The {@link InputStream}.
+   * @param in The {@link InputStream} from which to read.
    * @return A {@code short} value constructed from the 2-byte big-endian representation read from {@code in}.
    * @throws IOException If an I/O error has occurred.
    * @throws NullPointerException If {@code in} is null.
@@ -390,7 +390,7 @@ public final class Streams {
   /**
    * Returns a {@code short} value constructed from the 2-byte {@code isBigEndian} representation read from {@code in}.
    *
-   * @param in The {@link InputStream}.
+   * @param in The {@link InputStream} from which to read.
    * @return A {@code short} value constructed from the 2-byte {@code isBigEndian} representation read from {@code in}.
    * @param isBigEndian If {@code true}, bytes will be read in big-endian encoding. If {@code false}, in little-endian.
    * @throws IOException If an I/O error has occurred.
@@ -406,7 +406,7 @@ public final class Streams {
   /**
    * Returns a {@code char} value constructed from the 2-byte unsigned big-endian representation read from {@code in}.
    *
-   * @param in The {@link InputStream}.
+   * @param in The {@link InputStream} from which to read.
    * @return A {@code short} value constructed from the 2-byte unsigned big-endian representation read from {@code in}.
    * @throws IOException If an I/O error has occurred.
    * @throws NullPointerException If {@code in} is null.
@@ -418,7 +418,7 @@ public final class Streams {
   /**
    * Returns a {@code char} value constructed from the 2-byte unsigned {@code isBigEndian} representation read from {@code in}.
    *
-   * @param in The {@link InputStream}.
+   * @param in The {@link InputStream} from which to read.
    * @return A {@code short} value constructed from the 2-byte unsigned {@code isBigEndian} representation read from {@code in}.
    * @param isBigEndian If {@code true}, bytes will be read in big-endian encoding. If {@code false}, in little-endian.
    * @throws IOException If an I/O error has occurred.
@@ -434,7 +434,7 @@ public final class Streams {
   /**
    * Returns an {@code int} value constructed from the 4-byte big-endian representation read from {@code in}.
    *
-   * @param in The {@link InputStream}.
+   * @param in The {@link InputStream} from which to read.
    * @return An {@code int} value constructed from the 4-byte big-endian representation read from {@code in}.
    * @throws IOException If an I/O error has occurred.
    * @throws NullPointerException If {@code in} is null.
@@ -446,7 +446,7 @@ public final class Streams {
   /**
    * Returns an {@code int} value constructed from the 4-byte {@code isBigEndian} representation read from {@code in}.
    *
-   * @param in The {@link InputStream}.
+   * @param in The {@link InputStream} from which to read.
    * @return An {@code int} value constructed from the 4-byte {@code isBigEndian} representation read from {@code in}.
    * @param isBigEndian If {@code true}, bytes will be read in big-endian encoding. If {@code false}, in little-endian.
    * @throws IOException If an I/O error has occurred.
@@ -462,7 +462,7 @@ public final class Streams {
   /**
    * Returns a {@code long} value constructed from the 8-byte big-endian representation read from {@code in}.
    *
-   * @param in The {@link InputStream}.
+   * @param in The {@link InputStream} from which to read.
    * @return A {@code long} value constructed from the 8-byte big-endian representation read from {@code in}.
    * @throws IOException If an I/O error has occurred.
    * @throws NullPointerException If {@code in} is null.
@@ -474,7 +474,7 @@ public final class Streams {
   /**
    * Returns a {@code long} value constructed from the 8-byte {@code isBigEndian} representation read from {@code in}.
    *
-   * @param in The {@link InputStream}.
+   * @param in The {@link InputStream} from which to read.
    * @return A {@code long} value constructed from the 8-byte {@code isBigEndian} representation read from {@code in}.
    * @param isBigEndian If {@code true}, bytes will be read in big-endian encoding. If {@code false}, in little-endian.
    * @throws IOException If an I/O error has occurred.
@@ -788,7 +788,7 @@ public final class Streams {
    * @param src The source {@link InputStream}.
    * @param snk The sink {@link OutputStream}.
    * @return The number of bytes transferred.
-   * @throws IOException If an I/O error occurs.
+   * @throws IOException If an I/O error has occurred.
    * @throws NullPointerException If {@code src} or {@code snk} is null.
    */
   public static long transferTo(final InputStream src, final OutputStream snk) throws IOException {

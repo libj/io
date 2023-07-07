@@ -57,7 +57,7 @@ public class DelegateInputStream extends InputStream {
    * This method simply performs {@link #read() in.read()} and returns the result.
    *
    * @return The next byte of data, or {@code -1} if the end of the stream is reached.
-   * @throws IOException If an I/O error occurs.
+   * @throws IOException If an I/O error has occurred.
    * @see DelegateInputStream#in
    */
   @Override
@@ -76,7 +76,7 @@ public class DelegateInputStream extends InputStream {
    * @param b The buffer into which the data is read.
    * @return The total number of bytes read into the buffer, or {@code -1} if there is no more data because the end of the stream
    *         has been reached.
-   * @throws IOException if an I/O error occurs.
+   * @throws IOException If an I/O error has occurred.
    * @see DelegateInputStream#read(byte[], int, int)
    */
   @Override
@@ -98,7 +98,7 @@ public class DelegateInputStream extends InputStream {
    * @throws NullPointerException If {@code b} is null.
    * @throws IndexOutOfBoundsException If {@code off} is negative, {@code len} is negative, or {@code len} is greater than
    *           {@code b.length - off}.
-   * @throws IOException If an I/O error occurs.
+   * @throws IOException If an I/O error has occurred.
    * @see DelegateInputStream#in
    */
   @Override
@@ -129,7 +129,7 @@ public class DelegateInputStream extends InputStream {
    * This method returns the result of {@link #in}.available().
    *
    * @return An estimate of the number of bytes that can be read (or skipped over) from this input stream without blocking.
-   * @throws IOException If an I/O error occurs.
+   * @throws IOException If an I/O error has occurred.
    */
   @Override
   public int available() throws IOException {
@@ -140,7 +140,7 @@ public class DelegateInputStream extends InputStream {
    * Closes this input stream and releases any system resources associated with the stream. This method simply performs
    * {@link #close() in.close()}.
    *
-   * @throws IOException If an I/O error occurs.
+   * @throws IOException If an I/O error has occurred.
    * @see DelegateInputStream#in
    */
   @Override

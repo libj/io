@@ -227,7 +227,7 @@ public class ReaderInputStream extends InputStream {
       return 0;
 
     int read = 0;
-    while (len > 0) {
+    do {
       if (encoderOut.hasRemaining()) {
         final int count = Math.min(encoderOut.remaining(), len);
         encoderOut.get(b, off, count);
@@ -241,6 +241,7 @@ public class ReaderInputStream extends InputStream {
           break;
       }
     }
+    while (len > 0);
 
     return read == 0 && endOfInput ? -1 : read;
   }
@@ -267,7 +268,7 @@ public class ReaderInputStream extends InputStream {
    */
   @Override
   public int read() throws IOException {
-    while (true) {
+    do {
       if (encoderOut.hasRemaining())
         return encoderOut.get() & 0xFF;
 
@@ -275,6 +276,7 @@ public class ReaderInputStream extends InputStream {
       if (endOfInput && !encoderOut.hasRemaining())
         return -1;
     }
+    while (true);
   }
 
   /**

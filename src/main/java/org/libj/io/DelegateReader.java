@@ -57,7 +57,7 @@ public class DelegateReader extends Reader {
    *
    * @return {@code true} if the next {@link #read()} is guaranteed not to block for input, {@code false} otherwise. Note that
    *         returning false does not guarantee that the next read will block.
-   * @throws IOException If an I/O error occurs.
+   * @throws IOException If an I/O error has occurred.
    * @see DelegateReader#in
    */
   @Override
@@ -73,7 +73,7 @@ public class DelegateReader extends Reader {
    * This method simply performs {@link #read() in.read()} and returns the result.
    *
    * @return The next byte of data, or {@code -1} if the end of the stream is reached.
-   * @throws IOException If an I/O error occurs.
+   * @throws IOException If an I/O error has occurred.
    * @see DelegateReader#in
    */
   @Override
@@ -91,7 +91,7 @@ public class DelegateReader extends Reader {
    *
    * @param cbuf Destination buffer.
    * @return The number of characters read, or {@code -1} if the end of the stream has been reached.
-   * @throws IOException if an I/O error occurs.
+   * @throws IOException If an I/O error has occurred.
    * @see DelegateReader#read(char[], int, int)
    */
   @Override
@@ -112,7 +112,7 @@ public class DelegateReader extends Reader {
    * @throws NullPointerException If {@code b} is null.
    * @throws IndexOutOfBoundsException If {@code off} is negative, {@code len} is negative, or {@code len} is greater than
    *           {@code b.length - off}.
-   * @throws IOException If an I/O error occurs.
+   * @throws IOException If an I/O error has occurred.
    * @see DelegateReader#in
    */
   @Override
@@ -128,7 +128,7 @@ public class DelegateReader extends Reader {
    *
    * @param target The buffer to read characters into.
    * @return The number of characters added to the buffer, or {@code -1} if this source of characters is at its end.
-   * @throws IOException If an I/O error occurs.
+   * @throws IOException If an I/O error has occurred.
    * @throws NullPointerException If target is null.
    * @throws java.nio.ReadOnlyBufferException If target is a read only buffer.
    */
@@ -156,7 +156,7 @@ public class DelegateReader extends Reader {
    * Closes this input stream and releases any system resources associated with the stream. This method simply performs
    * {@link #close() in.close()}.
    *
-   * @throws IOException If an I/O error occurs.
+   * @throws IOException If an I/O error has occurred.
    * @see DelegateReader#in
    */
   @Override
