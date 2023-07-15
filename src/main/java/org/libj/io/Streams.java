@@ -538,7 +538,7 @@ public final class Streams {
     buf.write(len);
     ++pos;
 
-    while ((len = Math.min(DEFAULT_SOCKET_BUFFER_SIZE, maxLength - pos)) > 0 && (len = in.read(data, 0, len)) != -1) { // [ST]
+    while ((len = Math.min(DEFAULT_SOCKET_BUFFER_SIZE, maxLength - pos)) > 0 && (len = in.read(data, 0, len)) != -1) {
       buf.write(data, 0, Math.min(len, maxLength - pos));
       if ((pos += len) == maxLength)
         break;
@@ -841,7 +841,7 @@ public final class Streams {
         buf1.flip();
         buf2.flip();
 
-        for (int i = 0; i < Math.min(n1, n2); i++) // [N]
+        for (int i = 0; i < Math.min(n1, n2); ++i) // [N]
           if (buf1.get() != buf2.get())
             return null;
 

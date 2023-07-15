@@ -26,8 +26,8 @@ import java.io.ObjectOutputStream;
 import java.util.UUID;
 
 abstract class SerializableStreamTest<T extends AutoCloseable> {
-  abstract T serialize(final String inputString, final int serializationBufferSize, final Class<? extends SerializableStreamStore<T>> tempStore);
-  abstract String deserialize(final ObjectInputStream ois) throws ClassNotFoundException, IOException;
+  abstract T serialize(String inputString, int serializationBufferSize, Class<? extends SerializableStreamStore<T>> tempStore);
+  abstract String deserialize(ObjectInputStream ois) throws ClassNotFoundException, IOException;
 
   @SafeVarargs
   final void test(final Class<? extends SerializableStreamStore<T>> ... serializationTempStores) throws Exception {
@@ -57,7 +57,7 @@ abstract class SerializableStreamTest<T extends AutoCloseable> {
 
   private static String createPayload() {
     final StringBuilder b = new StringBuilder();
-    for (int i = 0; i < 500; i++) // [N]
+    for (int i = 0; i < 500; ++i) // [N]
       b.append(UUID.randomUUID().toString()).append('\n');
 
     return b.toString();
