@@ -23,8 +23,8 @@ import java.io.IOException;
 import java.io.Reader;
 
 /**
- * A {@link SerializableStreamStore} for {@link Reader}s that stores deserialized data in temp files. The temp files are
- * deleted upon invocation of {@link #close()}, as well as via {@link File#deleteOnExit()} in all else cases.
+ * A {@link SerializableStreamStore} for {@link Reader}s that stores deserialized data in temp files. The temp files are deleted
+ * upon invocation of {@link #close()}, as well as via {@link File#deleteOnExit()} in all else cases.
  */
 public class SerializableReaderFileStore extends FileWriter implements SerializableStreamStore<Reader> {
   private final File file;

@@ -165,9 +165,9 @@ public class UnsynchronizedStringReader extends Reader {
   }
 
   /**
-   * Closes the stream and releases any system resources associated with it. Once the stream has been closed, further
-   * {@link #read()}, {@link #ready()}, {@link #mark(int)}, or {@link #reset()} invocations will throw an {@link IOException}.
-   * Closing a previously closed stream has no effect. This method will block while there is another thread blocking on the reader.
+   * Closes the stream and releases any system resources associated with it. Once the stream has been closed, further {@link #read()},
+   * {@link #ready()}, {@link #mark(int)}, or {@link #reset()} invocations will throw an {@link IOException}. Closing a previously
+   * closed stream has no effect. This method will block while there is another thread blocking on the reader.
    */
   @Override
   public void close() {

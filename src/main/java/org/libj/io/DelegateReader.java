@@ -34,8 +34,8 @@ public class DelegateReader extends Reader {
   protected Reader in;
 
   /**
-   * Creates a {@link DelegateReader} by assigning the argument {@code in} to the field {@code this.in} so as to remember it for
-   * later use.
+   * Creates a {@link DelegateReader} by assigning the argument {@code in} to the field {@code this.in} so as to remember it for later
+   * use.
    *
    * @param in The underlying input stream, or {@code null} if this instance is to be created without an underlying stream.
    * @throws NullPointerException If {@code in} is null.
@@ -121,8 +121,8 @@ public class DelegateReader extends Reader {
   }
 
   /**
-   * Attempts to read characters into the specified character buffer. The buffer is used as a repository of characters as-is: the
-   * only changes made are the results of a put operation. No flipping or rewinding of the buffer is performed.
+   * Attempts to read characters into the specified character buffer. The buffer is used as a repository of characters as-is: the only
+   * changes made are the results of a put operation. No flipping or rewinding of the buffer is performed.
    * <p>
    * This method simply performs {@link #read(CharBuffer) in.readCharBuffer)} and returns the result.
    *
@@ -165,8 +165,8 @@ public class DelegateReader extends Reader {
   }
 
   /**
-   * Marks the current position in this input stream. A subsequent call to the {@link #reset()} method repositions this stream at
-   * the last marked position so that subsequent reads re-read the same bytes.
+   * Marks the current position in this input stream. A subsequent call to the {@link #reset()} method repositions this stream at the
+   * last marked position so that subsequent reads re-read the same bytes.
    * <p>
    * The {@code readlimit} argument tells this input stream to allow that many bytes to be read before the mark position gets
    * invalidated.
@@ -188,10 +188,10 @@ public class DelegateReader extends Reader {
    * <p>
    * This method simply performs {@link #reset() in.reset()}.
    * <p>
-   * Stream marks are intended to be used in situations where you need to read ahead a little to see what's in the stream. Often
-   * this is most easily done by invoking some general parser. If the stream is of the type handled by the parse, it just chugs
-   * along happily. If the stream is not of that type, the parser should toss an exception when it fails. If this happens within
-   * readlimit bytes, it allows the outer code to reset the stream and try another parser.
+   * Stream marks are intended to be used in situations where you need to read ahead a little to see what's in the stream. Often this
+   * is most easily done by invoking some general parser. If the stream is of the type handled by the parse, it just chugs along
+   * happily. If the stream is not of that type, the parser should toss an exception when it fails. If this happens within readlimit
+   * bytes, it allows the outer code to reset the stream and try another parser.
    *
    * @throws IOException If the stream has not been marked or if the mark has been invalidated.
    * @see DelegateReader#in

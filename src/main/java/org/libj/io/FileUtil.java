@@ -134,8 +134,8 @@ public final class FileUtil {
   }
 
   /**
-   * Register a path to be recursively deleted when the JVM exits. When executed on exit, only the paths that pass the
-   * {@code filter} will be deleted.
+   * Register a path to be recursively deleted when the JVM exits. When executed on exit, only the paths that pass the {@code filter}
+   * will be deleted.
    *
    * @implNote Filtering will be performed at the time the JVM exists (not at the time when this method is called).
    * @param path The path to delete recursively.
@@ -148,8 +148,8 @@ public final class FileUtil {
   }
 
   /**
-   * Register a path to be recursively deleted when the JVM exits. When executed on exit, only the paths that pass the
-   * {@code filter} will be deleted.
+   * Register a path to be recursively deleted when the JVM exits. When executed on exit, only the paths that pass the {@code filter}
+   * will be deleted.
    *
    * @implNote Filtering will be performed at the time the JVM exists (not at the time when this method is called).
    * @param path The path to delete recursively.
@@ -168,8 +168,8 @@ public final class FileUtil {
   }
 
   /**
-   * Register a path to be recursively deleted when the JVM exits. When executed on exit, only the paths that pass the
-   * {@code filter} will be deleted.
+   * Register a path to be recursively deleted when the JVM exits. When executed on exit, only the paths that pass the {@code filter}
+   * will be deleted.
    *
    * @implNote Filtering will be performed at the time the JVM exists (not at the time when this method is called).
    * @param file The file to delete recursively.
@@ -182,8 +182,8 @@ public final class FileUtil {
   }
 
   /**
-   * Register a path to be recursively deleted when the JVM exits. When executed on exit, only the paths that pass the
-   * {@code filter} will be deleted.
+   * Register a path to be recursively deleted when the JVM exits. When executed on exit, only the paths that pass the {@code filter}
+   * will be deleted.
    *
    * @implNote Filtering will be performed at the time the JVM exists (not at the time when this method is called).
    * @param file The file to delete recursively.
@@ -261,8 +261,8 @@ public final class FileUtil {
   /**
    * Copy a source path to a target path recursively with the {@code options} parameter specifying how the copy is performed. If the
    * source path is a directory, this method traverses all child paths, creates child directories, and applies the {@code options}
-   * parameter to the {@link Files#copy(Path,Path,CopyOption...)} operation applied to each child file. If the source path is a
-   * file, this method delegate to {@link Files#copy(Path,Path,CopyOption...)}.
+   * parameter to the {@link Files#copy(Path,Path,CopyOption...)} operation applied to each child file. If the source path is a file,
+   * this method delegate to {@link Files#copy(Path,Path,CopyOption...)}.
    *
    * @param source The source path to copy from.
    * @param target The target path to copy to.
@@ -272,8 +272,8 @@ public final class FileUtil {
    * @throws UnsupportedOperationException If the array contains a copy option that is not supported.
    * @throws FileAlreadyExistsException If the target file exists but cannot be replaced because the
    *           {@link StandardCopyOption#REPLACE_EXISTING} option is not specified <i>(optional specific exception)</i>.
-   * @throws DirectoryNotEmptyException The {@link StandardCopyOption#REPLACE_EXISTING} option is specified but the target path
-   *           could not be deleted <i>(optional specific exception)</i>.
+   * @throws DirectoryNotEmptyException The {@link StandardCopyOption#REPLACE_EXISTING} option is specified but the target path could
+   *           not be deleted <i>(optional specific exception)</i>.
    * @throws SecurityException In the case of the default provider, and a security manager is installed, the
    *           {@link SecurityManager#checkRead(String) checkRead} method is invoked to check read access to the source file, the
    *           {@link SecurityManager#checkWrite(String) checkWrite} is invoked to check write access to the target file. If a

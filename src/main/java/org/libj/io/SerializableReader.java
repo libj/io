@@ -42,9 +42,9 @@ public class SerializableReader extends Reader implements Serializable {
   private transient SerializableStreamStore<Reader> serializableStreamStore;
 
   /**
-   * Creates a new {@link SerializableReader} with the provided {@link Reader}, which uses
-   * {@value #DEFAULT_SERIALIZATION_CHUNK_SIZE} as the chunk size, and {@link SerializableReaderMemoryStore} as the
-   * {@linkplain SerializableStreamStore serializable stream store}.
+   * Creates a new {@link SerializableReader} with the provided {@link Reader}, which uses {@value #DEFAULT_SERIALIZATION_CHUNK_SIZE}
+   * as the chunk size, and {@link SerializableReaderMemoryStore} as the {@linkplain SerializableStreamStore serializable stream
+   * store}.
    *
    * @param stream The stream to serialize.
    * @throws NullPointerException If {@code stream} is null.
@@ -56,8 +56,8 @@ public class SerializableReader extends Reader implements Serializable {
   }
 
   /**
-   * Creates a new {@link SerializableReader} with the provided {@link Reader}, {@code serializationBufferSize} as the chunk size,
-   * and {@link SerializableReaderMemoryStore} as the {@linkplain SerializableStreamStore serializable stream store}.
+   * Creates a new {@link SerializableReader} with the provided {@link Reader}, {@code serializationBufferSize} as the chunk size, and
+   * {@link SerializableReaderMemoryStore} as the {@linkplain SerializableStreamStore serializable stream store}.
    *
    * @param stream The stream to serialize.
    * @param serializationBufferSize The buffer size to be used when serializing.
@@ -71,8 +71,8 @@ public class SerializableReader extends Reader implements Serializable {
   }
 
   /**
-   * Creates a new {@link SerializableReader} with the provided {@link Reader}, {@code serializationBufferSize} as the chunk size,
-   * and {@code serializableStreamStore} as the {@linkplain SerializableStreamStore serializable stream store}.
+   * Creates a new {@link SerializableReader} with the provided {@link Reader}, {@code serializationBufferSize} as the chunk size, and
+   * {@code serializableStreamStore} as the {@linkplain SerializableStreamStore serializable stream store}.
    *
    * @param stream The stream to serialize.
    * @param serializationBufferSize The buffer size to be used when serializing.

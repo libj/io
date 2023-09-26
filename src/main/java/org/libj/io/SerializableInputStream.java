@@ -53,9 +53,8 @@ public class SerializableInputStream extends InputStream implements Serializable
   }
 
   /**
-   * Creates a new {@link SerializableInputStream} with the provided {@link InputStream}, {@code serializationBufferSize} as the
-   * chunk size, and {@link SerializableInputStreamMemoryStore} as the {@linkplain SerializableStreamStore serializable stream
-   * store}.
+   * Creates a new {@link SerializableInputStream} with the provided {@link InputStream}, {@code serializationBufferSize} as the chunk
+   * size, and {@link SerializableInputStreamMemoryStore} as the {@linkplain SerializableStreamStore serializable stream store}.
    *
    * @param stream The stream to serialize.
    * @param serializationBufferSize The buffer size to be used when serializing.
@@ -69,8 +68,8 @@ public class SerializableInputStream extends InputStream implements Serializable
   }
 
   /**
-   * Creates a new {@link SerializableInputStream} with the provided {@link InputStream}, {@code serializationBufferSize} as the
-   * chunk size, and {@code serializableStreamStore} as the {@linkplain SerializableStreamStore serializable stream store}.
+   * Creates a new {@link SerializableInputStream} with the provided {@link InputStream}, {@code serializationBufferSize} as the chunk
+   * size, and {@code serializableStreamStore} as the {@linkplain SerializableStreamStore serializable stream store}.
    *
    * @param stream The stream to serialize.
    * @param serializationBufferSize The buffer size to be used when serializing.

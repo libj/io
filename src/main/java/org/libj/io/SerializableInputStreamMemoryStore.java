@@ -28,7 +28,7 @@ public class SerializableInputStreamMemoryStore extends ByteArrayOutputStream im
   }
 
   @Override
-	public InputStream consume() {
+  public InputStream consume() {
     return new ByteArrayInputStream(toByteArray());
-	}
+  }
 }

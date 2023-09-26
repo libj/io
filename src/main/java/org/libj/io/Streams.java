@@ -343,9 +343,8 @@ public final class Streams {
   }
 
   /**
-   * Write a 8-byte {@code double} value to the specified {@link OutputStream}, in the representation of the specified
-   * floating-point value according to the <a href="https://en.wikipedia.org/wiki/IEEE_754">IEEE 754</a> floating-point "double
-   * format" bit layout.
+   * Write a 8-byte {@code double} value to the specified {@link OutputStream}, in the representation of the specified floating-point
+   * value according to the <a href="https://en.wikipedia.org/wiki/IEEE_754">IEEE 754</a> floating-point "double format" bit layout.
    *
    * @param out The {@link OutputStream} to which to write.
    * @param d The {@code double} value to write.
@@ -548,10 +547,10 @@ public final class Streams {
   }
 
   /**
-   * Returns a synchronous merged {@link InputStream} receiving its input from the array of {@code streams} {@link InputStream}s.
-   * Data is received from each {@link InputStream} in sequential order -- i.e. the first stream is read first, advancing to the
-   * second only once the first has been read fully. The order the {@link InputStream}s are read is the order in which they are
-   * provided in the {@code streams} argument.
+   * Returns a synchronous merged {@link InputStream} receiving its input from the array of {@code streams} {@link InputStream}s. Data
+   * is received from each {@link InputStream} in sequential order -- i.e. the first stream is read first, advancing to the second
+   * only once the first has been read fully. The order the {@link InputStream}s are read is the order in which they are provided in
+   * the {@code streams} argument.
    *
    * @param streams The streams to merge.
    * @return A merged {@link InputStream} receiving its input from the array of {@code streams} {@link InputStream}s.
@@ -564,9 +563,9 @@ public final class Streams {
   }
 
   /**
-   * Returns an asynchronously merged {@link InputStream} receiving its input from the array of {@code streams}
-   * {@link InputStream}s. Data is received from each {@link InputStream} asynchronously, and is written to the merged stream in the
-   * order data becomes available to read.
+   * Returns an asynchronously merged {@link InputStream} receiving its input from the array of {@code streams} {@link InputStream}s.
+   * Data is received from each {@link InputStream} asynchronously, and is written to the merged stream in the order data becomes
+   * available to read.
    *
    * @param streams The streams to merge.
    * @return A merged {@link InputStream} receiving its input from the array of {@code streams} {@link InputStream}s.
@@ -602,7 +601,7 @@ public final class Streams {
             pipedOut.close();
           }
           catch (final IOException e) {
-            if (logger.isDebugEnabled()) logger.debug(e.getMessage(), e);
+            if (logger.isDebugEnabled()) { logger.debug(e.getMessage(), e); }
           }
         });
       }
@@ -642,9 +641,9 @@ public final class Streams {
    *
    * @param src The source {@link InputStream}.
    * @param snk The sink {@link OutputStream}.
-   * @param onThreadExit Consumer function that will be called when the thread exits, either (1) due to IOException (in which case
-   *          the exception will be passed to the consumer instance), or (2) due to regular completion (in which case null will be
-   *          passed to the consumer instance).
+   * @param onThreadExit Consumer function that will be called when the thread exits, either (1) due to IOException (in which case the
+   *          exception will be passed to the consumer instance), or (2) due to regular completion (in which case null will be passed
+   *          to the consumer instance).
    * @throws IOException If an I/O error has occurred.
    * @throws NullPointerException If {@code src} is null.
    */
@@ -686,9 +685,9 @@ public final class Streams {
    *
    * @param src The source {@link InputStream}.
    * @param snk The sink {@link OutputStream}.
-   * @param onThreadExit Consumer function that will be called when the thread exits, either (1) due to IOException (in which case
-   *          the exception will be passed to the consumer instance), or (2) due to regular completion (in which case {@code null}
-   *          will be passed to the consumer instance).
+   * @param onThreadExit Consumer function that will be called when the thread exits, either (1) due to IOException (in which case the
+   *          exception will be passed to the consumer instance), or (2) due to regular completion (in which case {@code null} will be
+   *          passed to the consumer instance).
    * @return The {@link InputStream} teed from {@code src}.
    * @throws IOException If an I/O error has occurred.
    * @throws NullPointerException If {@code src} is null.
@@ -776,14 +775,13 @@ public final class Streams {
    * order that they are read. On return, the {@code src} {@link InputStream} will be at end of stream. This method does not close
    * either stream.
    * <p>
-   * This method may block indefinitely reading from the {@link InputStream}, or writing to the {@link OutputStream}. The behavior
-   * for the case where the {@link InputStream} and/or {@link OutputStream} is <i>asynchronously closed</i>, or the thread
-   * interrupted during the transfer, is highly {@link InputStream} and {@link OutputStream} specific, and therefore not specified.
+   * This method may block indefinitely reading from the {@link InputStream}, or writing to the {@link OutputStream}. The behavior for
+   * the case where the {@link InputStream} and/or {@link OutputStream} is <i>asynchronously closed</i>, or the thread interrupted
+   * during the transfer, is highly {@link InputStream} and {@link OutputStream} specific, and therefore not specified.
    * <p>
-   * If an I/O error occurs reading from the {@link InputStream} or writing to the {@link OutputStream}, then it may do so after
-   * some bytes have been read or written. Consequently the {@link InputStream} may not be at end of stream and one, or both,
-   * streams may be in an inconsistent state. It is strongly recommended that both streams be promptly closed if an I/O error
-   * occurs.
+   * If an I/O error occurs reading from the {@link InputStream} or writing to the {@link OutputStream}, then it may do so after some
+   * bytes have been read or written. Consequently the {@link InputStream} may not be at end of stream and one, or both, streams may
+   * be in an inconsistent state. It is strongly recommended that both streams be promptly closed if an I/O error occurs.
    *
    * @param src The source {@link InputStream}.
    * @param snk The sink {@link OutputStream}.

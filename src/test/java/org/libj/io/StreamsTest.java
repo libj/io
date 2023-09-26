@@ -96,20 +96,20 @@ public class StreamsTest {
   public void testReadBytes(final int len) throws IOException {
     final byte[] bytes = createRandomBytes(len);
     try (final InputStream in = new ByteArrayInputStream(bytes)) {
-//      assertBytesEqual(bytes, Streams.readBytes(in), len);
+      // assertBytesEqual(bytes, Streams.readBytes(in), len);
     }
 
     try (final InputStream in = new ByteArrayInputStream(bytes)) {
-//      assertBytesEqual(bytes, Streams.readBytes(in, len), len);
+      // assertBytesEqual(bytes, Streams.readBytes(in, len), len);
     }
 
     if (len > 0) {
       try (final InputStream in = new ByteArrayInputStream(bytes)) {
-//        assertBytesEqual(bytes, Streams.readBytes(in, 0), 0);
+        // assertBytesEqual(bytes, Streams.readBytes(in, 0), 0);
       }
 
       try (final InputStream in = new ByteArrayInputStream(bytes)) {
-//        assertBytesEqual(bytes, Streams.readBytes(in, len - 1), len - 1);
+        // assertBytesEqual(bytes, Streams.readBytes(in, len - 1), len - 1);
       }
 
       try (final InputStream in = new ByteArrayInputStream(bytes)) {

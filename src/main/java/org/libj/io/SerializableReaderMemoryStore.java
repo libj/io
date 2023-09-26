@@ -29,7 +29,7 @@ public class SerializableReaderMemoryStore extends StringWriter implements Seria
   }
 
   @Override
-	public Reader consume() {
+  public Reader consume() {
     return new StringReader(super.toString());
-	}
+  }
 }

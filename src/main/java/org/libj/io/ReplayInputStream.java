@@ -83,7 +83,8 @@ public class ReplayInputStream extends DelegateInputStream {
     /**
      * Reads a single byte from the buffer.
      *
-     * @return The byte read, as an integer in the range 0 to 255, or -1 if the end of the buffer has been reached.
+     * @return The byte read, as an integer in the range {@code 0} to {@code 255}, or {@code -1} if the end of the buffer has been
+     *         reached.
      */
     public int read() {
       return closed || count >= total ? -1 : buf[count++];
@@ -219,8 +220,8 @@ public class ReplayInputStream extends DelegateInputStream {
   private volatile boolean closed;
 
   /**
-   * Creates a new {@link ReplayInputStream} using the specified {@link InputStream} as its source, and the provided initial size
-   * for the re-readable buffer.
+   * Creates a new {@link ReplayInputStream} using the specified {@link InputStream} as its source, and the provided initial size for
+   * the re-readable buffer.
    *
    * @param in An InputStream object providing the underlying stream.
    * @param initialSize An int specifying the initial buffer size of the re-readable buffer.
@@ -233,8 +234,8 @@ public class ReplayInputStream extends DelegateInputStream {
   }
 
   /**
-   * Creates a new {@link ReplayInputStream} using the specified {@link InputStream} as its source, and default initial size of 32
-   * for the re-readable buffer.
+   * Creates a new {@link ReplayInputStream} using the specified {@link InputStream} as its source, and default initial size of 32 for
+   * the re-readable buffer.
    *
    * @param in A Reader object providing the underlying stream.
    * @throws NullPointerException If {@code in} is null.
@@ -245,12 +246,13 @@ public class ReplayInputStream extends DelegateInputStream {
   }
 
   /**
-   * Reads a single byte. If the stream's position was previously reset resulting in the buffer having a byte available to be
-   * re-read, the byte will be re-read from the underlying buffer. Otherwise, a byte will be read from the underlying stream, in
-   * which case this method will block until a byte is available, an I/O error occurs, or the end of the stream is reached.
+   * Reads a single byte. If the stream's position was previously reset resulting in the buffer having a byte available to be re-read,
+   * the byte will be re-read from the underlying buffer. Otherwise, a byte will be read from the underlying stream, in which case
+   * this method will block until a byte is available, an I/O error occurs, or the end of the stream is reached.
    *
    * @throws IOException If an I/O error has occurred.
-   * @return The byte read, as an integer in the range 0 to 255, or -1 if the end of the stream has been reached.
+   * @return The byte read, as an integer in the range {@code 0} to {@code 255}, or {@code -1} if the end of the stream has been
+   *         reached.
    */
   @Override
   public int read() throws IOException {
@@ -273,7 +275,7 @@ public class ReplayInputStream extends DelegateInputStream {
    * stream, in which case this method will block bytes are available, an I/O error occurs, or the end of the stream is reached.
    *
    * @param b Destination buffer.
-   * @return The number of bytes read, or -1 if the end of the stream has been reached.
+   * @return The number of bytes read, or {@code -1} if the end of the stream has been reached.
    * @throws IOException If an I/O error has occurred.
    * @throws NullPointerException If {@code b} is null.
    */
@@ -285,13 +287,13 @@ public class ReplayInputStream extends DelegateInputStream {
   /**
    * Reads bytes into a portion of an array. If the stream's position was previously reset resulting in the buffer having bytes
    * available to be re-read, the available bytes will be re-read from the underlying buffer. The remaining bytes will be read from
-   * the underlying stream, in which case this method will block bytes are available, an I/O error occurs, or the end of the stream
-   * is reached.
+   * the underlying stream, in which case this method will block bytes are available, an I/O error occurs, or the end of the stream is
+   * reached.
    *
    * @param b Destination buffer.
    * @param off Offset at which to start storing bytes.
    * @param len Maximum number of bytes to read.
-   * @return The number of bytes read, or -1 if the end of the stream has been reached.
+   * @return The number of bytes read, or {@code -1} if the end of the stream has been reached.
    * @throws IOException If an I/O error has occurred.
    * @throws IndexOutOfBoundsException If {@code off} is negative, or {@code len} is negative, or {@code len} is greater than
    *           {@code b.length - off}.
@@ -305,8 +307,7 @@ public class ReplayInputStream extends DelegateInputStream {
 
     if (avail > 0) {
       buffer.read(b, off, avail);
-      for (int ch; avail < b.length && (ch = read()) != -1; b[off + avail++] = (byte)ch)
-        ;
+      for (int ch; avail < b.length && (ch = read()) != -1; b[off + avail++] = (byte)ch);
       return avail;
     }
 
@@ -323,8 +324,8 @@ public class ReplayInputStream extends DelegateInputStream {
   /**
    * Skips bytes. If the stream's position was previously reset resulting in the buffer having bytes available to be re-read, the
    * available bytes will first be skipped in the underlying buffer. The remaining bytes will be read from the underlying stream,
-   * written to the buffer, and skipped, in which case this method will block bytes are available, an I/O error occurs, or the end
-   * of the stream is reached.
+   * written to the buffer, and skipped, in which case this method will block bytes are available, an I/O error occurs, or the end of
+   * the stream is reached.
    *
    * @param n The number of bytes to skip.
    * @return The number of bytes actually skipped.
@@ -342,21 +343,19 @@ public class ReplayInputStream extends DelegateInputStream {
 
     if (avail > 0) {
       buffer.skip(avail);
-      while (avail++ < n && read() != -1)
-        ;
+      while (avail++ < n && read() != -1);
       return avail;
     }
 
-    while (read() != -1 && ++avail < n)
-      ;
+    while (read() != -1 && ++avail < n);
     return avail;
   }
 
   /**
-   * Returns an estimate of the number of bytes that can be read (or skipped over) from this input stream without blocking by the
-   * next caller of a method for this input stream. If the stream's position was previously reset resulting in the buffer having
-   * bytes available to be re-read, the available bytes will contribute to the total returned by this method. The remaining estimate
-   * is delegated to the available() method of the underlying stream.
+   * Returns an estimate of the number of bytes that can be read (or skipped over) from this input stream without blocking by the next
+   * caller of a method for this input stream. If the stream's position was previously reset resulting in the buffer having bytes
+   * available to be re-read, the available bytes will contribute to the total returned by this method. The remaining estimate is
+   * delegated to the available() method of the underlying stream.
    *
    * @return An estimate of the number of bytes that can be read (or skipped over) from this input stream without blocking.
    * @throws IOException If an I/O error has occurred.
@@ -397,9 +396,9 @@ public class ReplayInputStream extends DelegateInputStream {
   }
 
   /**
-   * Closes the stream and releases any system resources associated with it. Once the stream has been closed, further
-   * {@link #read()}, {@link #available()}, {@link #mark(int)}, {@link #reset()}, or {@link #skip(long)} invocations will throw an
-   * {@link IOException}. Closing a previously closed stream has no effect.
+   * Closes the stream and releases any system resources associated with it. Once the stream has been closed, further {@link #read()},
+   * {@link #available()}, {@link #mark(int)}, {@link #reset()}, or {@link #skip(long)} invocations will throw an {@link IOException}.
+   * Closing a previously closed stream has no effect.
    *
    * @throws IOException If an I/O error has occurred.
    */

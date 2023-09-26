@@ -130,9 +130,9 @@ public class WriterOutputStream extends OutputStream {
   }
 
   /**
-   * Creates a new {@link WriterOutputStream} with the target {@link Writer}, {@link CharsetDecoder}, and a default output buffer
-   * size of {@value #DEFAULT_BUFFER_SIZE} characters. The output buffer will only be flushed when it overflows or when
-   * {@link #flush()} or {@link #close()} is called.
+   * Creates a new {@link WriterOutputStream} with the target {@link Writer}, {@link CharsetDecoder}, and a default output buffer size
+   * of {@value #DEFAULT_BUFFER_SIZE} characters. The output buffer will only be flushed when it overflows or when {@link #flush()} or
+   * {@link #close()} is called.
    *
    * @param writer The target {@link Writer}.
    * @param decoder The {@link CharsetDecoder}.

@@ -144,9 +144,8 @@ public class ReaderInputStream extends InputStream {
   }
 
   /**
-   * Construct a new {@link ReaderInputStream} with the specified {@link Reader}, {@link Charset}, and a default input buffer size
-   * of 1024 characters. Characters from the specified reader that do not map or are invalid to the provided encoder will be
-   * replaced.
+   * Construct a new {@link ReaderInputStream} with the specified {@link Reader}, {@link Charset}, and a default input buffer size of
+   * 1024 characters. Characters from the specified reader that do not map or are invalid to the provided encoder will be replaced.
    *
    * @param reader The target {@link Reader}.
    * @param charset The charset encoding.
@@ -171,9 +170,8 @@ public class ReaderInputStream extends InputStream {
   }
 
   /**
-   * Construct a new {@link ReaderInputStream} with the specified {@link Reader}, {@link Charset}, and a default input buffer size
-   * of 1024 characters. Characters from the specified reader that do not map or are invalid to the provided encoder will be
-   * replaced.
+   * Construct a new {@link ReaderInputStream} with the specified {@link Reader}, {@link Charset}, and a default input buffer size of
+   * 1024 characters. Characters from the specified reader that do not map or are invalid to the provided encoder will be replaced.
    *
    * @param reader The target {@link Reader}.
    * @param charsetName The name of the charset encoding.
@@ -213,8 +211,8 @@ public class ReaderInputStream extends InputStream {
    * @param b The buffer into which the data is read.
    * @param off The start offset in array {@code b} at which the data is written.
    * @param len The maximum number of bytes to read.
-   * @return The total number of bytes read into the buffer, or {@code -1} if there is no more data because the end of the stream
-   *         has been reached.
+   * @return The total number of bytes read into the buffer, or {@code -1} if there is no more data because the end of the stream has
+   *         been reached.
    * @throws IOException If an I/O error has occurred.
    * @throws NullPointerException If {@code b} is null.
    * @throws IndexOutOfBoundsException If {@code off} is negative, {@code len} is negative, or {@code len} is greater than
@@ -250,8 +248,8 @@ public class ReaderInputStream extends InputStream {
    * Read the specified number of bytes into an array.
    *
    * @param b The buffer into which the data is read.
-   * @return The total number of bytes read into the buffer, or {@code -1} if there is no more data because the end of the stream
-   *         has been reached.
+   * @return The total number of bytes read into the buffer, or {@code -1} if there is no more data because the end of the stream has
+   *         been reached.
    * @throws IOException If an I/O error has occurred.
    * @throws NullPointerException If {@code b} is null.
    */
