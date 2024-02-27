@@ -1,16 +1,19 @@
 # Changes by Version
 
-## [v0.7.9-SNAPSHOT](https://github.com/libj/util/compare/f31854f80822de2c202c6c6920ea25fc86413e7d..HEAD)
+## [v0.8.1-SNAPSHOT](https://github.com/libj/util/compare/eb31a1f5d2ee0d960ff708cdb8b780e7acbb77c7..HEAD)
+
+## [v0.7.9](https://github.com/libj/util/compare/f31854f80822de2c202c6c6920ea25fc86413e7d..eb31a1f5d2ee0d960ff708cdb8b780e7acbb77c7) (2024-02-27)
+* #9 `flush()` in `Streams.transferTo`
 
 ## [v0.7.8](https://github.com/libj/io/compare/fd4e15b7912455c645fb4f288e2ef6117327a2e3..f31854f80822de2c202c6c6920ea25fc86413e7d) (2023-09-20)
-* #8 Implement DelegateReader
-* #7 Implement SerializableInputStream and SerializableReader
-* #6 Implement WriterOutputStream
-* #5 Implement UnsynchronizedStringReader
-* #4 Implement CountingBufferedOutputStream
+* #8 Implement `DelegateReader`
+* #7 Implement `SerializableInputStream` and `SerializableReader`
+* #6 Implement `WriterOutputStream`
+* #5 Implement `UnsynchronizedStringReader`
+* #4 Implement `CountingBufferedOutputStream`
 * #3 Transition to GitHub Actions
-* #2 FileUtil.deleteAllOnExit() not working for directories
-* #1 Implement FileUtil.existsOrNull
+* #2 `FileUtil.deleteAllOnExit()` not working for directories
+* #1 Implement `FileUtil.existsOrNull`
 
 ## [v0.7.7](https://github.com/libj/io/compare/c487802c095868ea65620a3db2eef6fb77930b5e..fd4e15b7912455c645fb4f288e2ef6117327a2e3) (2020-05-23)
 * Add `Charsets` utility class.
