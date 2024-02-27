@@ -795,6 +795,7 @@ public final class Streams {
     for (int read; (read = src.read(buffer, 0, DEFAULT_SOCKET_BUFFER_SIZE)) >= 0; total += read) // [X]
       snk.write(buffer, 0, read);
 
+    snk.flush();
     return total;
   }
 
