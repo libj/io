@@ -24,30 +24,38 @@ import java.util.Objects;
  * {@link OutputStream} that delegates its method calls to an array of output streams.
  */
 public class TeeOutputStream extends OutputStream {
+  private final OutputStream stream;
   private final OutputStream[] streams;
+  private final int len;
 
   /**
    * Construct a new {@link TeeOutputStream} with the specified {@link OutputStream} instances.
    * <p>
    * Streams will be written to in the order of the provided array.
    *
-   * @param streams The streams to which this stream's method calls will be delegated.
-   * @throws NullPointerException If {@code streams} is null or empty, or if any stream in the {@code streams} array is null.
+   * @param stream The first stream to which this stream's method calls will be delegated.
+   * @param streams The other streams to which this stream's method calls will be delegated.
+   * @throws NullPointerException If {@code stream} or {@code streams} is null, or if any stream in the {@code streams} array is null.
    */
-  public TeeOutputStream(final OutputStream ... streams) {
-    if (Objects.requireNonNull(streams).length == 0)
-      throw new IllegalArgumentException("Empty array");
-
-    for (int i = 0, i$ = streams.length; i < i$; ++i) // [A]
-      Objects.requireNonNull(streams[i], "member at index " + i + " is null");
-
+  public TeeOutputStream(final OutputStream stream, final OutputStream ... streams) {
+    this.stream = Objects.requireNonNull(stream, "member at index 0 is null");;
     this.streams = streams;
+    this.len = streams.length;
+    for (int i = 0; i < len; ++i) // [A]
+      Objects.requireNonNull(streams[i], "member at index " + (i + 1) + " is null");
   }
 
   @Override
   public void write(final int b) throws IOException {
     IOException exception = null;
-    for (int i = 0, i$ = streams.length; i < i$; ++i) { // [A]
+    try {
+      stream.write(b);
+    }
+    catch (final IOException e) {
+      exception = e;
+    }
+
+    for (int i = 0; i < len; ++i) { // [A]
       try {
         streams[i].write(b);
       }
@@ -66,7 +74,14 @@ public class TeeOutputStream extends OutputStream {
   @Override
   public void write(final byte[] b) throws IOException {
     IOException exception = null;
-    for (int i = 0, i$ = streams.length; i < i$; ++i) { // [A]
+    try {
+      stream.write(b);
+    }
+    catch (final IOException e) {
+      exception = e;
+    }
+
+    for (int i = 0; i < len; ++i) { // [A]
       try {
         streams[i].write(b);
       }
@@ -85,7 +100,14 @@ public class TeeOutputStream extends OutputStream {
   @Override
   public void write(final byte[] b, final int off, final int len) throws IOException {
     IOException exception = null;
-    for (int i = 0, i$ = streams.length; i < i$; ++i) { // [A]
+    try {
+      stream.write(b, off, len);
+    }
+    catch (final IOException e) {
+      exception = e;
+    }
+
+    for (int i = 0; i < len; ++i) { // [A]
       try {
         streams[i].write(b, off, len);
       }
@@ -104,7 +126,14 @@ public class TeeOutputStream extends OutputStream {
   @Override
   public void flush() throws IOException {
     IOException exception = null;
-    for (int i = 0, i$ = streams.length; i < i$; ++i) { // [A]
+    try {
+      stream.flush();
+    }
+    catch (final IOException e) {
+      exception = e;
+    }
+
+    for (int i = 0; i < len; ++i) { // [A]
       try {
         streams[i].flush();
       }
@@ -123,7 +152,14 @@ public class TeeOutputStream extends OutputStream {
   @Override
   public void close() throws IOException {
     IOException exception = null;
-    for (int i = 0, i$ = streams.length; i < i$; ++i) { // [A]
+    try {
+      stream.close();
+    }
+    catch (final IOException e) {
+      exception = e;
+    }
+
+    for (int i = 0; i < len; ++i) { // [A]
       try {
         streams[i].close();
       }

@@ -48,7 +48,6 @@ public final class FileUtil {
   private static ConcurrentMap<Path,ArrayList<Filter<? super Path>>> deleteOnExit;
   private static final AtomicBoolean deleteOnExitMutex = new AtomicBoolean();
 
-  // FIXME: This synchronization seems so rigid
   private static void deleteOnExit(final Path path, final Filter<? super Path> filter, final Consumer<Throwable> onThrow) {
     if (!deleteOnExitMutex.get()) {
       synchronized (deleteOnExitMutex) {
@@ -116,7 +115,7 @@ public final class FileUtil {
     return TEMP_DIR == null ? TEMP_DIR = new File(System.getProperty("java.io.tmpdir")) : TEMP_DIR;
   }
 
-  private static final Filter<Path> anyStreamFilter = p -> true;
+  private static final Filter<Path> anyStreamFilter = (final Path p) -> true;
 
   private static void deleteAll0(final Path path, final Filter<? super Path> filter) throws IOException {
     if (Files.isDirectory(path)) {
@@ -290,7 +289,7 @@ public final class FileUtil {
         if (options[i] == StandardCopyOption.REPLACE_EXISTING && !deleteAll(target))
           throw new DirectoryNotEmptyException(target.toString());
 
-    Files.walk(source).forEach(rethrow(path -> {
+    Files.walk(source).forEach(rethrow((final Path path) -> {
       final Path resolved = target.resolve(source.relativize(path));
       if (Files.isRegularFile(path))
         Files.copy(path, resolved, options);

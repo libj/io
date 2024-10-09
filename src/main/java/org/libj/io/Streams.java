@@ -578,13 +578,14 @@ public final class Streams {
   }
 
   private static InputStream merge(final boolean sync, final InputStream ... streams) throws IOException {
-    if (streams.length == 0)
+    final int len = streams.length;
+    if (len == 0)
       throw new IllegalArgumentException("streams.length == 0");
 
-    if (streams.length == 1)
+    if (len == 1)
       return streams[0];
 
-    final CountDownLatch latch = new CountDownLatch(streams.length + 1);
+    final CountDownLatch latch = new CountDownLatch(len + 1);
     try (final PipedOutputStream pipedOut = new PipedOutputStream() {
       @Override
       public void close() throws IOException {
@@ -595,8 +596,8 @@ public final class Streams {
       }
     }) {
       final InputStream pipedIn = new PipedInputStream(pipedOut, DEFAULT_SOCKET_BUFFER_SIZE);
-      for (int i = 0, i$ = streams.length; i < i$; ++i) { // [A]
-        pipe(streams[i], pipedOut, false, sync, p -> {
+      for (int i = 0; i < len; ++i) { // [A]
+        pipe(streams[i], pipedOut, false, sync, (final IOException p) -> {
           try {
             pipedOut.close();
           }
